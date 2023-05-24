@@ -1,13 +1,14 @@
 import "./style.css";
 
 import { priceData } from "./priceData";
-// import { areaData } from './areaData';
+import useHttpReq from "./http/request";
+import BasicGraph from "./graph/basicGraph";
 import { volumeData } from "./volumeData";
 
 //import { createChart, CrosshairMode } from "lightweight-charts";
 
 import { createChart, ColorType } from 'lightweight-charts';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef,useMemo } from 'react';
 
 export const ChartComponent = props => {
 	const {
@@ -22,6 +23,32 @@ export const ChartComponent = props => {
 	} = props;
 
 	const chartContainerRef = useRef();
+
+	
+
+	//const reqHttp = useApi(requestApi.reqHttp);
+	
+	/*const httpData  = useHttpReq(
+		"https://jsonplaceholder.typicode.com/comments",
+		"GET",
+		{
+		  message: "Hello World",
+		}
+	  );
+
+	console.log('arnabdata1232 is '+ httpData.data);  
+	const stringifiedData = JSON.stringify(httpData.data || {});
+	console.log('stringifiedData is '+stringifiedData);
+	
+	if (httpData.loaded) {	
+		return httpData.error ? (
+		  <span>Error: {httpData.error}</span>
+		) : (
+		  <p>{stringifiedData}</p>
+		);
+	  }
+	
+	return <span>Loading...</span>;*/
 
 	useEffect(
 		() => {
@@ -54,9 +81,13 @@ export const ChartComponent = props => {
 	);
 
 	return (
-		<div
-			ref={chartContainerRef}
-		/>
+		<div>
+			<BasicGraph />
+			<div
+				ref={chartContainerRef}
+			/>	
+		</div>
+			
 	);
 };
 
