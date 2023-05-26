@@ -14,6 +14,9 @@ const useHttpReq = (url, method, payload) => {
       (async () => {
         try {
           const response = await axios.request({
+            headers: {
+                "Access-Control-Allow-Origin": "*"
+              },
             data: payload,
             signal: controllerRef.current.signal,
             method,
