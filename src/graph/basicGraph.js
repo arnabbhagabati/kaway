@@ -1,12 +1,7 @@
 import "../style.css";
 
-import { priceData } from "../priceData";
 import useHttpReq from "../http/request";
-//import BasicGraph from "./basicGraph";
-import { volumeData } from "../volumeData";
-
-//import { createChart, CrosshairMode } from "lightweight-charts";
-
+import * as constants from '../constants';
 import { createChart, ColorType } from 'lightweight-charts';
 import React, { useEffect, useRef,useMemo } from 'react';
 
@@ -22,30 +17,7 @@ export const ChartComponent = props => {
 		} = {},
 	} = props;
 
-	const chartContainerRef = useRef();
-
-	
-
-	/*const httpData  = useHttpReq(
-		"https://kaway-server-n3ahptldka-el.a.run.app/default",
-		"GET",
-		{
-		  message: "Hello World",
-		}
-	  );
-
-	console.log('arnabdata221 is '+ httpData.data);  
-	const stringifiedData = JSON.stringify(httpData.data || {});
-	console.log('stringifiedData is '+stringifiedData);
-
-    if (httpData.loaded) {	
-		return httpData.error ? (
-		  <span>Error: {httpData.error}</span>
-		) : (
-		  <p>{stringifiedData}</p>
-		);
-	  }*/
-	
+	const chartContainerRef = useRef();	
 
 	useEffect(
 		() => {
@@ -87,48 +59,22 @@ export const ChartComponent = props => {
 	);
 };
 
-const initialData1 = [
-	{ time: '2018-12-22', value: 32.51 },
-	{ time: '2018-12-23', value: 31.11 },
-	{ time: '2018-12-24', value: 27.02 },
-	{ time: '2018-12-25', value: 27.32 },
-	{ time: '2018-12-26', value: 25.17 },
-	{ time: '2018-12-27', value: 28.89 },
-	{ time: '2018-12-28', value: 25.46 },
-	{ time: '2018-12-29', value: 23.92 },
-	{ time: '2018-12-30', value: 22.68 },
-	{ time: '2018-12-31', value: 22.67 },
-];
-
-
-const initialData = [	
-	{"time":"2020-03-16","value":46600000},
-	{"time":"2020-03-17","value":46400000},
-	{"time":"2020-03-18","value":44300000},
-	{"time":"2020-03-19","value":45000000},
-	{"time":"2020-03-20","value":44800000},
-];
 
 export default function App(props) {
+	//console.log('1 props is '+ JSON.stringify(props));  
 
+	let url = constants.SERVER_BASEURL+"/histData/"+props.exchange+"/"+props.secId+"?stDate=1995-05-12&endDate=2005-05-12";
+	
 	const httpData  = useHttpReq(
-		"https://kaway-server-n3ahptldka-el.a.run.app/default",
-		"GET",
-		{
-		  message: "Hello World",
-		}
+		url,
+		"GET",		
 	  );
-
-	console.log('arnabdata221 is '+ httpData.data);  
-	const stringifiedData = JSON.stringify(httpData.data || {});
-	console.log('stringifiedData is '+stringifiedData);
 
     if (httpData.loaded) {	
 		return httpData.error ? (
 		  <span>Error: {httpData.error}</span>
 		) : (
-			<div>
-				<p>Arnab</p>
+			<div>				
 				<ChartComponent {...props} data={httpData.data}></ChartComponent>
 			</div>
 		);
@@ -136,7 +82,7 @@ export default function App(props) {
 
 	return (
 		<div>
-			<p>Arnab</p>			
+			<p>Loading..</p>			
 		</div>		
 	);
 }
