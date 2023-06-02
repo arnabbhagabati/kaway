@@ -27,6 +27,7 @@ export const STOCK_CODE_LIST = [
 ];
 
 export const COLORS = {
-    normal_blue : "#2962FF"
+    normal_blue : "#2962FF",
+    green_blue :"#33cccc"
 }
 

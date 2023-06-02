@@ -2,7 +2,6 @@ import "./style.css";
 
 import BasicGraph from "./graph/basicGraph/basicGraph";
 import * as constants from './constants';
-import TVGraph from "./graph/tvGraph";
 
 import React, { useEffect, useRef,useState } from 'react';
 

@@ -1,6 +1,6 @@
 .graph-header{
     display: flex;
-    margin: 10px 5px;
+    margin: 0px 5px;
     text-align: center;
     width: 100%;
 }
@@ -8,6 +8,7 @@
 .stock-id{
     width: 15%;
     align:left;
+    display: table; 
 }
 
 .range-select{
@@ -20,4 +21,13 @@
     font-size: large;
     font-weight: bold;
     color: #33cccc;
+    margin: 0px;
+    vertical-align: middle;
+    display: table-cell;   
+}
+
+.graph-container{
+    margin:10px 20px;
+    padding: 10px 10px;
+    background-color: rgb(230, 239, 239);
 }

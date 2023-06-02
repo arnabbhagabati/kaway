@@ -81,22 +81,19 @@ export default function App(props) {
 
     if (httpData.loaded) {	
 		return httpData.error ? (
-			<div>
-				<span >
-					<div> NSE: BPCL</div>   
-			    </span>
+			<div class="graph-container">		
 				<span>Error: {httpData.error}</span>
 			</div>
 		  
 		) : (
-			<div>				
+			<div class="graph-container">				
 				<ChartComponent {...props} data={httpData.data}></ChartComponent>
 			</div>
 		);
 	  }
 
 	return (
-		<div>
+		<div class="graph-container">
 			<p>Loading..</p>			
 		</div>		
 	);

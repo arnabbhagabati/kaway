@@ -14,7 +14,7 @@ const ButtonToggle = styled(Button)`
     opacity: 1;
   `};
   border:none;
-  color:${constants.COLORS.normal_blue || "#BF4F74"};
+  color:black;
 `;
 const ButtonGroup = styled.div`
   display: flex;
