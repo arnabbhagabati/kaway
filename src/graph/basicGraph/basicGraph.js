@@ -1,16 +1,19 @@
-import "../style.css";
+import "../../style.css";
+import "./basicGraph.css"
 
-import useHttpReq from "../http/request";
-import * as constants from '../constants';
+import useHttpReq from "../../http/request";
+import * as constants from '../../constants';
 import { createChart, ColorType } from 'lightweight-charts';
 import React, { useEffect, useRef,useMemo } from 'react';
+
+import MultiBtn from '../../pieces/multi-btn/multi-btn'
 
 export const ChartComponent = props => {
 	const {
 		data,
 		colors: {
 			backgroundColor = 'white',
-			lineColor = '#2962FF',
+			lineColor = constants.COLORS.normal_blue,
 			textColor = 'black',
 			areaTopColor = '#2962FF',
 			areaBottomColor = 'rgba(41, 98, 255, 0.28)',
@@ -50,7 +53,13 @@ export const ChartComponent = props => {
 	);
 
 	return (
-		<div>			
+		<div>
+			<div class="graph-header">			
+				<div class="stock-id"> 
+					<p class="stock-id-text"> {props.exchange}: {props.code} </p>
+				</div>   
+				<MultiBtn class="range-select"/>	
+			</div>		
 			<div
 				ref={chartContainerRef}
 			/>	
@@ -68,11 +77,17 @@ export default function App(props) {
 	const httpData  = useHttpReq(
 		url,
 		"GET",		
-	  );
+	  );	
 
     if (httpData.loaded) {	
 		return httpData.error ? (
-		  <span>Error: {httpData.error}</span>
+			<div>
+				<span >
+					<div> NSE: BPCL</div>   
+			    </span>
+				<span>Error: {httpData.error}</span>
+			</div>
+		  
 		) : (
 			<div>				
 				<ChartComponent {...props} data={httpData.data}></ChartComponent>

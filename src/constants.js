@@ -17,6 +17,16 @@ export const STOCK_CODE_LIST = [
         name:"Kirloskar Industries Ltd",
         code:"KIRLOSIND",
         id:"BOM500243"
+    },
+    {
+        exchange : "BSE",
+        name:"Bharat Petroleum Corporation Ltd",
+        code:"BPCL",
+        id:""
     }
 ];
+
+export const COLORS = {
+    normal_blue : "#2962FF"
+}
 
