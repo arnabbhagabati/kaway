@@ -23,6 +23,18 @@ export const STOCK_CODE_LIST = [
         name:"Bharat Petroleum Corporation Ltd",
         code:"BPCL",
         id:""
+    },
+    {
+        exchange : "NSE",
+        name:"ABB INDIA LIMITED",
+        code:"ABB",
+        id:"ABB"
+    },
+     {
+        exchange : "NSE",
+        name:"Bajaj Electricals",
+        code:"BAJAJELEC",
+        id:"BAJAJELEC"
     }
 ];
 
