@@ -18,7 +18,6 @@ const ButtonToggle = styled(Button)`
 `;
 const ButtonGroup = styled.div`
   display: flex;
-
 `;
 const types = ['5D', '1W', '2W', '1M' ,'6M','1Y','5Y','All'];
 
