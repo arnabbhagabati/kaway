@@ -1,0 +1,11 @@
+steps:
+
+# Install node packages
+- name: node:18.12.1
+  entrypoint: npm
+  args: ['install']
+
+# Build productive files
+- name: node:18.12.1
+  entrypoint: npm
+  args: [ 'run', 'build', '--prod' ]
