@@ -22,6 +22,8 @@ import { mainListItems, secondaryListItems } from './listItems';
 
 import BasicGraph from "../../graph/basicGraph/basicGraph";
 import * as constants from '../../constants';
+import PageOptions from "../../pieces/page-options-bar/page-options-bar"
+
 
 function Copyright(props) {
   return (
@@ -185,6 +187,8 @@ export default function Dashboard() {
           }}
         >
         <Toolbar />
+
+        <PageOptions></PageOptions>  
         <div>
 			    {secList.map((sec, index) => <BasicGraph exchange={sec.exchange} secId={sec.id} code={sec.code} key={index} />)} 			
 		    </div>  

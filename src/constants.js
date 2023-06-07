@@ -1,4 +1,12 @@
 export const SERVER_BASEURL = "http://localhost:8080";
+export const EXCHANGES_LIST =[
+    {
+        title : "BSE"
+    },{
+        title: "NSE"
+    }
+];
+
 export const STOCK_CODE_LIST = [
     {   
         exchange : "BSE",
