@@ -6,31 +6,99 @@ import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { KawayContext } from '../../kawayContext';
 
-
+import * as Constants from '../../constants';
+import { createFilterOptions } from '@mui/material/Autocomplete';
+import Chip from '@mui/material/Chip';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default function CheckboxesTags(boxProps) {
+export default function CheckboxesTags(boxProps) { 
+ 
+  const { kawayText, allAvlSec, selEx,selectedSec } = useContext(KawayContext);
+  const [allAvlblSecs, setAllAvlblSecs] = allAvlSec;    
+  //console.log('allSecs allAvlblSecs in multi dropdown'+JSON.stringify(allAvlblSecs));
 
-  const drpDwnOptions = boxProps.options;  
-  const tag = boxProps.tag;
+  
+  const [secOptions,setSecOptions] = useState([]);
+  
+  let currCount = 0;
 
-  //console.log('boxProps.options is'+JSON.stringify(boxProps.options));
-  //const [count] = useCount()
+  useEffect(() => {
 
+    const allSecs = [];
+    let cnt = 0;
+    allAvlblSecs.forEach(  (secs,index) =>{
+      for (var key in secs) {
+          if (secs.hasOwnProperty(key)) {
+              //console.log(key + " -> " + JSON.stringify(secs[key]));
+              for (var i = 0; i < secs[key].length; i++) {
+                allSecs.push(secs[key][i]);              
+              } 
+
+           
+          }
+      }
+    });
+   
+    setSecOptions(allSecs);
+    //exchanges.forEach(function (exchange,index){
+
+
+    //});
+
+
+   /* if(allAvlblSecs.length>currCount){
+        //console.log('secCodeArr arnn'+JSON.stringify(secMap));
+        allAvlblSecs.forEach(  (secs,index) =>{
+            for (var key in secs) {
+                if (secs.hasOwnProperty(key)) {
+                    console.log(key + " -> " + JSON.stringify(secs[key]));
+                    setAllSecs([...allSecs, ...secs[key]]);
+                }
+            }
+          });
+
+      //setAllSecs([...allSecs, allAvlblSecs]);
+    }
+    currCount = allAvlblSecs.length;
+    console.log('allSecs in select secs'+JSON.stringify(allSecs));*/
+  }, [allAvlblSecs]); 
+
+
+  /*allAvlblSecs.forEach((secs,index) =>{
+      setAllSecs([...allSecs, secs]);
+    }
+  );*/
+
+  console.log('secOptions in select secs out'+JSON.stringify(secOptions));
+
+  const filterOptions = createFilterOptions({
+    matchFrom: 'any',
+    limit: 50,
+  });
+  const [disableCloseOnSelect,setDisableCloseOnSelect] = useState(true);
+  const fixedOptions = [top100Films[6]];
 
   return (
     <div>
     <Autocomplete
       multiple
-      id="checkboxes-multi-select"
-      options={drpDwnOptions}
-      disableCloseOnSelect
-      limitTags={1}
+      id="select-sec"
+      filterOptions={filterOptions}
+      limitTags={3}
+      options={secOptions}      
+      renderTags={(tagValue, getTagProps) =>
+       {
+        const txt = tagValue.length+' Selected' ;
+        return <Chip
+            label={txt}   
+            />
+       }
+      }     
       getOptionLabel={(option) => option.title}      
       renderOption={(props, option, { selected }) => (
         <li {...props}>
@@ -45,7 +113,7 @@ export default function CheckboxesTags(boxProps) {
       )}
       style={{ width: 250, height:30 }}
       renderInput={(params) => (
-        <TextField {...params} label={tag} placeholder={boxProps.placeHolder} />
+        <TextField {...params} label={boxProps.tag} placeholder={boxProps.placeHolder} />
       )}
     />
     </div>

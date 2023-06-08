@@ -191,7 +191,6 @@ export default function Dashboard() {
           }}
         >
         <Toolbar />
-        <div>{kawayText}</div>   
         <PageOptions></PageOptions>          
         <div>
 			    {secList.map((sec, index) => <BasicGraph exchange={sec.exchange} secId={sec.id} code={sec.code} key={index} />)} 			

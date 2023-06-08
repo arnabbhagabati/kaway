@@ -1,6 +1,7 @@
 import Toolbar from '@mui/material/Toolbar';
 import SelectExchange from '../select-exchange/select-exchange'
-import React, { useState, setState,  useEffect} from 'react';
+import SelectSec from '../select-sec/select-sec'
+import React, { useState, useEffect} from 'react';
 import "./page-options-bar.css";
 import * as Constants from '../../constants';
 import UseHttpReq from "../../http/request";
@@ -23,7 +24,7 @@ function GetData(exchanges,sec_list,setSecs){
         if (httpData.loaded){
              const secs = httpData.data;
              const secCodeArr = [];  
-             console.log('secs is '+JSON.stringify(secs));
+             //console.log('secs is '+JSON.stringify(secs));
             
             if(Array.isArray(secs) && secs.length>0){
                 secs.forEach(function(sec,index){                
@@ -63,11 +64,12 @@ export default function PageOptions() {
     const [allAvlblSecs, setAllAvlblSecs] = allAvlSec;    
     setAllAvlblSecs(sec_list);    
 
-    console.log('sec_list here is '+JSON.stringify(sec_list));     
+    //console.log('sec_list here is '+JSON.stringify(sec_list));     
 
     return (
         <Toolbar className="page-options-toolbar">            
                 <SelectExchange tag="EX" options={exchanges} placeHolder="Exchanges"> </SelectExchange>     
+                <SelectSec tag="Stock" options={exchanges} placeHolder="Stocks"> </SelectSec>
         </Toolbar >
     );
     
