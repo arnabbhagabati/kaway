@@ -1,10 +1,11 @@
 import Toolbar from '@mui/material/Toolbar';
-import MultiSelect from '../multi-select-drop/multi-select-drop'
+import SelectExchange from '../select-exchange/select-exchange'
 import React, { useState, setState,  useEffect} from 'react';
 import "./page-options-bar.css";
 import * as Constants from '../../constants';
 import UseHttpReq from "../../http/request";
-
+import { useContext } from 'react';
+import { KawayContext } from '../../kawayContext';
 
 
 function GetData(exchanges,sec_list,setSecs){       
@@ -13,7 +14,7 @@ function GetData(exchanges,sec_list,setSecs){
     let loadedCnt = 0;
 
     exchanges.forEach(function (exchange,index){
-        let url = Constants.SERVER_BASEURL+"/secList/"+exchange;
+        let url = Constants.SERVER_BASEURL+"/secList/"+exchange.title;
         const httpData  = UseHttpReq(
             url,
             "GET",		
@@ -22,17 +23,19 @@ function GetData(exchanges,sec_list,setSecs){
         if (httpData.loaded){
              const secs = httpData.data;
              const secCodeArr = [];  
-             //console.log('secs is'+JSON.stringify(secs));
-                 
-            secs.forEach(function(sec,index){                
-                secCodeArr.push({"name" : exchange+" "+sec.id,
-                                  "id" :  sec.code });     
-                                        
-             });
-           
-             secMap.push({
-                [exchange] : secCodeArr
-             });
+             console.log('secs is '+JSON.stringify(secs));
+            
+            if(Array.isArray(secs) && secs.length>0){
+                secs.forEach(function(sec,index){                
+                    secCodeArr.push({"title" : exchange.title+" "+sec.id,
+                                    "id" :  sec.code });     
+                                            
+                });
+            
+                secMap.push({
+                    [exchange.title] : secCodeArr
+                });
+            }
              loadedCnt++;
         }
 
@@ -56,12 +59,15 @@ export default function PageOptions() {
     const [sec_list,setSecs]=useState([]);
 
     GetData(exchanges,sec_list,setSecs);
+    const { kawayText, allAvlSec, selEx,selectedSec } = useContext(KawayContext);
+    const [allAvlblSecs, setAllAvlblSecs] = allAvlSec;    
+    setAllAvlblSecs(sec_list);    
 
-    console.log('sec_list here is '+JSON.stringify(sec_list));
+    console.log('sec_list here is '+JSON.stringify(sec_list));     
 
     return (
-        <Toolbar className="page-options-toolbar">
-            <MultiSelect tag="EX" options={exchanges}> </MultiSelect>            
+        <Toolbar className="page-options-toolbar">            
+                <SelectExchange tag="EX" options={exchanges} placeHolder="Exchanges"> </SelectExchange>     
         </Toolbar >
     );
     

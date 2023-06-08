@@ -6,6 +6,9 @@ import * as constants from '../../constants';
 import { createChart, ColorType } from 'lightweight-charts';
 import React, { useEffect, useRef,useMemo } from 'react';
 
+import { KawayContext } from '../../kawayContext';
+import { useContext } from 'react';
+
 import MultiBtn from '../../pieces/multi-btn/multi-btn'
 
 export const ChartComponent = props => {
@@ -72,8 +75,8 @@ export const ChartComponent = props => {
 export default function App(props) {
 	//console.log('1 props is '+ JSON.stringify(props));  
 
-	let url = constants.SERVER_BASEURL+"/histData/"+props.exchange+"/"+props.secId+"?stDate=1995-05-12&endDate=2005-05-12";
-	
+	let url = constants.SERVER_BASEURL+"/histData/"+props.exchange+"/"+props.secId+"?stDate=1995-05-12&endDate=2005-05-12";	
+
 	const httpData  = useHttpReq(
 		url,
 		"GET",		
@@ -86,7 +89,7 @@ export default function App(props) {
 			</div>
 		  
 		) : (
-			<div class="graph-container">				
+			<div class="graph-container">			 				
 				<ChartComponent {...props} data={httpData.data}></ChartComponent>
 			</div>
 		);

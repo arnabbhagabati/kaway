@@ -23,6 +23,8 @@ import { mainListItems, secondaryListItems } from './listItems';
 import BasicGraph from "../../graph/basicGraph/basicGraph";
 import * as constants from '../../constants';
 import PageOptions from "../../pieces/page-options-bar/page-options-bar"
+import { KawayContext } from '../../kawayContext';
+import { useContext } from 'react';
 
 
 function Copyright(props) {
@@ -104,6 +106,8 @@ const kawayTheme = createTheme({
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
   let secList = constants.STOCK_CODE_LIST;
+
+  const { kawayText, setKawayText } = useContext(KawayContext);
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -187,8 +191,8 @@ export default function Dashboard() {
           }}
         >
         <Toolbar />
-
-        <PageOptions></PageOptions>  
+        <div>{kawayText}</div>   
+        <PageOptions></PageOptions>          
         <div>
 			    {secList.map((sec, index) => <BasicGraph exchange={sec.exchange} secId={sec.id} code={sec.code} key={index} />)} 			
 		    </div>  

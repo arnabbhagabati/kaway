@@ -1,9 +1,15 @@
+
 import * as React from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+
+import { useContext } from 'react';
+import { KawayContext } from '../../kawayContext';
+
+
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -12,7 +18,15 @@ export default function CheckboxesTags(boxProps) {
 
   const drpDwnOptions = boxProps.options;  
   const tag = boxProps.tag;
+
+  //const [count] = useCount()
+ 
+  const { kawayText, allAvlSec, selEx,selectedSec } = useContext(KawayContext);
+  const [allAvlblSecs, setAllAvlblSecs] = allAvlSec;    
+  console.log('allAvlblSecs in multi dropdown'+JSON.stringify(allAvlblSecs));
+
   return (
+    <div>
     <Autocomplete
       multiple
       id="checkboxes-multi-select"
@@ -32,9 +46,10 @@ export default function CheckboxesTags(boxProps) {
       )}
       style={{ width: 250, height:30 }}
       renderInput={(params) => (
-        <TextField {...params} label={tag} placeholder="Select Exchange" />
+        <TextField {...params} label={tag} placeholder={boxProps.placeHolder} />
       )}
     />
+    </div>
   );
 }
 
