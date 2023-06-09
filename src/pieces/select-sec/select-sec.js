@@ -21,7 +21,7 @@ export default function CheckboxesTags(boxProps) {
   const [allAvlblSecs, setAllAvlblSecs] = allAvlSec;    
   //console.log('allSecs allAvlblSecs in multi dropdown'+JSON.stringify(allAvlblSecs));
   const [selectedSecs, setSelectedSecs] = selectedSec;  
-
+  const [selectedExs, setSelectedExs] = selEx; 
   
   const [secOptions,setSecOptions] = useState([]);
   
@@ -32,21 +32,27 @@ export default function CheckboxesTags(boxProps) {
     const allSecs = [];
     let cnt = 0;
     allAvlblSecs.forEach(  (secs,index) =>{
+
+      const exchngs =[]
+      selectedExs.forEach((ex,index) => {
+        exchngs.push(ex.title);
+      });
+
       for (var key in secs) {
           if (secs.hasOwnProperty(key)) {
-              //console.log(key + " -> " + JSON.stringify(secs[key]));
-              for (var i = 0; i < secs[key].length; i++) {
-                allSecs.push(secs[key][i]);              
-              } 
-
-           
+              console.log(key + " -> " + JSON.stringify(secs[key]));
+              if(exchngs.includes(key)){
+                for (var i = 0; i < secs[key].length; i++) {
+                  allSecs.push(secs[key][i]);              
+                }    
+              }        
           }
       }
     });
    
     setSecOptions(allSecs);
     
-  }, [allAvlblSecs]); 
+  }, [selectedExs]); 
 
 
   //console.log('secOptions in select secs out'+JSON.stringify(secOptions));
@@ -74,7 +80,7 @@ export default function CheckboxesTags(boxProps) {
             />
        }
       }     
-      getOptionLabel={(option) => option.title}      
+      getOptionLabel={(option) => option.displayId}      
       renderOption={(props, option, { selected }) => (
         <li {...props}>
           <Checkbox
@@ -83,7 +89,7 @@ export default function CheckboxesTags(boxProps) {
             style={{ marginRight: 8 }}
             checked={selected}
           />
-          {option.title}
+          {option.displayId}
         </li>
       )}
       style={{ width: 250, height:30 }}

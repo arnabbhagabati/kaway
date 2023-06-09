@@ -59,7 +59,7 @@ export const ChartComponent = props => {
 		<div>
 			<div class="graph-header">			
 				<div class="stock-id"> 
-					<p class="stock-id-text"> {props.exchange}: {props.code} </p>
+					<p class="stock-id-text"> {props.displayId} </p>
 				</div>   
 				<MultiBtn class="range-select"/>	
 			</div>		
@@ -75,7 +75,7 @@ export const ChartComponent = props => {
 export default function App(props) {
 	//console.log('1 props is '+ JSON.stringify(props));  
 
-	let url = constants.SERVER_BASEURL+"/histData/"+props.exchange+"/"+props.secId+"?stDate=1995-05-12&endDate=2005-05-12";	
+	let url = constants.SERVER_BASEURL+"/histData/"+props.exchange+"/"+props.code+"?stDate=1995-05-12&endDate=2005-05-12";	
 
 	const httpData  = useHttpReq(
 		url,

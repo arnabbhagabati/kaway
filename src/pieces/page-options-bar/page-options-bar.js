@@ -28,8 +28,10 @@ function GetData(exchanges,sec_list,setSecs){
             
             if(Array.isArray(secs) && secs.length>0){
                 secs.forEach(function(sec,index){                
-                    secCodeArr.push({"title" : exchange.title+" "+sec.id,
-                                    "id" :  sec.code });     
+                    secCodeArr.push({"code" : sec.code,
+                                     "id" :  sec.id ,
+                                     "exchange" : exchange.title,
+                                     "displayId" : exchange.title+" "+sec.id});     
                                             
                 });
             

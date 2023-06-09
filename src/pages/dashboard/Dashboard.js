@@ -107,7 +107,8 @@ export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
   let secList = constants.STOCK_CODE_LIST;
 
-  const { kawayText, setKawayText } = useContext(KawayContext);
+  const { kawayText, allAvlSec, selEx,selectedSec } = useContext(KawayContext); 
+  const [selectedSecs, setSelectedSecs] = selectedSec;  
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -193,7 +194,7 @@ export default function Dashboard() {
         <Toolbar />
         <PageOptions></PageOptions>          
         <div>
-			    {secList.map((sec, index) => <BasicGraph exchange={sec.exchange} secId={sec.id} code={sec.code} key={index} />)} 			
+			    {selectedSecs.map((sec, index) => <BasicGraph exchange={sec.exchange} secId={sec.id} code={sec.code} displayId={sec.displayId} key={index} />)} 			
 		    </div>  
          
         </Box>
