@@ -40,8 +40,6 @@ function GetData(exchanges,sec_list,setSecs){
              loadedCnt++;
         }
 
-        //console.log('rest call no '+index);
-        //console.log('secCodeArr is'+JSON.stringify(secCodeArr));
     });
 
     useEffect(() => {
@@ -62,7 +60,9 @@ export default function PageOptions() {
     GetData(exchanges,sec_list,setSecs);
     const { kawayText, allAvlSec, selEx,selectedSec } = useContext(KawayContext);
     const [allAvlblSecs, setAllAvlblSecs] = allAvlSec;    
-    setAllAvlblSecs(sec_list);    
+    setAllAvlblSecs(sec_list);   
+    const [selectedExs, setSelectedExs] = selEx;  
+    console.log('selectedExs in pageoptions'+JSON.stringify(selectedExs));
 
     //console.log('sec_list here is '+JSON.stringify(sec_list));     
 
