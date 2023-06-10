@@ -10,7 +10,7 @@ import React, { useEffect, useRef,useState } from 'react';
 
 export default function App(props) {	
 
-	const [kawayText, setKawayText] = useState("");
+	const [duration, setDuration] = useState("");
 
 	const [allAvlblSecs, setAllAvlblSecs] = useState([]);
 	const [selectedEx, setSelectedEx] = useState([]);
@@ -20,7 +20,7 @@ export default function App(props) {
 	return (
 		<div>
 			
-			<KawayContext.Provider value={{kawayText :[ kawayText, setKawayText ],allAvlSec :[ allAvlblSecs, setAllAvlblSecs ],selEx :[ selectedEx, setSelectedEx ],selectedSec :[ selectedSecs, setSelectedSecs ]}}>
+			<KawayContext.Provider value={{duration :[ duration, setDuration ],allAvlSec :[ allAvlblSecs, setAllAvlblSecs ],selEx :[ selectedEx, setSelectedEx ],selectedSec :[ selectedSecs, setSelectedSecs ]}}>
 				<DashBoard/>
 			</KawayContext.Provider>
 		</div>

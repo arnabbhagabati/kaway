@@ -92,7 +92,7 @@ export default function CheckboxesTags(boxProps) {
           {option.displayId}
         </li>
       )}
-      style={{ width: 250, height:30 }}
+      style={{ width: 250 }}
       renderInput={(params) => (
         <TextField {...params} label={boxProps.tag} placeholder={boxProps.placeHolder} />
       )}

@@ -7,6 +7,8 @@ import * as Constants from '../../constants';
 import UseHttpReq from "../../http/request";
 import { useContext } from 'react';
 import { KawayContext } from '../../kawayContext';
+import SelectDur from '../select-duration/select-duration'
+import Typography from '@mui/material/Typography';
 
 
 function GetData(exchanges,sec_list,setSecs){       
@@ -60,7 +62,7 @@ export default function PageOptions() {
     const [sec_list,setSecs]=useState([]);
 
     GetData(exchanges,sec_list,setSecs);
-    const { kawayText, allAvlSec, selEx,selectedSec } = useContext(KawayContext);
+    const { duration, allAvlSec, selEx,selectedSec } = useContext(KawayContext);
     const [allAvlblSecs, setAllAvlblSecs] = allAvlSec;    
     setAllAvlblSecs(sec_list);   
     const [selectedExs, setSelectedExs] = selEx;  
@@ -70,8 +72,12 @@ export default function PageOptions() {
 
     return (
         <Toolbar className="page-options-toolbar">            
-                <SelectExchange tag="EX" options={exchanges} placeHolder="Exchanges"> </SelectExchange>     
+                <SelectExchange tag="EX" options={exchanges} placeHolder="Exchanges" sx={{ mr: 30 }}> </SelectExchange>     
                 <SelectSec tag="Stock" options={exchanges} placeHolder="Stocks"> </SelectSec>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        
+                </Typography>
+                <SelectDur> </SelectDur>
         </Toolbar >
     );
     

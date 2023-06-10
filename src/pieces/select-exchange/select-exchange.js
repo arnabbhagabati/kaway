@@ -13,7 +13,7 @@ import Chip from '@mui/material/Chip';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default function CheckboxesTags(boxProps) {
+export default function SeletExchanges(boxProps) {
 
   const drpDwnOptions = boxProps.options;  
   const tag = boxProps.tag;
@@ -58,7 +58,7 @@ export default function CheckboxesTags(boxProps) {
           {option.title}
         </li>
       )}
-      style={{ width: 250, height:30 }}
+      style={{ width: 250 }}
       renderInput={(params) => (
         <TextField {...params} label={boxProps.tag} placeholder={boxProps.placeHolder} />
       )}
