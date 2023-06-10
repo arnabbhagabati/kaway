@@ -4,12 +4,14 @@ import "./basicGraph.css"
 import useHttpReq from "../../http/request";
 import * as constants from '../../constants';
 import { createChart, ColorType } from 'lightweight-charts';
-import React, { useEffect, useRef,useState } from 'react';
+import React, { useEffect, useRef,useState,useMemo } from 'react';
 
 import { KawayContext } from '../../kawayContext';
 import { useContext } from 'react';
 
 import MultiBtn from '../../pieces/graph-dur-selector/multi-btn'
+
+
 
 export const ChartComponent = props => {
 	const {		
@@ -23,14 +25,27 @@ export const ChartComponent = props => {
 	} = props;
 
 	const chartContainerRef = useRef();	
-	const { duration, allAvlSec, selEx,selectedSec } = useContext(KawayContext);
+	const { duration, allAvlSec, selEx,selectedSec,durChangedFlag } = useContext(KawayContext);
 	const [ctxDuration, setCtxDuration] = duration; 	
+	const [durChgFlag, setDurChgFlag] = durChangedFlag;
 	const [httpData, setHttpData] = useState(props.gdata); 	
-	const [graphSelDuration, setGraphSelDuration] = useState(0); 
+	const [graphSelDuration, setGraphSelDuration] = useState(-99); 
+
 	let [graphDuration, setGraphDuration] = useState(0); 
+	let [graphSelFlag,setGraphSelFlag] = useState(false); 
+	
+	//let [graphData,setGraphData] = useState([]);
+	//console.log('setGraphData 1 is'+JSON.stringify(graphData));
+	console.log('graphSelFlag 1 is'+graphSelFlag);
+
+
+    const ref = useRef(true);
 
 	useEffect(
 		() => {
+
+			const firstRender = ref.current;
+
 			const handleResize = () => {
 				chart.applyOptions({ width: chartContainerRef.current.clientWidth });
 			};
@@ -47,21 +62,27 @@ export const ChartComponent = props => {
 
 			const newSeries = chart.addLineSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });
 			console.log('graphDuration in graph =='+graphDuration);
-			console.log('graphSelDuration in graph =='+graphSelDuration);
-			console.log('ctxDuration in graph =='+ctxDuration);			
+			console.log('graphSelDuration in graph =='+graphSelDuration);	
+			console.log('ctxDuration in graph =='+ctxDuration);		
+			console.log('firstRender in graph =='+firstRender);	
 
-			if(graphDuration != ctxDuration){
-
-				const graphData = [];
-				
-				graphDuration = ctxDuration;
+			if( firstRender){
+				ref.current = false;
 				setGraphSelDuration(ctxDuration);
-				console.log('graphDuration in ctxDuration check =='+graphDuration);
+			}
+
+			if( (durChgFlag && ctxDuration != graphSelDuration)){
+
+				let graphData = [];				
+				let tmpDuration = ctxDuration;
+				console.log('ctxDuration in ctxDuration check =='+ctxDuration);
+				setGraphSelDuration(ctxDuration);
+				/*console.log('graphDuration in ctxDuration check =='+graphDuration);
 				console.log('ctxDuration in ctxDuration check =='+ctxDuration);
 				const startDate = new Date();
-				startDate.setDate(startDate.getDate() - graphDuration);
+				startDate.setDate(startDate.getDate() - tmpDuration);
 				
-				console.log('setGraphData is'+JSON.stringify(graphData));
+				console.log('setGraphData 2 is'+JSON.stringify(graphData));
 
 				httpData.forEach(element => {				
 					if(element != null && element.time != null && element.time.length>0){
@@ -79,19 +100,21 @@ export const ChartComponent = props => {
 					}				
 				});
 
-				console.log('setGraphData is'+JSON.stringify(graphData));
-				newSeries.setData(graphData);
+				console.log('setGraphData 3 is'+JSON.stringify(graphData));		
+				newSeries.setData(graphData);*/	
+				setDurChgFlag(false);					
 			}
 
 
-			if(graphDuration != graphSelDuration){
-
-					const graphData = [];
-					graphDuration = graphSelDuration;					
+			if(graphSelDuration){
+					
+					let graphData = [];
+					let tmpDuration = graphSelDuration;					
 					console.log('graphDuration in graphSelDuration check =='+graphDuration);
 					console.log('ctxDuration in graphSelDuration check =='+ctxDuration);
+					console.log('graphSelDuration in graphSelDuration check =='+graphSelDuration);
 					const startDate = new Date();
-					startDate.setDate(startDate.getDate() - graphDuration);
+					startDate.setDate(startDate.getDate() - tmpDuration);
 					
 					//console.log('setGraphData '+JSON.stringify(graphData));
 	
@@ -111,18 +134,21 @@ export const ChartComponent = props => {
 						}				
 					});
 
-				newSeries.setData(graphData);
+				console.log('setGraphData 4 is'+JSON.stringify(graphData));			
+				newSeries.setData(graphData);	
 			}
-
-			window.addEventListener('resize', handleResize);
-
+			
+			window.addEventListener('resize', handleResize);			
+			
 			return () => {
 				window.removeEventListener('resize', handleResize);
 				chart.remove();
 			};
 		},
-		[backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor,ctxDuration,graphSelDuration,httpData]
+		[backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor,graphSelDuration,ctxDuration,httpData]
 	);
+
+	
 
 	return (
 		<div>
@@ -130,7 +156,7 @@ export const ChartComponent = props => {
 				<div class="stock-id"> 
 					<p class="stock-id-text"> {props.displayId} </p>
 				</div>   
-				<MultiBtn class="range-select" setGraphDur={setGraphSelDuration}/>	
+				<MultiBtn class="range-select" setGraphDur={setGraphSelDuration} setGraphSelFlag={setGraphSelFlag}/>	
 			</div>		
 			<div
 				ref={chartContainerRef}
@@ -139,6 +165,8 @@ export const ChartComponent = props => {
 			
 	);
 };
+
+
 
 
 export default function App(props) {

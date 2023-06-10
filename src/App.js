@@ -11,7 +11,7 @@ import React, { useEffect, useRef,useState } from 'react';
 export default function App(props) {	
 
 	const [duration, setDuration] = useState("");
-
+	const [durChangedFlag, setDurChangedFlag] = useState(false);
 	const [allAvlblSecs, setAllAvlblSecs] = useState([]);
 	const [selectedEx, setSelectedEx] = useState([]);
 	const [selectedSecs, setSelectedSecs] = useState([]);
@@ -20,7 +20,7 @@ export default function App(props) {
 	return (
 		<div>
 			
-			<KawayContext.Provider value={{duration :[ duration, setDuration ],allAvlSec :[ allAvlblSecs, setAllAvlblSecs ],selEx :[ selectedEx, setSelectedEx ],selectedSec :[ selectedSecs, setSelectedSecs ]}}>
+			<KawayContext.Provider value={{duration :[ duration, setDuration ],allAvlSec :[ allAvlblSecs, setAllAvlblSecs ],selEx :[ selectedEx, setSelectedEx ],selectedSec :[ selectedSecs, setSelectedSecs ], durChangedFlag:[durChangedFlag, setDurChangedFlag]}}>
 				<DashBoard/>
 			</KawayContext.Provider>
 		</div>
