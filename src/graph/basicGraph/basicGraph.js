@@ -9,7 +9,7 @@ import React, { useEffect, useRef,useState } from 'react';
 import { KawayContext } from '../../kawayContext';
 import { useContext } from 'react';
 
-import MultiBtn from '../../pieces/multi-btn/multi-btn'
+import MultiBtn from '../../pieces/graph-dur-selector/multi-btn'
 
 export const ChartComponent = props => {
 	const {		
@@ -24,9 +24,10 @@ export const ChartComponent = props => {
 
 	const chartContainerRef = useRef();	
 	const { duration, allAvlSec, selEx,selectedSec } = useContext(KawayContext);
-	const [ctxDuration, setCtxDuration] = duration; 
-	const [httpData, setHttpData] = useState(props.gdata); 
-	const [graphData, setGraphData] = useState([]); 
+	const [ctxDuration, setCtxDuration] = duration; 	
+	const [httpData, setHttpData] = useState(props.gdata); 	
+	const [graphSelDuration, setGraphSelDuration] = useState(0); 
+	let [graphDuration, setGraphDuration] = useState(0); 
 
 	useEffect(
 		() => {
@@ -45,33 +46,73 @@ export const ChartComponent = props => {
 			chart.timeScale().fitContent();
 
 			const newSeries = chart.addLineSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });
+			console.log('graphDuration in graph =='+graphDuration);
+			console.log('graphSelDuration in graph =='+graphSelDuration);
+			console.log('ctxDuration in graph =='+ctxDuration);			
 
-			console.log('duration in graph =='+ctxDuration);
-			const startDate = new Date();
-			startDate.setDate(startDate.getDate() - ctxDuration);
+			if(graphDuration != ctxDuration){
 
-			setGraphData([]);
-			//console.log('setGraphData '+JSON.stringify(graphData));
-
-			httpData.forEach(element => {
-				/*console.log('bad data found '+element.time);*/
-				if(element != null && element.time != null && element.time.length>0){
-					let parts = element.time.split('-');		
-					let currDate = new Date(parts[0], parts[1] - 1, parts[2]); 
-					if(currDate>startDate){
-						const gPoint = {
-							"time" : element.time,
-							"value" : element.value
-						}
-						graphData.push(gPoint);
-					}				
-				}else{
-					console.log('bad data found '+JSON.stringify(element));
-				}
+				const graphData = [];
 				
-			});
+				graphDuration = ctxDuration;
+				setGraphSelDuration(ctxDuration);
+				console.log('graphDuration in ctxDuration check =='+graphDuration);
+				console.log('ctxDuration in ctxDuration check =='+ctxDuration);
+				const startDate = new Date();
+				startDate.setDate(startDate.getDate() - graphDuration);
+				
+				console.log('setGraphData is'+JSON.stringify(graphData));
 
-			newSeries.setData(graphData);
+				httpData.forEach(element => {				
+					if(element != null && element.time != null && element.time.length>0){
+						let parts = element.time.split('-');		
+						let currDate = new Date(parts[0], parts[1] - 1, parts[2]); 
+						if(currDate>startDate){
+							const gPoint = {
+								"time" : element.time,
+								"value" : element.value
+							}
+							graphData.push(gPoint);
+						}				
+					}else{
+						console.log('bad data found '+JSON.stringify(element));
+					}				
+				});
+
+				console.log('setGraphData is'+JSON.stringify(graphData));
+				newSeries.setData(graphData);
+			}
+
+
+			if(graphDuration != graphSelDuration){
+
+					const graphData = [];
+					graphDuration = graphSelDuration;					
+					console.log('graphDuration in graphSelDuration check =='+graphDuration);
+					console.log('ctxDuration in graphSelDuration check =='+ctxDuration);
+					const startDate = new Date();
+					startDate.setDate(startDate.getDate() - graphDuration);
+					
+					//console.log('setGraphData '+JSON.stringify(graphData));
+	
+					httpData.forEach(element => {				
+						if(element != null && element.time != null && element.time.length>0){
+							let parts = element.time.split('-');		
+							let currDate = new Date(parts[0], parts[1] - 1, parts[2]); 
+							if(currDate>startDate){
+								const gPoint = {
+									"time" : element.time,
+									"value" : element.value
+								}
+								graphData.push(gPoint);
+							}				
+						}else{
+							console.log('bad data found '+JSON.stringify(element));
+						}				
+					});
+
+				newSeries.setData(graphData);
+			}
 
 			window.addEventListener('resize', handleResize);
 
@@ -80,7 +121,7 @@ export const ChartComponent = props => {
 				chart.remove();
 			};
 		},
-		[backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor,duration,httpData]
+		[backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor,ctxDuration,graphSelDuration,httpData]
 	);
 
 	return (
@@ -89,7 +130,7 @@ export const ChartComponent = props => {
 				<div class="stock-id"> 
 					<p class="stock-id-text"> {props.displayId} </p>
 				</div>   
-				<MultiBtn class="range-select"/>	
+				<MultiBtn class="range-select" setGraphDur={setGraphSelDuration}/>	
 			</div>		
 			<div
 				ref={chartContainerRef}
@@ -104,39 +145,25 @@ export default function App(props) {
 	//console.log('1 props is '+ JSON.stringify(props));  
 
 	let url = constants.SERVER_BASEURL+"/histData/"+props.exchange+"/"+props.code+"?stDate=1995-05-12&endDate=2005-05-12";	
-
 	const httpData  = useHttpReq(
 		url,
 		"GET",		
-	  );	
+	);	
 		
     if (httpData.loaded) {	
-
 		if(httpData.error){
 			return (
 				<div class="graph-container">		
 					<span>Error: {httpData.error}</span>
 				</div>
 			)
-		}else{
-			
-			/*httpData.data.forEach(element => {
-				graphdata.push(element);
-			})
-
-			useEffect(
-				() => {
-					httpData.data.array.forEach(element => {
-						graphdata.push(element);
-					});				
-			},[ctxDuration]);*/
+		}else{			
 			return (
-				(
+				(	
 					<div class="graph-container">			 				
 						<ChartComponent {...props} gdata={httpData.data}></ChartComponent>
 					</div>
 				)
-
 			)
 		}		
 	  }
