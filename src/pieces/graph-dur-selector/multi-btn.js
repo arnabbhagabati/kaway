@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import * as constants from '../../constants';
 import styles from './multi-btn.css'
@@ -25,8 +25,35 @@ export default function ToggleGroup(props) {
   console.log('props in mult is '+JSON.stringify(props));
   const [active, setActive] = useState(types[0]);
 
-  const setDur = (type) => {
-    console.log('multi change detected');
+  useEffect(()=>{
+    console.log('multi change effect');
+    switch(props.graphDur){
+      case 7:
+        setActive('1W');
+        break;
+      case 14:
+        setActive('2W');
+        break;
+      case 30:
+        setActive('1M');
+        break;
+      case 180:
+        setActive('6M');
+        break;
+      case 365:
+        setActive('1Y');
+        break;
+      case 1825:
+        setActive('5Y');
+        break;
+      case 9999999:
+        setActive('All');
+        break;          
+    }
+    console.log('multi change effect active is now '+active);
+  },[props.graphDur])
+
+  const setDur = (type) => {    
     props.setGraphSelFlag(false);
     setActive(type);
     switch(type){

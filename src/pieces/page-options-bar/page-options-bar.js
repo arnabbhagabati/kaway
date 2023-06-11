@@ -74,9 +74,7 @@ export default function PageOptions() {
         <Toolbar className="page-options-toolbar">            
                 <SelectExchange tag="EX" options={exchanges} placeHolder="Exchanges" sx={{ mr: 30 }}> </SelectExchange>     
                 <SelectSec tag="Stock" options={exchanges} placeHolder="Stocks"> </SelectSec>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        
-                </Typography>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}></Typography>
                 <SelectDur> </SelectDur>
         </Toolbar >
     );
