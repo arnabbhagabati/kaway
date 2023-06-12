@@ -1,16 +1,16 @@
 import "../../style.css";
-import "./basicGraph.css"
-
+import "./basicGraph.css";
 import useHttpReq from "../../http/request";
 import * as constants from '../../constants';
 import { createChart, ColorType } from 'lightweight-charts';
-import React, { useEffect, useRef,useMemo } from 'react';
+import React, { useEffect, useRef,useState,useMemo } from 'react';
+import { KawayContext } from '../../kawayContext';
+import { useContext } from 'react';
+import MultiBtn from '../../pieces/graph-dur-selector/multi-btn';
 
-import MultiBtn from '../../pieces/multi-btn/multi-btn'
 
 export const ChartComponent = props => {
-	const {
-		data,
+	const {		
 		colors: {
 			backgroundColor = 'white',
 			lineColor = constants.COLORS.normal_blue,
@@ -21,9 +21,24 @@ export const ChartComponent = props => {
 	} = props;
 
 	const chartContainerRef = useRef();	
+	const { duration, allAvlSec, selEx,selectedSec,durChangedFlag } = useContext(KawayContext);
+	const [ctxDuration, setCtxDuration] = duration; 	
+	const [durChgFlag, setDurChgFlag] = durChangedFlag;
+	const [httpData, setHttpData] = useState(props.gdata); 	
+	const [graphSelDuration, setGraphSelDuration] = useState(-99); 
+
+	let [graphDuration, setGraphDuration] = useState(0); 
+	let [graphSelFlag,setGraphSelFlag] = useState(false); 
+	
+	console.log('graphSelFlag 1 is'+graphSelFlag);
+
+    const ref = useRef(true);
 
 	useEffect(
 		() => {
+
+			const firstRender = ref.current;
+
 			const handleResize = () => {
 				chart.applyOptions({ width: chartContainerRef.current.clientWidth });
 			};
@@ -39,26 +54,73 @@ export const ChartComponent = props => {
 			chart.timeScale().fitContent();
 
 			const newSeries = chart.addLineSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });
-			newSeries.setData(data);
+			console.log('graphDuration in graph =='+graphDuration);
+			console.log('graphSelDuration in graph =='+graphSelDuration);	
+			console.log('ctxDuration in graph =='+ctxDuration);		
+			console.log('firstRender in graph =='+firstRender);	
 
-			window.addEventListener('resize', handleResize);
+			if( firstRender){
+				ref.current = false;
+				setGraphSelDuration(ctxDuration);
+			}
 
+			if( (durChgFlag && ctxDuration != graphSelDuration)){
+				
+				console.log('ctxDuration in ctxDuration check =='+ctxDuration);
+				setGraphSelDuration(ctxDuration);				
+				setDurChgFlag(false);					
+			}
+
+
+			if(graphSelDuration){
+					
+					let graphData = [];
+					let tmpDuration = graphSelDuration;					
+					console.log('graphDuration in graphSelDuration check =='+graphDuration);
+					console.log('ctxDuration in graphSelDuration check =='+ctxDuration);
+					console.log('graphSelDuration in graphSelDuration check =='+graphSelDuration);
+					const startDate = new Date();
+					startDate.setDate(startDate.getDate() - tmpDuration);
+					
+					//console.log('setGraphData '+JSON.stringify(graphData));
+	
+					httpData.forEach(element => {				
+						if(element != null && element.time != null && element.time.length>0){
+							let parts = element.time.split('-');		
+							let currDate = new Date(parts[0], parts[1] - 1, parts[2]); 
+							if(currDate>startDate){
+								const gPoint = {
+									"time" : element.time,
+									"value" : element.value
+								}
+								graphData.push(gPoint);
+							}				
+						}else{
+							console.log('bad data found '+JSON.stringify(element));
+						}				
+					});
+
+				console.log('setGraphData 4 is'+JSON.stringify(graphData));			
+				newSeries.setData(graphData);	
+			}
+			
+			window.addEventListener('resize', handleResize);			
+			
 			return () => {
 				window.removeEventListener('resize', handleResize);
-
 				chart.remove();
 			};
 		},
-		[data, backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor]
-	);
+		[backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor,graphSelDuration,ctxDuration,httpData]
+	);	
 
 	return (
 		<div>
 			<div class="graph-header">			
 				<div class="stock-id"> 
-					<p class="stock-id-text"> {props.exchange}: {props.code} </p>
+					<p class="stock-id-text"> {props.displayId} </p>
 				</div>   
-				<MultiBtn class="range-select"/>	
+				<MultiBtn class="range-select" graphDur={graphSelDuration} setGraphDur={setGraphSelDuration} setGraphSelFlag={setGraphSelFlag}/>	
 			</div>		
 			<div
 				ref={chartContainerRef}
@@ -69,27 +131,31 @@ export const ChartComponent = props => {
 };
 
 
-export default function App(props) {
-	//console.log('1 props is '+ JSON.stringify(props));  
 
-	let url = constants.SERVER_BASEURL+"/histData/"+props.exchange+"/"+props.secId+"?stDate=1995-05-12&endDate=2005-05-12";
+export default function App(props) {
 	
+	let url = constants.SERVER_BASEURL+"/histData/"+props.exchange+"/"+props.code+"?stDate=1995-05-12&endDate=2005-05-12";	
 	const httpData  = useHttpReq(
 		url,
 		"GET",		
-	  );	
-
+	);	
+		
     if (httpData.loaded) {	
-		return httpData.error ? (
-			<div class="graph-container">		
-				<span>Error: {httpData.error}</span>
-			</div>
-		  
-		) : (
-			<div class="graph-container">				
-				<ChartComponent {...props} data={httpData.data}></ChartComponent>
-			</div>
-		);
+		if(httpData.error){
+			return (
+				<div class="graph-container">		
+					<span>Error: {httpData.error}</span>
+				</div>
+			)
+		}else{			
+			return (
+				(	
+					<div class="graph-container">			 				
+						<ChartComponent {...props} gdata={httpData.data}></ChartComponent>
+					</div>
+				)
+			)
+		}		
 	  }
 
 	return (

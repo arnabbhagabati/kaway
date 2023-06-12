@@ -22,6 +22,10 @@ import { mainListItems, secondaryListItems } from './listItems';
 
 import BasicGraph from "../../graph/basicGraph/basicGraph";
 import * as constants from '../../constants';
+import PageOptions from "../../pieces/page-options-bar/page-options-bar"
+import { KawayContext } from '../../kawayContext';
+import { useContext } from 'react';
+
 
 function Copyright(props) {
   return (
@@ -102,6 +106,10 @@ const kawayTheme = createTheme({
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
   let secList = constants.STOCK_CODE_LIST;
+
+  const {duration, allAvlSec, selEx,selectedSec } = useContext(KawayContext); 
+  const [selectedSecs, setSelectedSecs] = selectedSec;  
+  const [ctxDuration, setCtxDuration] = duration; 
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -185,8 +193,13 @@ export default function Dashboard() {
           }}
         >
         <Toolbar />
+        <PageOptions></PageOptions>          
         <div>
-			    {secList.map((sec, index) => <BasicGraph exchange={sec.exchange} secId={sec.id} code={sec.code} key={index} />)} 			
+			    {selectedSecs.map((sec, index) => <BasicGraph exchange={sec.exchange} 
+                                                        secId={sec.id} 
+                                                        code={sec.code} 
+                                                        displayId={sec.displayId} 
+                                                        key={index} />)} 			
 		    </div>  
          
         </Box>
