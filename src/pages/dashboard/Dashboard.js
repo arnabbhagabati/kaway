@@ -22,9 +22,10 @@ import { mainListItems, secondaryListItems } from './listItems';
 
 import BasicGraph from "../../graph/basicGraph/basicGraph";
 import * as constants from '../../constants';
-import PageOptions from "../../pieces/page-options-bar/page-options-bar"
+import PageOptions from "../../pieces/page-options-bar/page-options-bar";
 import { KawayContext } from '../../kawayContext';
 import { useContext } from 'react';
+import SelectedSecList from "../../pieces/selected-list/selected-list";
 
 
 function Copyright(props) {
@@ -193,15 +194,17 @@ export default function Dashboard() {
           }}
         >
         <Toolbar />
-        <PageOptions></PageOptions>          
-        <div>
-			    {selectedSecs.map((sec, index) => <BasicGraph exchange={sec.exchange} 
-                                                        secId={sec.id} 
-                                                        code={sec.code} 
-                                                        displayId={sec.displayId} 
-                                                        key={index} />)} 			
-		    </div>  
-         
+        <PageOptions></PageOptions>
+        <div className='rowAXC'>          
+          <div style={{ width:'90%'}}>
+            {selectedSecs.map((sec, index) => <BasicGraph exchange={sec.exchange} 
+                                                          secId={sec.id} 
+                                                          code={sec.code} 
+                                                          displayId={sec.displayId} 
+                                                          key={index} />)} 			
+          </div>
+          <SelectedSecList style={{ width:'10%'}}/>  
+        </div>
         </Box>
       </Box>
     </ThemeProvider>
