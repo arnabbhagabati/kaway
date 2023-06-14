@@ -30,7 +30,8 @@ function GetData(exchanges,sec_list,setSecs){
             
             if(Array.isArray(secs) && secs.length>0){
                 secs.forEach(function(sec,index){                
-                    secCodeArr.push({"code" : sec.code,
+                    secCodeArr.push({ key : exchange.title+"_"+sec.code,
+                                     "code" : sec.code,
                                      "id" :  sec.id ,
                                      "exchange" : exchange.title,
                                      "displayId" : exchange.title+" "+sec.id});     
@@ -66,7 +67,7 @@ export default function PageOptions() {
     const [allAvlblSecs, setAllAvlblSecs] = allAvlSec;    
     setAllAvlblSecs(sec_list);   
     const [selectedExs, setSelectedExs] = selEx;  
-    console.log('selectedExs in pageoptions'+JSON.stringify(selectedExs));
+    //console.log('selectedExs in pageoptions'+JSON.stringify(selectedExs));
 
     //console.log('sec_list here is '+JSON.stringify(sec_list));     
 

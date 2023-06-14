@@ -56,7 +56,7 @@ export default function CheckboxesTags(boxProps) {
 
 
   //console.log('secOptions in select secs out'+JSON.stringify(secOptions));
-  console.log('selected secs in seclect-sec'+JSON.stringify(selectedSecs));
+  //console.log('selected secs in seclect-sec'+JSON.stringify(selectedSecs));
 
   const filterOptions = createFilterOptions({
     matchFrom: 'any',
@@ -70,8 +70,9 @@ export default function CheckboxesTags(boxProps) {
       id="select-sec"
       filterOptions={filterOptions}
       limitTags={1}
-      disableCloseOnSelect
-      options={secOptions}      
+      disableCloseOnSelect     
+      options={secOptions}   
+      value={selectedSecs}   
       renderTags={(tagValue, getTagProps) =>
        {
         const txt = tagValue.length+' Selected' ;

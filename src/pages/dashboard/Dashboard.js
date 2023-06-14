@@ -203,7 +203,7 @@ export default function Dashboard() {
                                                           displayId={sec.displayId} 
                                                           key={index} />)} 			
           </div>
-          <SelectedSecList style={{ width:'10%'}}/>  
+          <SelectedSecList style={{ width:'10%'}}/>
         </div>
         </Box>
       </Box>

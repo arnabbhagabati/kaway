@@ -14,14 +14,14 @@ export default function CheckboxListSecondary() {
   const [checked, setChecked] = React.useState([1]);
 
   const [secsList, setSecsList] = React.useState([]);
-  const {duration, allAvlSec, selEx,selectedSec } = useContext(KawayContext); 
+  const { duration, allAvlSec, selEx,selectedSec,durChangedFlag } = useContext(KawayContext);
   const [selectedSecs, setSelectedSecs] = selectedSec;  
 
   useEffect(()=>{
     let selSecs = [];
     selectedSecs.forEach((sec) =>{
         const newSec = {
-            "key" : sec.exchange+"_"+sec.id,
+            key : sec.key,
              "exchange" : sec.exchange,
              "id" : sec.id,
              "code" : sec.code,
@@ -34,28 +34,27 @@ export default function CheckboxListSecondary() {
   },[selectedSecs]);
 
   const handleToggle = (value) => () => {
-    console.log('value in selected-list handleToggle'+JSON.stringify(value));
-    let indexToDel = -1;
-    selectedSecs.forEach((sec,index) =>{
-       if(sec.exchange === value.exchange && sec.id === value.id && sec.code === value.code){
-        indexToDel = index;
-       }
-    });
-    if (indexToDel > -1) { 
-        console.log('Deleting sec from selected-list '+selectedSecs[indexToDel].displayId);
-        selectedSecs.splice(indexToDel, 1); 
+    console.log('value in selected-list handleToggle'+JSON.stringify(value));   
+
+         setSelectedSecs(current =>
+            current.filter(sec => {            
+              return (sec.key !== value.key);
+            }),
+         ); 
+          
         console.log('selectedSecs after delete in selected-list '+JSON.stringify(selectedSecs));
-    }
+    
   };
 
   return (
     <List dense sx={{ width: '100%', maxWidth: 200, bgcolor: 'none' }}>
       {secsList.map((value) => {
         const labelId = `checkbox-list-secondary-label-${value}`;
-        console.log('value in selected-list '+JSON.stringify(value));
+        //console.log('value in selected-list '+JSON.stringify(value));
+        //console.log('secsList1 is '+JSON.stringify(secsList));
         return (
           <ListItem
-            key={value}
+            key={value.key}
             secondaryAction={
               <Checkbox
                 edge="end"
@@ -67,7 +66,7 @@ export default function CheckboxListSecondary() {
             disablePadding
           >
             <ListItemButton>            
-              <ListItemText id={labelId} primary={`${value.displayId}`} />
+              <ListItemText id={labelId} primary={value.displayId} />
             </ListItemButton>
           </ListItem>
         );

@@ -30,7 +30,7 @@ export const ChartComponent = props => {
 	let [graphDuration, setGraphDuration] = useState(0); 
 	let [graphSelFlag,setGraphSelFlag] = useState(false); 
 	
-	console.log('graphSelFlag 1 is'+graphSelFlag);
+	//console.log('graphSelFlag 1 is'+graphSelFlag);
 
     const ref = useRef(true);
 
@@ -54,10 +54,10 @@ export const ChartComponent = props => {
 			chart.timeScale().fitContent();
 
 			const newSeries = chart.addLineSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });
-			console.log('graphDuration in graph =='+graphDuration);
-			console.log('graphSelDuration in graph =='+graphSelDuration);	
-			console.log('ctxDuration in graph =='+ctxDuration);		
-			console.log('firstRender in graph =='+firstRender);	
+			//console.log('graphDuration in graph =='+graphDuration);
+			//console.log('graphSelDuration in graph =='+graphSelDuration);	
+			//console.log('ctxDuration in graph =='+ctxDuration);		
+			//console.log('firstRender in graph =='+firstRender);	
 
 			if( firstRender){
 				ref.current = false;
@@ -66,7 +66,7 @@ export const ChartComponent = props => {
 
 			if( (durChgFlag && ctxDuration != graphSelDuration)){
 				
-				console.log('ctxDuration in ctxDuration check =='+ctxDuration);
+				//console.log('ctxDuration in ctxDuration check =='+ctxDuration);
 				setGraphSelDuration(ctxDuration);				
 				setDurChgFlag(false);					
 			}
@@ -76,13 +76,13 @@ export const ChartComponent = props => {
 					
 					let graphData = [];
 					let tmpDuration = graphSelDuration;					
-					console.log('graphDuration in graphSelDuration check =='+graphDuration);
-					console.log('ctxDuration in graphSelDuration check =='+ctxDuration);
-					console.log('graphSelDuration in graphSelDuration check =='+graphSelDuration);
+					//console.log('graphDuration in graphSelDuration check =='+graphDuration);
+					//console.log('ctxDuration in graphSelDuration check =='+ctxDuration);
+					//console.log('graphSelDuration in graphSelDuration check =='+graphSelDuration);
 					const startDate = new Date();
 					startDate.setDate(startDate.getDate() - tmpDuration);
 					
-					//console.log('setGraphData '+JSON.stringify(graphData));
+					////console.log('setGraphData '+JSON.stringify(graphData));
 	
 					httpData.forEach(element => {				
 						if(element != null && element.time != null && element.time.length>0){
@@ -96,11 +96,11 @@ export const ChartComponent = props => {
 								graphData.push(gPoint);
 							}				
 						}else{
-							console.log('bad data found '+JSON.stringify(element));
+							//console.log('bad data found '+JSON.stringify(element));
 						}				
 					});
 
-				console.log('setGraphData 4 is'+JSON.stringify(graphData));			
+				//console.log('setGraphData 4 is'+JSON.stringify(graphData));			
 				newSeries.setData(graphData);	
 			}
 			
