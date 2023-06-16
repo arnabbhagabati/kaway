@@ -1,5 +1,4 @@
 import "../../style.css";
-import "./basicGraph.css";
 import useHttpReq from "../../http/request";
 import * as constants from '../../constants';
 import { createChart, ColorType } from 'lightweight-charts';
@@ -21,27 +20,24 @@ export const ChartComponent = props => {
 	} = props;
 
 	const chartContainerRef = useRef();	
-	//const [chartContainerRef, setChartContainerRef] = useState();
-
 	const { duration, allAvlSec, selEx,selectedSec,durChangedFlag } = useContext(KawayContext);
 	const [ctxDuration, setCtxDuration] = duration; 	
-	const [selectedSecs, setSelectedSecs] = selectedSec;  
 	const [durChgFlag, setDurChgFlag] = durChangedFlag;
+	const [httpData, setHttpData] = useState(props.gdata); 	
 	const [graphSelDuration, setGraphSelDuration] = useState(-99); 
 
 	let [graphDuration, setGraphDuration] = useState(0); 
 	let [graphSelFlag,setGraphSelFlag] = useState(false); 
 	
 	//console.log('graphSelFlag 1 is'+graphSelFlag);
-	// To Do - change it to a integer variable
-    const ref = useRef(true);	
+
+    const ref = useRef(true);
 
 	useEffect(
 		() => {
 
-			
+			// To Do - change it to a integer variable
 			const firstRender = ref.current;
-			//console.log('basicGraph props is'+JSON.stringify(props));
 
 			const handleResize = () => {
 				chart.applyOptions({ width: chartContainerRef.current.clientWidth });
@@ -57,7 +53,7 @@ export const ChartComponent = props => {
 			});
 			chart.timeScale().fitContent();
 
-			const newSeries = chart.addLineSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });
+			const newSeries = chart.addCandlestickSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });
 			//console.log('graphDuration in graph =='+graphDuration);
 			//console.log('graphSelDuration in graph =='+graphSelDuration);	
 			//console.log('ctxDuration in graph =='+ctxDuration);		
@@ -88,14 +84,18 @@ export const ChartComponent = props => {
 					
 					////console.log('setGraphData '+JSON.stringify(graphData));
 	
-					props.gdata.forEach(element => {				
+					httpData.forEach(element => {				
 						if(element != null && element.time != null && element.time.length>0){
 							let parts = element.time.split('-');		
 							let currDate = new Date(parts[0], parts[1] - 1, parts[2]); 
 							if(currDate>startDate){
 								const gPoint = {
 									"time" : element.time,
-									"value" : element.close
+									"open" : element.open,
+                                    "close" : element.close,
+                                    "high" : element.high,
+                                    "low" : element.low,
+                                    "volume" : element.volume,
 								}
 								graphData.push(gPoint);
 							}				
@@ -115,7 +115,7 @@ export const ChartComponent = props => {
 				chart.remove();
 			};
 		},
-		[graphSelDuration,ctxDuration,selectedSecs,props.gdata]
+		[backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor,graphSelDuration,ctxDuration,httpData]
 	);	
 
 	return (
@@ -126,7 +126,7 @@ export const ChartComponent = props => {
 				</div>   
 				<MultiBtn class="range-select" graphDur={graphSelDuration} setGraphDur={setGraphSelDuration} setGraphSelFlag={setGraphSelFlag}/>	
 			</div>		
-			<div id="chart-container"
+			<div
 				ref={chartContainerRef}
 			/>	
 		</div>
@@ -139,11 +139,7 @@ export const ChartComponent = props => {
 export default function App(props) {
 	
 	let url = constants.SERVER_BASEURL+"/histData/"+props.exchange+"/"+props.code+"?stDate=1995-05-12&endDate=2005-05-12";	
-	//console.log('basicGraph props 1 '+JSON.stringify(props));
-	
-	let httpData = null;
-	console.log('basicGraph httpData 1 '+JSON.stringify(httpData));
-	httpData  = useHttpReq(
+	const httpData  = useHttpReq(
 		url,
 		"GET",		
 	);	
@@ -155,12 +151,10 @@ export default function App(props) {
 					<span>Error: {httpData.error}</span>
 				</div>
 			)
-		}else{	
-			console.log('basicGraph return 1 ');		
+		}else{			
 			return (
-
 				(	
-					<div class="graph-container" id="graph-container-1}">			 				
+					<div class="graph-container">			 				
 						<ChartComponent {...props} gdata={httpData.data}></ChartComponent>
 					</div>
 				)

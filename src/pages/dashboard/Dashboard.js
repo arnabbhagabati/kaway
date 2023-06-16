@@ -21,10 +21,11 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 
 import BasicGraph from "../../graph/basicGraph/basicGraph";
+import CandleStickGraph from "../../graph/candleStickGraph/candleStickGraph";
 import * as constants from '../../constants';
 import PageOptions from "../../pieces/page-options-bar/page-options-bar";
 import { KawayContext } from '../../kawayContext';
-import { useContext } from 'react';
+import { useContext, useState,useEffect } from 'react';
 import SelectedSecList from "../../pieces/selected-list/selected-list";
 
 
@@ -197,11 +198,17 @@ export default function Dashboard() {
         <PageOptions></PageOptions>
         <div className='rowAXC'>          
           <div style={{ width:'90%'}}>
-            {selectedSecs.map((sec, index) => <BasicGraph exchange={sec.exchange} 
+            { false ? (selectedSecs.map((sec, index) => <CandleStickGraph exchange={sec.exchange} 
                                                           secId={sec.id} 
                                                           code={sec.code} 
                                                           displayId={sec.displayId} 
-                                                          key={index} />)} 			
+                                                          key={index} />))
+                    : (selectedSecs.map((sec, index) => <BasicGraph exchange={sec.exchange} 
+                                                            secId={sec.id} 
+                                                            code={sec.code} 
+                                                            displayId={sec.displayId} 
+                                                            key={index} />))                                                        
+            } 			
           </div>
           <SelectedSecList style={{ width:'10%'}}/>
         </div>
