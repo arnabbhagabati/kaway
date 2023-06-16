@@ -8,6 +8,7 @@ import UseHttpReq from "../../http/request";
 import { useContext } from 'react';
 import { KawayContext } from '../../kawayContext';
 import SelectDur from '../select-duration/select-duration'
+import SelectGraphStyle from '../graph-style-toggle/graph-style-toggle'
 import Typography from '@mui/material/Typography';
 
 
@@ -18,11 +19,9 @@ function GetData(exchanges,sec_list,setSecs){
 
     exchanges.forEach(function (exchange,index){
         let url = Constants.SERVER_BASEURL+"/secList/"+exchange.title;
-        const httpData  = UseHttpReq(
-            url,
-            "GET",		
-        );	    
 
+        const httpData = UseHttpReq( url,"GET");
+      
         if (httpData.loaded){
              const secs = httpData.data;
              const secCodeArr = [];  
@@ -63,10 +62,9 @@ export default function PageOptions() {
     const [sec_list,setSecs]=useState([]);
 
     GetData(exchanges,sec_list,setSecs);
-    const { duration, allAvlSec, selEx,selectedSec } = useContext(KawayContext);
+    const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext);
     const [allAvlblSecs, setAllAvlblSecs] = allAvlSec;    
     setAllAvlblSecs(sec_list);   
-    const [selectedExs, setSelectedExs] = selEx;  
     //console.log('selectedExs in pageoptions'+JSON.stringify(selectedExs));
 
     //console.log('sec_list here is '+JSON.stringify(sec_list));     
@@ -76,7 +74,8 @@ export default function PageOptions() {
                 <SelectExchange tag="EX" options={exchanges} placeHolder="Exchanges" sx={{ mr: 30 }}> </SelectExchange>     
                 <SelectSec tag="Stock" options={exchanges} placeHolder="Stocks"> </SelectSec>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}></Typography>
-                <SelectDur> </SelectDur>
+                <SelectGraphStyle className="select-graph-style"></SelectGraphStyle>
+                <SelectDur> </SelectDur>                
         </Toolbar >
     );
     

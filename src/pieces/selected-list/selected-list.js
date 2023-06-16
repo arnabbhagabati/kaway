@@ -14,7 +14,7 @@ export default function CheckboxListSecondary() {
   const [checked, setChecked] = React.useState([1]);
 
   const [secsList, setSecsList] = React.useState([]);
-  const { duration, allAvlSec, selEx,selectedSec,durChangedFlag } = useContext(KawayContext);
+  const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext);
   const [selectedSecs, setSelectedSecs] = selectedSec;  
 
   useEffect(()=>{

@@ -23,13 +23,12 @@ export const ChartComponent = props => {
 	const chartContainerRef = useRef();	
 	//const [chartContainerRef, setChartContainerRef] = useState();
 
-	const { duration, allAvlSec, selEx,selectedSec,durChangedFlag } = useContext(KawayContext);
+	const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext);
 	const [ctxDuration, setCtxDuration] = duration; 	
 	const [selectedSecs, setSelectedSecs] = selectedSec;  
 	const [durChgFlag, setDurChgFlag] = durChangedFlag;
 	const [graphSelDuration, setGraphSelDuration] = useState(-99); 
 
-	let [graphDuration, setGraphDuration] = useState(0); 
 	let [graphSelFlag,setGraphSelFlag] = useState(false); 
 	
 	//console.log('graphSelFlag 1 is'+graphSelFlag);
@@ -142,7 +141,6 @@ export default function App(props) {
 	//console.log('basicGraph props 1 '+JSON.stringify(props));
 	
 	let httpData = null;
-	console.log('basicGraph httpData 1 '+JSON.stringify(httpData));
 	httpData  = useHttpReq(
 		url,
 		"GET",		

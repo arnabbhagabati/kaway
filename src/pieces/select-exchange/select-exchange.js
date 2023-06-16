@@ -21,7 +21,7 @@ export default function SeletExchanges(boxProps) {
   //console.log('boxProps.options is'+JSON.stringify(boxProps.options));
   //const [count] = useCount()
 
-  const { kawayText, allAvlSec, selEx,selectedSec } = useContext(KawayContext);
+  const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext);
   const [selectedExs, setSelectedExs] = selEx;  
 
   const filterOptions = createFilterOptions({

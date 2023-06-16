@@ -109,9 +109,10 @@ export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
   let secList = constants.STOCK_CODE_LIST;
 
-  const {duration, allAvlSec, selEx,selectedSec } = useContext(KawayContext); 
+  const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext); 
   const [selectedSecs, setSelectedSecs] = selectedSec;  
   const [ctxDuration, setCtxDuration] = duration; 
+  const [candleCh, setCandleCh] = candleChart;
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -198,7 +199,7 @@ export default function Dashboard() {
         <PageOptions></PageOptions>
         <div className='rowAXC'>          
           <div style={{ width:'90%'}}>
-            { false ? (selectedSecs.map((sec, index) => <CandleStickGraph exchange={sec.exchange} 
+            { candleCh ? (selectedSecs.map((sec, index) => <CandleStickGraph exchange={sec.exchange} 
                                                           secId={sec.id} 
                                                           code={sec.code} 
                                                           displayId={sec.displayId} 

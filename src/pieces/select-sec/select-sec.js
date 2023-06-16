@@ -17,7 +17,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 export default function CheckboxesTags(boxProps) { 
  
-  const { kawayText, allAvlSec, selEx,selectedSec } = useContext(KawayContext);
+  const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext);
   const [allAvlblSecs, setAllAvlblSecs] = allAvlSec;    
   //console.log('allSecs allAvlblSecs in multi dropdown'+JSON.stringify(allAvlblSecs));
   const [selectedSecs, setSelectedSecs] = selectedSec;  

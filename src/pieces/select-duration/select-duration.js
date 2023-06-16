@@ -12,7 +12,7 @@ export default function SeletDuration(props) {
 
     
 
-    const {duration,allAvlSec,selEx,selectedSec,durChangedFlag} = useContext(KawayContext);
+    const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext);
     const [ctxDur, setCtxDur] = duration;    
     const [durChgFlag, setDurChgFlag] = durChangedFlag;
     const [localDuration, setLocalDuration] = React.useState(365);
