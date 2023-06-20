@@ -19,7 +19,7 @@ export default function SeletExchanges(boxProps) {
   const tag = boxProps.tag;
 
   //console.log('boxProps.options is'+JSON.stringify(boxProps.options));
-  //const [count] = useCount()
+  console.log('select exchange boxProps.tag is'+boxProps.tag);
 
   const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext);
   const [selectedExs, setSelectedExs] = selEx;  
@@ -37,6 +37,7 @@ export default function SeletExchanges(boxProps) {
       filterOptions={filterOptions}
       limitTags={1}
       disableCloseOnSelect
+      disabled={(boxProps.tag == 'Loading...')}
       options={drpDwnOptions}      
       renderTags={(tagValue, getTagProps) =>
        {

@@ -12,10 +12,11 @@ import SelectGraphStyle from '../graph-style-toggle/graph-style-toggle'
 import Typography from '@mui/material/Typography';
 
 
-function GetData(exchanges,sec_list,setSecs){       
+function GetData(exchanges,sec_list,setSecs,setExSelectState){       
     
     const secMap = [];
     let loadedCnt = 0;
+    //const exchanges= Constants.EXCHANGES_LIST;
 
     exchanges.forEach(function (exchange,index){
         let url = Constants.SERVER_BASEURL+"/secList/"+exchange.title;
@@ -52,6 +53,11 @@ function GetData(exchanges,sec_list,setSecs){
             setSecs(secMap);
         }      
 
+         //Todo : Fix this - we should wait for all http calls to complete (Promise.all?)
+         if(loadedCnt==2){
+            setExSelectState("EX")
+         }
+
     }, [loadedCnt]); 
 
 }
@@ -60,8 +66,9 @@ function GetData(exchanges,sec_list,setSecs){
 export default function PageOptions() {   
     const exchanges = Constants.EXCHANGES_LIST;
     const [sec_list,setSecs]=useState([]);
+    const [exSelectState, setExSelectState] = useState("Loading...");
 
-    GetData(exchanges,sec_list,setSecs);
+    GetData(exchanges,sec_list,setSecs,setExSelectState);
     const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext);
     const [allAvlblSecs, setAllAvlblSecs] = allAvlSec;    
     setAllAvlblSecs(sec_list);   
@@ -71,7 +78,7 @@ export default function PageOptions() {
 
     return (
         <Toolbar className="page-options-toolbar">            
-                <SelectExchange tag="EX" options={exchanges} placeHolder="Exchanges" sx={{ mr: 30 }}> </SelectExchange>     
+                <SelectExchange tag={exSelectState} options={exchanges} placeHolder="Exchanges" sx={{ mr: 30 }}> </SelectExchange>     
                 <SelectSec tag="Stock" options={exchanges} placeHolder="Stocks"> </SelectSec>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}></Typography>
                 <SelectGraphStyle className="select-graph-style"></SelectGraphStyle>
