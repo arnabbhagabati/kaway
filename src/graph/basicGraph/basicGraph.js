@@ -135,10 +135,10 @@ export const ChartComponent = props => {
 
 
 
-export default function App(props) {
+export default function BasicGraph(props) {
 	
-	let url = constants.SERVER_BASEURL+"/histData/"+props.exchange+"/"+props.code+"?stDate=1995-05-12&endDate=2005-05-12";	
-	//console.log('basicGraph props 1 '+JSON.stringify(props));
+	let url = constants.SERVER_BASEURL+"/histData/"+props.exchange+"/"+props.code+"?type="+props.type+"&stDate=1995-05-12&endDate=2005-05-12";	
+	console.log('basicGraph props 1 '+JSON.stringify(props));
 	
 	let httpData = null;
 	httpData  = useHttpReq(

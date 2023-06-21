@@ -1,7 +1,5 @@
 import "./style.css";
 
-import BasicGraph from "./graph/basicGraph/basicGraph";
-import * as constants from './constants';
 import DashBoard from "./pages/dashboard/Dashboard"
 import { KawayContext } from "./kawayContext";
 

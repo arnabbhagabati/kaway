@@ -202,11 +202,13 @@ export default function Dashboard() {
             { candleCh ? (selectedSecs.map((sec, index) => <CandleStickGraph exchange={sec.exchange} 
                                                           secId={sec.id} 
                                                           code={sec.code} 
+                                                          type={sec.type} 
                                                           displayId={sec.displayId} 
                                                           key={index} />))
                     : (selectedSecs.map((sec, index) => <BasicGraph exchange={sec.exchange} 
                                                             secId={sec.id} 
                                                             code={sec.code} 
+                                                            type={sec.type}
                                                             displayId={sec.displayId} 
                                                             key={index} />))                                                        
             } 			

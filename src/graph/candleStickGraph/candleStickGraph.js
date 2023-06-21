@@ -39,7 +39,7 @@ export const ChartComponent = props => {
 
 			
 			const firstRender = ref.current;
-			//console.log('basicGraph props is'+JSON.stringify(props));
+			//console.log('candleStickGraph props is'+JSON.stringify(props));
 
 			const handleResize = () => {
 				chart.applyOptions({ width: chartContainerRef.current.clientWidth });
@@ -140,8 +140,8 @@ export const ChartComponent = props => {
 
 export default function App(props) {
 	
-	let url = constants.SERVER_BASEURL+"/histData/"+props.exchange+"/"+props.code+"?stDate=1995-05-12&endDate=2005-05-12";	
-	//console.log('basicGraph props 1 '+JSON.stringify(props));
+	console.log('candleStickGraph props 1 '+JSON.stringify(props));
+	let url = constants.SERVER_BASEURL+"/histData/"+props.exchange+"/"+props.code+"?type="+props.type+"&stDate=1995-05-12&endDate=2005-05-12";	
 	
 	let httpData = null;
 	httpData  = useHttpReq(
@@ -157,7 +157,7 @@ export default function App(props) {
 				</div>
 			)
 		}else{	
-			console.log('basicGraph return 1 ');		
+			console.log('candleStickGraph return 1 ');		
 			return (
 
 				(	
