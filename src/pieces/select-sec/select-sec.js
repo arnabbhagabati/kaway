@@ -26,6 +26,7 @@ export default function CheckboxesTags(boxProps) {
   const [secOptions,setSecOptions] = useState([]);
   
   let currCount = 0;
+  const exchngs =[];
 
   useEffect(() => {
 
@@ -33,7 +34,6 @@ export default function CheckboxesTags(boxProps) {
     let cnt = 0;
     allAvlblSecs.forEach(  (secs,index) =>{
 
-      const exchngs =[]
       selectedExs.forEach((ex,index) => {
         exchngs.push(ex.title);
       });
@@ -98,7 +98,65 @@ export default function CheckboxesTags(boxProps) {
         <TextField {...params} label={boxProps.tag} placeholder={boxProps.placeHolder} />
       )}
       onChange={(event, newValue) => {
+
         setSelectedSecs(newValue);
+
+        newValue.forEach(function(sec,index){
+            if(sec.type == "INDEX_ALL"){
+              
+              setSelectedSecs(current =>
+                current.filter(secr => {            
+                  return (secr.key !== sec.key);
+                }),
+              ); 
+              
+              let selectedSecsMap =  selectedSecs.reduce(function(map, obj) {
+                map[obj.code] = obj;
+                return map;
+              }, {});
+              
+              let allSecMap = null;
+
+              allAvlblSecs.forEach(  (secs,index) =>{   
+
+                selectedExs.forEach((ex,index) => {
+                  exchngs.push(ex.title);
+                });
+                
+                for (var key in secs) {
+                    if (secs.hasOwnProperty(key)) {                        
+                        if(exchngs.includes(key)){
+                          allSecMap = secs[key].reduce(function(map, obj) {
+                            map[obj.code] = obj;
+                            return map;
+                          }, {});
+                        }        
+                    }
+                }
+              });
+
+              sec.constituents.forEach(function(secId,index){                
+                if(!selectedSecsMap.hasOwnProperty(secId) || selectedSecsMap[secId] == null){
+                  const thisSec = allSecMap[secId];
+                  setSelectedSecs(current => [...current, thisSec]);
+                }
+              });
+
+                  
+
+              /*sec.constituents.forEach(function(secId,index){   
+                    const thisSec = allSecMap[secId];
+                    if(thisSec != null && typeof thisSec != 'undefined' && thisSec.hasOwnProperty("code")){
+                      setSelectedSecs(current => [...current, thisSec]);
+                    }else{
+                      console.log('select-sec.js Errorneous security found '+JSON.stringify(thisSec));
+                    }
+                    
+                  }
+              );*/
+            }
+        });        
+        
       }}
     />
     </div>

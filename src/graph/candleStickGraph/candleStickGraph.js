@@ -124,7 +124,7 @@ export const ChartComponent = props => {
 		<div>
 			<div class="graph-header">			
 				<div class="stock-id"> 
-					<p class="stock-id-text"> {props.displayId} </p>
+					<p class="stock-id-text"> {props.security.displayId} </p>
 				</div>   
 				<MultiBtn class="range-select" graphDur={graphSelDuration} setGraphDur={setGraphSelDuration} setGraphSelFlag={setGraphSelFlag}/>	
 			</div>		
@@ -141,7 +141,7 @@ export const ChartComponent = props => {
 export default function App(props) {
 	
 	console.log('candleStickGraph props 1 '+JSON.stringify(props));
-	let url = constants.SERVER_BASEURL+"/histData/"+props.exchange+"/"+props.code+"?type="+props.type+"&stDate=1995-05-12&endDate=2005-05-12";	
+	let url = constants.SERVER_BASEURL+"/histData/"+props.security.exchange+"/"+props.security.code+"?type="+props.security.type+"&stDate=1995-05-12&endDate=2005-05-12";	
 	
 	let httpData = null;
 	httpData  = useHttpReq(

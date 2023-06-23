@@ -199,17 +199,9 @@ export default function Dashboard() {
         <PageOptions></PageOptions>
         <div className='rowAXC'>          
           <div style={{ width:'90%'}}>
-            { candleCh ? (selectedSecs.map((sec, index) => <CandleStickGraph exchange={sec.exchange} 
-                                                          secId={sec.id} 
-                                                          code={sec.code} 
-                                                          type={sec.type} 
-                                                          displayId={sec.displayId} 
+            { candleCh ? (selectedSecs.map((sec, index) => <CandleStickGraph security={sec}                                                          
                                                           key={index} />))
-                    : (selectedSecs.map((sec, index) => <BasicGraph exchange={sec.exchange} 
-                                                            secId={sec.id} 
-                                                            code={sec.code} 
-                                                            type={sec.type}
-                                                            displayId={sec.displayId} 
+                    : (selectedSecs.map((sec, index) => <BasicGraph security={sec}                                                           
                                                             key={index} />))                                                        
             } 			
           </div>

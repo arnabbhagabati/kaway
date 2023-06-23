@@ -35,6 +35,7 @@ function GetData(exchanges,sec_list,setSecs,setExSelectState){
                                      "id" :  sec.id ,
                                      "exchange" : exchange.title,
                                      type : sec.type,
+                                     constituents : sec.constituents,
                                      "displayId" : exchange.title+" "+sec.id});     
                                             
                 });
