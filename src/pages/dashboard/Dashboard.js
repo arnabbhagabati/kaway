@@ -21,10 +21,12 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 
 import BasicGraph from "../../graph/basicGraph/basicGraph";
+import CandleStickGraph from "../../graph/candleStickGraph/candleStickGraph";
 import * as constants from '../../constants';
-import PageOptions from "../../pieces/page-options-bar/page-options-bar"
+import PageOptions from "../../pieces/page-options-bar/page-options-bar";
 import { KawayContext } from '../../kawayContext';
-import { useContext } from 'react';
+import { useContext, useState,useEffect } from 'react';
+import SelectedSecList from "../../pieces/selected-list/selected-list";
 
 
 function Copyright(props) {
@@ -107,9 +109,10 @@ export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
   let secList = constants.STOCK_CODE_LIST;
 
-  const {duration, allAvlSec, selEx,selectedSec } = useContext(KawayContext); 
+  const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext); 
   const [selectedSecs, setSelectedSecs] = selectedSec;  
   const [ctxDuration, setCtxDuration] = duration; 
+  const [candleCh, setCandleCh] = candleChart;
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -193,15 +196,17 @@ export default function Dashboard() {
           }}
         >
         <Toolbar />
-        <PageOptions></PageOptions>          
-        <div>
-			    {selectedSecs.map((sec, index) => <BasicGraph exchange={sec.exchange} 
-                                                        secId={sec.id} 
-                                                        code={sec.code} 
-                                                        displayId={sec.displayId} 
-                                                        key={index} />)} 			
-		    </div>  
-         
+        <PageOptions></PageOptions>
+        <div className='rowAXC'>          
+          <div style={{ width:'90%'}}>
+            { candleCh ? (selectedSecs.map((sec, index) => <CandleStickGraph security={sec}                                                          
+                                                          key={index} />))
+                    : (selectedSecs.map((sec, index) => <BasicGraph security={sec}                                                           
+                                                            key={index} />))                                                        
+            } 			
+          </div>
+          <SelectedSecList style={{ width:'10%'}}/>
+        </div>
         </Box>
       </Box>
     </ThemeProvider>

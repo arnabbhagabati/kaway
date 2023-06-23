@@ -1,10 +1,14 @@
 import axios from "axios";
 import { useState,useEffect, useRef } from 'react';
 
-const useHttpReq = (url, method, payload) => {
+export default function useHttpReq(url, method, payload) {
+    
     const [data, setData] = useState("test_arn");
     const [error, setError] = useState("");
     const [loaded, setLoaded] = useState(false);
+
+    //const [httpOp,setHttpOP] = useState({data,error,loaded});
+
     const controllerRef = useRef(new AbortController());
     const cancel = () => {
       controllerRef.current.abort();
@@ -22,7 +26,7 @@ const useHttpReq = (url, method, payload) => {
             method,
             url,
           });
-          //console.log(response.data);
+          //console.log('useHttpReq data'+response.data);
           setData(response.data);
         } catch (error) {
           setError(error.message);
@@ -30,10 +34,9 @@ const useHttpReq = (url, method, payload) => {
           setLoaded(true);
         }
       })();
-    }, []);
+    }, [url,method,payload]);
   
     //console.log('req data sent is '+data);
+    //setHttpOP({cancel:cancel,"data":data,"error":error,loaded:loaded});
     return {cancel:cancel,"data":data,"error":error,loaded:loaded};
   };
-
-  export default useHttpReq;

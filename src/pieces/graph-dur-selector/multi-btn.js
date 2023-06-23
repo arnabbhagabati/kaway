@@ -22,11 +22,11 @@ const ButtonGroup = styled.div`
 const types = ['1W', '2W', '1M' ,'6M','1Y','5Y','All'];
 
 export default function ToggleGroup(props) {
-  console.log('props in mult is '+JSON.stringify(props));
+  //console.log('props in mult is '+JSON.stringify(props));
   const [active, setActive] = useState(types[0]);
 
   useEffect(()=>{
-    console.log('multi change effect');
+    //console.log('multi change effect');
     switch(props.graphDur){
       case 7:
         setActive('1W');
@@ -50,7 +50,7 @@ export default function ToggleGroup(props) {
         setActive('All');
         break;          
     }
-    console.log('multi change effect active is now '+active);
+    //console.log('multi change effect active is now '+active);
   },[props.graphDur])
 
   const setDur = (type) => {    
@@ -80,7 +80,7 @@ export default function ToggleGroup(props) {
         break;          
     }
     props.setGraphSelFlag(true);
-    console.log('multi grap sel flag 2');
+    //console.log('multi grap sel flag 2');
  }
 
 
