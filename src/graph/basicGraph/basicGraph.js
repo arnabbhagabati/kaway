@@ -141,9 +141,8 @@ export default function BasicGraph(props) {
 	if(props != null && typeof props != 'undefined' && props.security != null && typeof props.security !='undefined'){
 		url = url+props.security.exchange+"/"+props.security.code+"?type="+props.security.type+"&stDate=1995-05-12&endDate=2005-05-12";	
 	}else{
-		console.log('basicGraph props 1 '+JSON.stringify(props));
+		console.log('bad data in basicGraph'+JSON.stringify(props));
 	}
-	//let url = constants.SERVER_BASEURL+"/histData/"+props.security.exchange+"/"+props.security.code+"?type="+props.security.type+"&stDate=1995-05-12&endDate=2005-05-12";	
 	console.log('basicGraph props 2 '+JSON.stringify(props));
 	
 	let httpData = null;
