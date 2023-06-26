@@ -51,7 +51,7 @@ export const ChartComponent = props => {
 					textColor,
 				},
 				width: chartContainerRef.current.clientWidth,
-				height: 300,
+				height: 250,
 			});
 			chart.timeScale().fitContent();
 

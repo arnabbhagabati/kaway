@@ -144,18 +144,28 @@ export default function Dashboard() {
             </IconButton>
             <Typography
               component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
+              variant="h4"
+              color="#c1f5f5"
+              noWrap         
+              fontFamily="Times New Roman"    
             >
-              Dashboard
+              Bullcharts
             </Typography>
-            <IconButton color="inherit">
+            <Typography
+              component="h1"
+              variant="h6"
+              color="white"
+              noWrap              
+            >
+              .org
+            </Typography>
+            <div sx={{ flexGrow: 1 }}></div>
+            {/* Login/Account Icon can go here
+              <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton>*/}
           </Toolbar>
         </AppBar>
      
