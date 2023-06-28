@@ -104,6 +104,9 @@ const kawayTheme = createTheme({
   },
 });
 
+const refreshPage = function(){
+  window.location.reload();
+}
 
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
@@ -147,7 +150,9 @@ export default function Dashboard() {
               variant="h4"
               color="#c1f5f5"
               noWrap         
-              fontFamily="Times New Roman"    
+              fontFamily="Times New Roman"  
+              className='appIcon'
+              onClick={refreshPage}  
             >
               Bullcharts
             </Typography>
@@ -216,6 +221,9 @@ export default function Dashboard() {
             } 			
           </div>
           <SelectedSecList style={{ width:'10%'}}/>
+        </div>
+        <div className='disclaimer'> 
+              Charts does not show real time information. Data intended for historical analysis only. For queries and feedback please drop an email to arnab.bhagabati1@gmail.com             
         </div>
         </Box>
       </Box>
