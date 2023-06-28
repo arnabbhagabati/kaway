@@ -48,6 +48,8 @@ export default function CheckboxesTags(boxProps) {
               }        
           }
       }
+
+      allSecs.sort((sec1,sec2)=> sec1.id.localeCompare(sec2.id));
     });
    
     setSecOptions(allSecs);
@@ -142,18 +144,6 @@ export default function CheckboxesTags(boxProps) {
                 }
               });
 
-                  
-
-              /*sec.constituents.forEach(function(secId,index){   
-                    const thisSec = allSecMap[secId];
-                    if(thisSec != null && typeof thisSec != 'undefined' && thisSec.hasOwnProperty("code")){
-                      setSelectedSecs(current => [...current, thisSec]);
-                    }else{
-                      console.log('select-sec.js Errorneous security found '+JSON.stringify(thisSec));
-                    }
-                    
-                  }
-              );*/
             }
         });        
         
