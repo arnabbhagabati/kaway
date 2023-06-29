@@ -13,8 +13,8 @@ export default function useHttpReq(existingData,url, method, payload) {
     };
   
     useEffect(() => {
-        if(existingData != null){
-          setData(existingData);
+        if(existingData != null && typeof existingData.data != "undefined" && existingData.data != null){
+          setData(existingData.data);
           setLoaded(true);
         }else{
   

@@ -110,8 +110,11 @@ export const ChartComponent = props => {
 
 				//console.log('setGraphData 4 is'+JSON.stringify(graphData));			
 				newSeries.setData(graphData);	
-				let key = props.security.exchange+"_"+props.security.code+"_"+props.security.type;	
-				addToMap(key,props.gdata,apiCallData, setApiCalldata);
+				const now = Date.now();
+				let key = props.security.exchange+"_"+props.security.code+"_"+props.security.type;		
+				if(!apiCallData.get(key) || (apiCallData.get(key) && (now - apiCallData.get(key).time)>3600000)){									
+					addToMap(key,{time: now, data:props.gdata},apiCallData, setApiCalldata);
+				}	
 			}
 			
 			window.addEventListener('resize', handleResize);			
@@ -153,6 +156,11 @@ export default function App(props) {
 	let httpData = null;
 	let key = props.security.exchange+"_"+props.security.code+"_"+props.security.type;
 	let existingData = apiCallData.get(key);
+	const now = Date.now();
+	if(existingData !== null && typeof existingData != "undefined" && (now-existingData.time) > 3600000){
+		existingData = null;
+	}
+
 
 	httpData  = useHttpReq(
 		existingData,
