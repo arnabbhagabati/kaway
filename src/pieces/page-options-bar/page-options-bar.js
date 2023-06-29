@@ -21,7 +21,7 @@ function GetData(exchanges,sec_list,setSecs,setExSelectState){
     exchanges.forEach(function (exchange,index){
         let url = Constants.SERVER_BASEURL+"/secList/"+exchange.title;
 
-        const httpData = UseHttpReq( url,"GET");
+        const httpData = UseHttpReq( null,url,"GET");
       
         if (httpData.loaded){
              const secs = httpData.data;

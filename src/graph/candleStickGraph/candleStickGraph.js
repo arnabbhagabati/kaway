@@ -6,6 +6,7 @@ import React, { useEffect, useRef,useState,useMemo } from 'react';
 import { KawayContext } from '../../kawayContext';
 import { useContext } from 'react';
 import MultiBtn from '../../pieces/graph-dur-selector/multi-btn';
+import {addToMap, removeFromMap} from '../../util';
 
 
 export const ChartComponent = props => {
@@ -22,10 +23,11 @@ export const ChartComponent = props => {
 	const chartContainerRef = useRef();	
 	//const [chartContainerRef, setChartContainerRef] = useState();
 
-	const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext);
+	const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart,apiData } = useContext(KawayContext);
 	const [ctxDuration, setCtxDuration] = duration; 	
 	const [selectedSecs, setSelectedSecs] = selectedSec;  
 	const [durChgFlag, setDurChgFlag] = durChangedFlag;
+	const [apiCallData, setApiCalldata] = apiData; 
 	const [graphSelDuration, setGraphSelDuration] = useState(-99); 
 
 	let [graphSelFlag,setGraphSelFlag] = useState(false); 
@@ -108,6 +110,8 @@ export const ChartComponent = props => {
 
 				//console.log('setGraphData 4 is'+JSON.stringify(graphData));			
 				newSeries.setData(graphData);	
+				let key = props.security.exchange+"_"+props.security.code+"_"+props.security.type;	
+				addToMap(key,props.gdata,apiCallData, setApiCalldata);
 			}
 			
 			window.addEventListener('resize', handleResize);			
@@ -139,12 +143,19 @@ export const ChartComponent = props => {
 
 
 export default function App(props) {
+
+	const {apiData } = useContext(KawayContext);
+	const [apiCallData, setApiCalldata] = apiData; 	
 	
 	console.log('candleStickGraph props 1 '+JSON.stringify(props));
 	let url = constants.SERVER_BASEURL+"/histData/"+props.security.exchange+"/"+props.security.code+"?type="+props.security.type+"&stDate=1995-05-12&endDate=2005-05-12";	
 	
 	let httpData = null;
+	let key = props.security.exchange+"_"+props.security.code+"_"+props.security.type;
+	let existingData = apiCallData.get(key);
+
 	httpData  = useHttpReq(
+		existingData,
 		url,
 		"GET",		
 	);	

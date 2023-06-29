@@ -7,6 +7,7 @@ import React, { useEffect, useRef,useState,useMemo } from 'react';
 import { KawayContext } from '../../kawayContext';
 import { useContext } from 'react';
 import MultiBtn from '../../pieces/graph-dur-selector/multi-btn';
+import {addToMap, removeFromMap} from '../../util';
 
 
 export const ChartComponent = props => {
@@ -23,13 +24,17 @@ export const ChartComponent = props => {
 	const chartContainerRef = useRef();	
 	//const [chartContainerRef, setChartContainerRef] = useState();
 
-	const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext);
+	const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart,apiData } = useContext(KawayContext);
 	const [ctxDuration, setCtxDuration] = duration; 	
 	const [selectedSecs, setSelectedSecs] = selectedSec;  
 	const [durChgFlag, setDurChgFlag] = durChangedFlag;
+	const [apiCallData, setApiCalldata] = apiData; 
 	const [graphSelDuration, setGraphSelDuration] = useState(-99); 
 
 	let [graphSelFlag,setGraphSelFlag] = useState(false); 
+
+	
+
 	
 	//console.log('graphSelFlag 1 is'+graphSelFlag);
 	// To Do - change it to a integer variable
@@ -105,6 +110,8 @@ export const ChartComponent = props => {
 
 				//console.log('setGraphData 4 is'+JSON.stringify(graphData));			
 				newSeries.setData(graphData);	
+				let key = props.security.exchange+"_"+props.security.code+"_"+props.security.type;	
+				addToMap(key,props.gdata,apiCallData, setApiCalldata);
 			}
 			
 			window.addEventListener('resize', handleResize);			
@@ -135,18 +142,25 @@ export const ChartComponent = props => {
 
 
 
-export default function BasicGraph(props) {
+export default function BasicGraph(props) {	
 	
+	const {apiData } = useContext(KawayContext);
+	const [apiCallData, setApiCalldata] = apiData; 	
+
 	let url = constants.SERVER_BASEURL+"/histData/"
 	if(props != null && typeof props != 'undefined' && props.security != null && typeof props.security !='undefined'){
-		url = url+props.security.exchange+"/"+props.security.code+"?type="+props.security.type+"&stDate=1995-05-12&endDate=2005-05-12";	
+		url = url+props.security.exchange+"/"+props.security.code+"?type="+props.security.type;	
 	}else{
 		console.log('bad data in basicGraph'+JSON.stringify(props));
 	}
 	console.log('basicGraph props 2 '+JSON.stringify(props));
 	
 	let httpData = null;
+	let key = props.security.exchange+"_"+props.security.code+"_"+props.security.type;
+	let existingData = apiCallData.get(key);
+
 	httpData  = useHttpReq(
+		existingData,
 		url,
 		"GET",		
 	);	
@@ -158,10 +172,9 @@ export default function BasicGraph(props) {
 					<span>Error: {httpData.error}</span>
 				</div>
 			)
-		}else{	
-			console.log('basicGraph return 1 ');		
+		}else{		
+			//addToMap(url,httpData.data,apiCallData, setApiCalldata);				
 			return (
-
 				(	
 					<div class="graph-container" id="graph-container-1}">			 				
 						<ChartComponent {...props} gdata={httpData.data}></ChartComponent>
