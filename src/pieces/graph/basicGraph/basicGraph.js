@@ -1,12 +1,13 @@
-import "../../style.css";
-import useHttpReq from "../../http/request";
-import * as constants from '../../constants';
+import "../../../style.css";
+import "./basicGraph.css";
+import useHttpReq from "../../../http/request";
+import * as constants from '../../../constants';
 import { createChart, ColorType } from 'lightweight-charts';
 import React, { useEffect, useRef,useState,useMemo } from 'react';
-import { KawayContext } from '../../kawayContext';
+import { KawayContext } from '../../../kawayContext';
 import { useContext } from 'react';
-import MultiBtn from '../../pieces/graph-dur-selector/multi-btn';
-import {addToMap, removeFromMap} from '../../util';
+import MultiBtn from '../../graph-dur-selector/multi-btn';
+import {addToMap, removeFromMap} from '../../../util';
 
 
 export const ChartComponent = props => {
@@ -31,6 +32,9 @@ export const ChartComponent = props => {
 	const [graphSelDuration, setGraphSelDuration] = useState(-99); 
 
 	let [graphSelFlag,setGraphSelFlag] = useState(false); 
+
+	
+
 	
 	//console.log('graphSelFlag 1 is'+graphSelFlag);
 	// To Do - change it to a integer variable
@@ -41,7 +45,7 @@ export const ChartComponent = props => {
 
 			
 			const firstRender = ref.current;
-			//console.log('candleStickGraph props is'+JSON.stringify(props));
+			//console.log('basicGraph props is'+JSON.stringify(props));
 
 			const handleResize = () => {
 				chart.applyOptions({ width: chartContainerRef.current.clientWidth });
@@ -57,7 +61,7 @@ export const ChartComponent = props => {
 			});
 			chart.timeScale().fitContent();
 
-			const newSeries = chart.addCandlestickSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });
+			const newSeries = chart.addLineSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });
 			//console.log('graphDuration in graph =='+graphDuration);
 			//console.log('graphSelDuration in graph =='+graphSelDuration);	
 			//console.log('ctxDuration in graph =='+ctxDuration);		
@@ -95,11 +99,7 @@ export const ChartComponent = props => {
 							if(currDate>startDate){
 								const gPoint = {
 									"time" : element.time,
-									"open" : element.open,
-                                    "close" : element.close,
-                                    "high" : element.high,
-                                    "low" : element.low,
-                                    "volume" : element.volume,
+									"value" : element.close
 								}
 								graphData.push(gPoint);
 							}				
@@ -145,13 +145,18 @@ export const ChartComponent = props => {
 
 
 
-export default function App(props) {
-
+export default function BasicGraph(props) {	
+	
 	const {apiData } = useContext(KawayContext);
 	const [apiCallData, setApiCalldata] = apiData; 	
-	
-	console.log('candleStickGraph props 1 '+JSON.stringify(props));
-	let url = constants.SERVER_BASEURL+"/histData/"+props.security.exchange+"/"+props.security.code+"?type="+props.security.type+"&stDate=1995-05-12&endDate=2005-05-12";	
+
+	let url = constants.SERVER_BASEURL+"/histData/"
+	if(props != null && typeof props != 'undefined' && props.security != null && typeof props.security !='undefined'){
+		url = url+props.security.exchange+"/"+props.security.code+"?type="+props.security.type;	
+	}else{
+		console.log('bad data in basicGraph'+JSON.stringify(props));
+	}
+	console.log('basicGraph props 2 '+JSON.stringify(props));
 	
 	let httpData = null;
 	let key = props.security.exchange+"_"+props.security.code+"_"+props.security.type;
@@ -160,7 +165,6 @@ export default function App(props) {
 	if(existingData !== null && typeof existingData != "undefined" && (now-existingData.time) > 3600000){
 		existingData = null;
 	}
-
 
 	httpData  = useHttpReq(
 		existingData,
@@ -175,10 +179,9 @@ export default function App(props) {
 					<span>Error: {httpData.error}</span>
 				</div>
 			)
-		}else{	
-			console.log('candleStickGraph return 1 ');		
+		}else{		
+			//addToMap(url,httpData.data,apiCallData, setApiCalldata);				
 			return (
-
 				(	
 					<div class="graph-container" id="graph-container-1}">			 				
 						<ChartComponent {...props} gdata={httpData.data}></ChartComponent>

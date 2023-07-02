@@ -20,8 +20,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 
-import BasicGraph from "../../graph/basicGraph/basicGraph";
-import CandleStickGraph from "../../graph/candleStickGraph/candleStickGraph";
+import BasicGraph from "../../pieces/graph/basicGraph/basicGraph";
+import CandleStickGraph from "../../pieces/graph/candleStickGraph/candleStickGraph";
 import * as constants from '../../constants';
 import PageOptions from "../../pieces/page-options-bar/page-options-bar";
 import { KawayContext } from '../../kawayContext';
