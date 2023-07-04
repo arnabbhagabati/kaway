@@ -20,8 +20,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 
-import BasicGraph from "../../graph/basicGraph/basicGraph";
-import CandleStickGraph from "../../graph/candleStickGraph/candleStickGraph";
+import BasicGraph from "../../pieces/graph/basicGraph/basicGraph";
+import CandleStickGraph from "../../pieces/graph/candleStickGraph/candleStickGraph";
 import * as constants from '../../constants';
 import PageOptions from "../../pieces/page-options-bar/page-options-bar";
 import { KawayContext } from '../../kawayContext';
@@ -104,6 +104,9 @@ const kawayTheme = createTheme({
   },
 });
 
+const refreshPage = function(){
+  window.location.reload();
+}
 
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
@@ -144,18 +147,30 @@ export default function Dashboard() {
             </IconButton>
             <Typography
               component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
+              variant="h4"
+              color="#c1f5f5"
+              noWrap         
+              fontFamily="Times New Roman"  
+              className='appIcon'
+              onClick={refreshPage}  
             >
-              Dashboard
+              Bullcharts
             </Typography>
-            <IconButton color="inherit">
+            <Typography
+              component="h1"
+              variant="h6"
+              color="white"
+              noWrap              
+            >
+              .org
+            </Typography>
+            <div sx={{ flexGrow: 1 }}></div>
+            {/* Login/Account Icon can go here
+              <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton>*/}
           </Toolbar>
         </AppBar>
      
@@ -206,6 +221,9 @@ export default function Dashboard() {
             } 			
           </div>
           <SelectedSecList style={{ width:'10%'}}/>
+        </div>
+        <div className='disclaimer'> 
+              Charts does not show real time information. Data intended for historical analysis only. For queries and feedback please drop an email to arnab.bhagabati1@gmail.com             
         </div>
         </Box>
       </Box>

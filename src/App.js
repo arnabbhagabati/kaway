@@ -14,12 +14,18 @@ export default function App(props) {
 	const [selectedEx, setSelectedEx] = useState([]);
 	const [selectedSecs, setSelectedSecs] = useState([]);
 	const [candleChart, setCandleChart] = useState(false);
-
+	const [apiCallData, setApiCallData] = useState(new Map());
 
 	return (
 		<div>
 			
-			<KawayContext.Provider value={{duration :[ duration, setDuration ],allAvlSec :[ allAvlblSecs, setAllAvlblSecs ],selEx :[ selectedEx, setSelectedEx ],selectedSec :[ selectedSecs, setSelectedSecs ], durChangedFlag:[durChangedFlag, setDurChangedFlag], candleChart:[candleChart, setCandleChart] }}>
+			<KawayContext.Provider value={{duration :[ duration, setDuration ],
+											allAvlSec :[ allAvlblSecs, setAllAvlblSecs ],
+											selEx :[ selectedEx, setSelectedEx ],
+											selectedSec :[ selectedSecs, setSelectedSecs ], 
+											durChangedFlag:[durChangedFlag, setDurChangedFlag], 
+											candleChart:[candleChart, setCandleChart],
+											apiData : [apiCallData, setApiCallData] }}>
 				<DashBoard/>
 			</KawayContext.Provider>
 		</div>

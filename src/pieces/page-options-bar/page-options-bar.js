@@ -21,7 +21,7 @@ function GetData(exchanges,sec_list,setSecs,setExSelectState){
     exchanges.forEach(function (exchange,index){
         let url = Constants.SERVER_BASEURL+"/secList/"+exchange.title;
 
-        const httpData = UseHttpReq( url,"GET");
+        const httpData = UseHttpReq( null,url,"GET");
       
         if (httpData.loaded){
              const secs = httpData.data;
@@ -81,9 +81,9 @@ export default function PageOptions() {
     return (
         <Toolbar className="page-options-toolbar">            
                 <SelectExchange tag={exSelectState} options={exchanges} placeHolder="Exchanges" sx={{ mr: 30 }}> </SelectExchange>     
-                <SelectSec tag="Stock" options={exchanges} placeHolder="Stocks"> </SelectSec>
+                <SelectSec tag="Stock" options={exchanges} placeHolder="Type To Search"> </SelectSec>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}></Typography>
-                <SelectGraphStyle className="select-graph-style"></SelectGraphStyle>
+                <div style={{margin: '0 20px'}}><SelectGraphStyle className="select-graph-style"  ></SelectGraphStyle></div>
                 <SelectDur> </SelectDur>                
         </Toolbar >
     );

@@ -28,3 +28,20 @@ p {
 
 
 .rowAXC{display:flex; flex-direction:row;}
+
+
+.disclaimer {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  display: inline-block;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+  width: 100%;
+}
+
+.appIcon {
+  cursor: pointer;
+}
