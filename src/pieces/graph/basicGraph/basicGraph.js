@@ -98,7 +98,7 @@ export const ChartComponent = props => {
 							let currDate = new Date(parts[0], parts[1] - 1, parts[2]); 
 							if(currDate>startDate){
 								const gPoint = {
-									"time" : element.time,
+									"time" : element.utcTimestamp,
 									"value" : element.close
 								}
 								graphData.push(gPoint);
@@ -111,7 +111,7 @@ export const ChartComponent = props => {
 				//console.log('setGraphData 4 is'+JSON.stringify(graphData));			
 				newSeries.setData(graphData);	
 				const now = Date.now();
-				let key = props.security.exchange+"_"+props.security.code+"_"+props.security.type;		
+				let key = props.security.exchange+"_"+props.security.id+"_"+props.security.type;		
 				if(!apiCallData.get(key) || (apiCallData.get(key) && (now - apiCallData.get(key).time)>3600000)){									
 					addToMap(key,{time: now, data:props.gdata},apiCallData, setApiCalldata);
 				}	
@@ -152,14 +152,14 @@ export default function BasicGraph(props) {
 
 	let url = constants.SERVER_BASEURL+"/histData/"
 	if(props != null && typeof props != 'undefined' && props.security != null && typeof props.security !='undefined'){
-		url = url+props.security.exchange+"/"+props.security.code+"?type="+props.security.type;	
+		url = url+props.security.exchange+"/"+props.security.id+"?type="+props.security.type;	
 	}else{
 		console.log('bad data in basicGraph'+JSON.stringify(props));
 	}
 	console.log('basicGraph props 2 '+JSON.stringify(props));
 	
 	let httpData = null;
-	let key = props.security.exchange+"_"+props.security.code+"_"+props.security.type;
+	let key = props.security.exchange+"_"+props.security.id+"_"+props.security.type;
 	let existingData = apiCallData.get(key);
 	const now = Date.now();
 	if(existingData !== null && typeof existingData != "undefined" && (now-existingData.time) > 3600000){

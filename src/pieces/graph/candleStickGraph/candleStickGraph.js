@@ -94,7 +94,7 @@ export const ChartComponent = props => {
 							let currDate = new Date(parts[0], parts[1] - 1, parts[2]); 
 							if(currDate>startDate){
 								const gPoint = {
-									"time" : element.time,
+									"time" : element.utcTimestamp,
 									"open" : element.open,
                                     "close" : element.close,
                                     "high" : element.high,
@@ -111,7 +111,7 @@ export const ChartComponent = props => {
 				//console.log('setGraphData 4 is'+JSON.stringify(graphData));			
 				newSeries.setData(graphData);	
 				const now = Date.now();
-				let key = props.security.exchange+"_"+props.security.code+"_"+props.security.type;		
+				let key = props.security.exchange+"_"+props.security.id+"_"+props.security.type;		
 				if(!apiCallData.get(key) || (apiCallData.get(key) && (now - apiCallData.get(key).time)>3600000)){									
 					addToMap(key,{time: now, data:props.gdata},apiCallData, setApiCalldata);
 				}	
@@ -151,10 +151,10 @@ export default function App(props) {
 	const [apiCallData, setApiCalldata] = apiData; 	
 	
 	console.log('candleStickGraph props 1 '+JSON.stringify(props));
-	let url = constants.SERVER_BASEURL+"/histData/"+props.security.exchange+"/"+props.security.code+"?type="+props.security.type+"&stDate=1995-05-12&endDate=2005-05-12";	
+	let url = constants.SERVER_BASEURL+"/histData/"+props.security.exchange+"/"+props.security.id+"?type="+props.security.type+"&stDate=1995-05-12&endDate=2005-05-12";	
 	
 	let httpData = null;
-	let key = props.security.exchange+"_"+props.security.code+"_"+props.security.type;
+	let key = props.security.exchange+"_"+props.security.id+"_"+props.security.type;
 	let existingData = apiCallData.get(key);
 	const now = Date.now();
 	if(existingData !== null && typeof existingData != "undefined" && (now-existingData.time) > 3600000){
