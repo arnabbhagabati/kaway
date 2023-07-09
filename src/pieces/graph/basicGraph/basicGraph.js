@@ -90,9 +90,16 @@ export const ChartComponent = props => {
 					const startDate = new Date();
 					startDate.setDate(startDate.getDate() - tmpDuration);
 					
-					////console.log('setGraphData '+JSON.stringify(graphData));
+					////console.log('setGraphData '+JSON.stringify(graphData));		
+								
+					let graphSourceData= [];
+					if(tmpDuration<45){
+						graphSourceData	= props.gdata.fifMin;
+					}else{
+						graphSourceData = props.gdata.oneDay;
+					}
 	
-					props.gdata.forEach(element => {				
+					graphSourceData.forEach(element => {				
 						if(element != null && element.time != null && element.time.length>0){
 							let parts = element.time.split('-');		
 							let currDate = new Date(parts[0], parts[1] - 1, parts[2]); 
