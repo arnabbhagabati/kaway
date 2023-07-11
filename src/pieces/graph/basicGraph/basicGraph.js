@@ -98,6 +98,10 @@ export const ChartComponent = props => {
 						graphSourceData	= props.gdata.fifMin;
 					}else{
 						graphSourceData = props.gdata.oneDay;
+						if(graphSourceData.length<5){
+							// Todo some symbols donot have hostorical data, but have recent 15 min data. Need to think how to appropriately handle them
+							//setGraphSelDuration(30);	
+						}
 					}
 	
 					graphSourceData.forEach(element => {				
@@ -165,7 +169,7 @@ export default function BasicGraph(props) {
 	}else{
 		console.log('bad data in basicGraph'+JSON.stringify(props));
 	}
-	console.log('basicGraph props 2 '+JSON.stringify(props));
+	//console.log('basicGraph props 2 '+JSON.stringify(props));
 	
 	let httpData = null;
 	let key = props.security.exchange+"_"+props.security.id+"_"+props.security.type;

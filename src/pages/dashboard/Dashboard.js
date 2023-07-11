@@ -27,7 +27,11 @@ import PageOptions from "../../pieces/page-options-bar/page-options-bar";
 import { KawayContext } from '../../kawayContext';
 import { useContext, useState,useEffect } from 'react';
 import SelectedSecList from "../../pieces/selected-list/selected-list";
-
+import PersonIcon from '@mui/icons-material/Person';
+import { getAuth, signInWithPopup, GoogleAuthProvider,signOut } from "firebase/auth";
+import { initializeApp } from 'firebase/app';
+import Profile from "../../pieces/profile/profile";
+import Avatar from '@mui/material/Avatar';
 
 function Copyright(props) {
   return (
@@ -108,14 +112,81 @@ const refreshPage = function(){
   window.location.reload();
 }
 
+
+
+
+
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
   let secList = constants.STOCK_CODE_LIST;
 
-  const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext); 
+  const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart,usrProf } = useContext(KawayContext); 
   const [selectedSecs, setSelectedSecs] = selectedSec;  
   const [ctxDuration, setCtxDuration] = duration; 
   const [candleCh, setCandleCh] = candleChart;
+  const [profileData, setProfileData] = usrProf;
+
+  const [viewProfile,setViewProfile] = useState(false);
+  const [profileImageLnk, setProfileImageLnk] = useState('');
+  const firebaseConfig = {
+    apiKey: "AIzaSyC81NoOiG1Ad5gz7MINsfZGiAokIH5K-zk",
+    authDomain: "silly-tomato-386917.firebaseapp.com",
+    projectId: "silly-tomato-386917",
+    storageBucket: "silly-tomato-386917.appspot.com",
+    messagingSenderId: "961131906413",
+    appId: "1:961131906413:web:7f729975010c49bad90664",
+    measurementId: "G-XH0MYEMXY3"
+  };
+  const app = initializeApp(firebaseConfig);
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+
+  const loginAction = function(){
+    if(profileData.loggedIn){
+      setViewProfile(viewProfile ? false : true);
+    }else{      
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          const token = credential.accessToken;
+          // The signed-in user info.
+          const user = result.user;
+          console.log(JSON.stringify(user));
+          // IdP data available using getAdditionalUserInfo(result)
+          // ...
+          setProfileData({loggedIn:true,userData:user,logoutFunction:logoutFn});
+          setProfileImageLnk(user.photoURL);
+        }).catch((error) => {
+          // Handle Errors here.
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // The email of the user's account used.
+          const email = error.customData.email;
+          // The AuthCredential type that was used.
+          const credential = GoogleAuthProvider.credentialFromError(error);
+          // ...
+        });
+    }
+  }
+  const logoutFn = function(){
+    signOut(auth).then(() => {
+      // Sign-out successful.
+      console.log('logged out');
+      setViewProfile(false);
+      setProfileData({loggedIn:false,userData:null,logoutFunction:logoutFn});
+      setProfileImageLnk('');
+    }).catch((error) => {
+      // An error happened.
+      setProfileData({loggedIn:false,userData:null,logoutFunction:logoutFn});
+      alert('We encountered some problem while logging out.Please try again');
+    });
+  }
+
+  const goToHome = function(){
+    setViewProfile(false);
+  }
+  
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -152,7 +223,7 @@ export default function Dashboard() {
               noWrap         
               fontFamily="Times New Roman"  
               className='appIcon'
-              onClick={refreshPage}  
+              onClick={goToHome}  
             >
               Bullcharts
             </Typography>
@@ -164,13 +235,10 @@ export default function Dashboard() {
             >
               .org
             </Typography>
-            <div sx={{ flexGrow: 1 }}></div>
-            {/* Login/Account Icon can go here
-              <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>*/}
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}></Typography>           
+            <IconButton color="inherit"  onClick={loginAction} >             
+                <Avatar src={profileImageLnk}/>              
+            </IconButton>
           </Toolbar>
         </AppBar>
      
@@ -210,21 +278,28 @@ export default function Dashboard() {
             overflow: 'auto',
           }}
         >
-        <Toolbar />
-        <PageOptions></PageOptions>
-        <div className='rowAXC'>          
-          <div style={{ width:'90%'}}>
-            { candleCh ? (selectedSecs.map((sec, index) => <CandleStickGraph security={sec}                                                          
-                                                          key={index} />))
-                    : (selectedSecs.map((sec, index) => <BasicGraph security={sec}                                                           
-                                                            key={index} />))                                                        
-            } 			
+        <Toolbar />       
+        {viewProfile &&
+            <Profile></Profile>
+        }
+        {!viewProfile &&
+          <div>
+            <PageOptions></PageOptions>
+            <div className='rowAXC'>          
+              <div style={{ width:'90%'}}>
+                { candleCh ? (selectedSecs.map((sec, index) => <CandleStickGraph security={sec}                                                          
+                                                              key={index} />))
+                        : (selectedSecs.map((sec, index) => <BasicGraph security={sec}                                                           
+                                                                key={index} />))                                                        
+                } 			
+              </div>
+              <SelectedSecList style={{ width:'10%'}}/>
+            </div>
+            <div className='disclaimer'> 
+                  Charts does not show real time information. Data intended for historical analysis only. For queries and feedback please drop an email to arnab.bhagabati1@gmail.com             
+            </div>
           </div>
-          <SelectedSecList style={{ width:'10%'}}/>
-        </div>
-        <div className='disclaimer'> 
-              Charts does not show real time information. Data intended for historical analysis only. For queries and feedback please drop an email to arnab.bhagabati1@gmail.com             
-        </div>
+        }
         </Box>
       </Box>
     </ThemeProvider>
