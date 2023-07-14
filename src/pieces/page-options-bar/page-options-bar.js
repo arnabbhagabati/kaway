@@ -34,7 +34,7 @@ function GetData(exchanges,sec_list,setSecs,setExSelectState){
                     secCodeArr.push({ key : exchange.title+"_"+sec.code,
                                      "code" : sec.code,
                                      "id" :  sec.id ,
-                                     "exchange" : exchange.title,
+                                     exchange : exchange.title,
                                      type : sec.type,
                                      constituents : sec.constituents,
                                      displayName : sec.name,

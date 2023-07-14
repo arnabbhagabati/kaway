@@ -40,7 +40,7 @@ export default function CheckboxesTags(boxProps) {
 
       for (var key in secs) {
           if (secs.hasOwnProperty(key)) {
-              console.log(key + " -> " + JSON.stringify(secs[key]));
+              //console.log(key + " -> " + JSON.stringify(secs[key]));
               if(exchngs.includes(key)){
                 for (var i = 0; i < secs[key].length; i++) {
                   allSecs.push(secs[key][i]);              

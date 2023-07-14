@@ -9,7 +9,7 @@ export const EXCHANGES_LIST =[
         code : 'NSE'
     },{
         title: 'NASDAQ',
-        code : 'NDQ'
+        code : 'NASDAQ'
     },
     {
         title: 'NYSE',

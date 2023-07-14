@@ -113,9 +113,6 @@ const refreshPage = function(){
 }
 
 
-
-
-
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
   let secList = constants.STOCK_CODE_LIST;
@@ -127,6 +124,8 @@ export default function Dashboard() {
   const [profileData, setProfileData] = usrProf;
 
   const [viewProfile,setViewProfile] = useState(false);
+  //const [viewGraohs,setViewGraphs] = useState(true);
+
   const [profileImageLnk, setProfileImageLnk] = useState('');
   const firebaseConfig = {
     apiKey: "AIzaSyC81NoOiG1Ad5gz7MINsfZGiAokIH5K-zk",
@@ -155,7 +154,7 @@ export default function Dashboard() {
           console.log(JSON.stringify(user));
           // IdP data available using getAdditionalUserInfo(result)
           // ...
-          setProfileData({loggedIn:true,userData:user,logoutFunction:logoutFn});
+          setProfileData({loggedIn:true,userData:user,logoutFunction:logoutFn,goToHm:goToHome});
           setProfileImageLnk(user.photoURL);
         }).catch((error) => {
           // Handle Errors here.
@@ -174,19 +173,19 @@ export default function Dashboard() {
       // Sign-out successful.
       console.log('logged out');
       setViewProfile(false);
-      setProfileData({loggedIn:false,userData:{},logoutFunction:logoutFn});
+      setProfileData({loggedIn:false,userData:{},logoutFunction:logoutFn,goToHm:goToHome});
       setProfileImageLnk('');
     }).catch((error) => {
       // An error happened.
-      setProfileData({loggedIn:false,userData:{},logoutFunction:logoutFn});
+      setProfileData({loggedIn:false,userData:{},logoutFunction:logoutFn,goToHm:goToHome});
       alert('We encountered some problem while logging out.Please try again');
     });
   }
 
   const goToHome = function(){
+    console.log('selected secs in db'+selectedSecs);
     setViewProfile(false);
   }
-  
 
   const toggleDrawer = () => {
     setOpen(!open);

@@ -23,10 +23,13 @@ import * as httpReq from "../httpReq";
 
 const ProfilePage = () => {
 
-    const {usrProf } = useContext(KawayContext); 
+    const {usrProf,selectedSec,selEx,allAvlSec } = useContext(KawayContext); 
     const [profileData, setProfileData] = usrProf;
     const [dashboards, setDashboards] = useState([]);
     const [delRet, setDelRet] = useState();
+    const [selectedSecs, setSelectedSecs] = selectedSec;  
+    const [selectedExs, setSelectedExs] = selEx; 
+    const [allAvlblSecs, setAllAvlblSecs] = allAvlSec; 
 
     let uid = profileData.userData.uid;
     let email = profileData.userData.email;
@@ -35,8 +38,7 @@ const ProfilePage = () => {
   // Sample data for the user profile
   let userProfile = {
     name: profileData.userData.displayName,
-    imageSrc: profileData.userData.photoURL,
-    dashboardItems: [{name:'My nasdaq data',modDate:'10-2-23'}, {name:'My Saved dashboard',modDate:'02-02-23'}, {name:'My Saved Dashboard for viewing later',modDate:'10-12-21'}],
+    imageSrc: profileData.userData.photoURL    
   };
 
   const handleLogout = () => {
@@ -62,7 +64,7 @@ const ProfilePage = () => {
   },[]);
 
   const deleteDashBd = (dashBdName) => {
-      console.log(dashBdName);
+      //console.log(dashBdName);
       let deleteDashboardsUrl = constants.SERVER_BASEURL+"/users/"+email+"/"+dashBdName+"?uid="+uid+"&userToken="+tkn;     
       httpReq.sendHttpReq(
         null,
@@ -71,6 +73,68 @@ const ProfilePage = () => {
         null,
         setDelRet
       );     
+  }
+
+  const loadDashboard = (dashboard) => {    
+    //let exchanges = [];
+    let exchangesObjs = [];
+    const exchanges = constants.EXCHANGES_LIST;
+    let dasboardSecKeys = [];
+    dashboard.securityList.forEach((sec) => {
+            let key = sec.code+"_"+sec.id+"_"+sec.exchange;
+            dasboardSecKeys.push(key);
+            exchanges.forEach((inBltExch) => {
+                if(inBltExch.title === sec.exchange){
+                  if(!exchangesObjs.includes(inBltExch)){
+                    exchangesObjs.push(inBltExch);
+                  }                  
+                }
+            });            
+    });
+    setSelectedExs(exchangesObjs);
+    //console.log('profile before pushing data  selectedExs '+JSON.stringify(selectedExs));
+
+    const exchngs =[];
+    const selSecs = [];
+
+    allAvlblSecs.forEach(  (secs,index) =>{
+      exchangesObjs.forEach((ex,index) => {        
+        exchngs.push(ex.title);
+      });
+      for (var key in secs) {
+          if (secs.hasOwnProperty(key)) {
+              //console.log('profile loggin secs '+key + " -> " + JSON.stringify(secs[key]));
+              //console.log('pushing data  exchngs '+JSON.stringify(exchngs));
+              if(exchngs.includes(key)){
+                for (var i = 0; i < secs[key].length; i++) {
+                  let secHere = secs[key][i];
+                  let dbKey = secHere.code+"_"+secHere.id+"_"+secHere.exchange;
+                  //console.log('pushing data  dbKey '+dbKey);
+                  if(dasboardSecKeys.includes(dbKey)){
+                    //console.log('pushing data to selsecs '+JSON.stringify(secHere));
+                    selSecs.push(secHere); 
+                  }
+                               
+                }    
+              }        
+          }
+      }
+    });
+
+   /* exchanges.forEach((exchng) =>{
+      exchangesObjs.push({
+          title: exchng,
+          code : exchng
+        });
+    });*/
+
+    console.log('profile loading dashboard '+JSON.stringify(dashboard));
+    console.log('profile loading exchangesObjs '+JSON.stringify(exchangesObjs));
+    console.log('profile loading selSecs '+JSON.stringify(selSecs));
+    setSelectedSecs(selSecs);    
+    console.log('profile loading selectedSecs '+JSON.stringify(selectedSecs));
+    console.log('profile loading selectedExs '+JSON.stringify(selectedExs));
+    profileData.goToHm();
   }
 
   useEffect(() => {
@@ -113,7 +177,7 @@ const ProfilePage = () => {
         <List>
         {dashboards.map((item, index) => (
           <ListItem key={index} style={{display:'flex', justifyContent:'center', cursor: 'pointer' }}>    
-            <Link >
+            <Link onClick={() => { loadDashboard(item) }}>
                 {item.name}
             </Link>        
             <Link style={{margin:'0px 10px 0px 10px' }} color="secondary.dark" onClick={() => { deleteDashBd(item.name) }} >
