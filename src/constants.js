@@ -65,3 +65,6 @@ export const COLORS = {
     green_blue :"#33cccc"
 }
 
+export const REQ_FAILED = "Request Failed";
+export const SUCCESS = "SUCCESS";
+

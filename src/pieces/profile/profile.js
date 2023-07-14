@@ -26,6 +26,7 @@ const ProfilePage = () => {
     const {usrProf } = useContext(KawayContext); 
     const [profileData, setProfileData] = usrProf;
     const [dashboards, setDashboards] = useState([]);
+    const [delRet, setDelRet] = useState();
 
     let uid = profileData.userData.uid;
     let email = profileData.userData.email;
@@ -45,16 +46,48 @@ const ProfilePage = () => {
     userProfile.name = null;
     userProfile = null;
     profileData.logoutFunction();
+    console.log('in profile handlelogout');
   };
 
-  let url = constants.SERVER_BASEURL+"/users/"+email+"/dashboards"+"?uid="+uid+"&userToken="+tkn;
-  httpReq.sendHttpReq(
-    null,
-    url,
-    "GET",		
-    null,
-    setDashboards
-  );
+  let getDashboardsUrl = constants.SERVER_BASEURL+"/users/"+email+"/dashboards"+"?uid="+uid+"&userToken="+tkn;
+
+  useEffect(() => {
+    httpReq.sendHttpReq(
+      null,
+      getDashboardsUrl,
+      "GET",		
+      null,
+      setDashboards
+    );
+  },[]);
+
+  const deleteDashBd = (dashBdName) => {
+      console.log(dashBdName);
+      let deleteDashboardsUrl = constants.SERVER_BASEURL+"/users/"+email+"/"+dashBdName+"?uid="+uid+"&userToken="+tkn;     
+      httpReq.sendHttpReq(
+        null,
+        deleteDashboardsUrl,
+        "DELETE",		
+        null,
+        setDelRet
+      );     
+  }
+
+  useEffect(() => {
+    if(delRet){
+        console.log('profile delRet '+JSON.stringify(delRet));        
+        if(delRet && delRet==constants.SUCCESS){
+          console.log('calling dashbrd list again');        
+          httpReq.sendHttpReq(
+            null,
+            getDashboardsUrl,
+            "GET",		
+            null,
+            setDashboards
+          );
+        }
+    }   
+  }, [delRet]);
 
 
   return (
@@ -83,7 +116,7 @@ const ProfilePage = () => {
             <Link >
                 {item.name}
             </Link>        
-            <Link style={{margin:'0px 10px 0px 10px' }} color="secondary.dark">
+            <Link style={{margin:'0px 10px 0px 10px' }} color="secondary.dark" onClick={() => { deleteDashBd(item.name) }} >
                     Delete
             </Link>
           </ListItem>

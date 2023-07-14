@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as constants from '../constants';
 
 
 export const sendHttpReq = function (existingData,url, method, payload,setPData) {
@@ -36,7 +37,7 @@ export const sendHttpReq = function (existingData,url, method, payload,setPData)
               setPData(data);
             } catch (error) {
                 error=error.message;
-                setPData("Request failed");
+                setPData(constants.REQ_FAILED);
             } finally {
                 
             }

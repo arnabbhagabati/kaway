@@ -174,11 +174,11 @@ export default function Dashboard() {
       // Sign-out successful.
       console.log('logged out');
       setViewProfile(false);
-      setProfileData({loggedIn:false,userData:null,logoutFunction:logoutFn});
+      setProfileData({loggedIn:false,userData:{},logoutFunction:logoutFn});
       setProfileImageLnk('');
     }).catch((error) => {
       // An error happened.
-      setProfileData({loggedIn:false,userData:null,logoutFunction:logoutFn});
+      setProfileData({loggedIn:false,userData:{},logoutFunction:logoutFn});
       alert('We encountered some problem while logging out.Please try again');
     });
   }
