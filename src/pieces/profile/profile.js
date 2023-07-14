@@ -15,7 +15,9 @@ import Link from '@mui/material/Link';
 import { getAuth, signOut } from "firebase/auth";
 
 import { KawayContext } from '../../kawayContext';
-import { useContext} from 'react';
+import { useContext, useState,useEffect } from 'react';
+import * as constants from '../../constants';
+import * as httpReq from "../httpReq";
 
 
 
@@ -23,7 +25,11 @@ const ProfilePage = () => {
 
     const {usrProf } = useContext(KawayContext); 
     const [profileData, setProfileData] = usrProf;
+    const [dashboards, setDashboards] = useState([]);
 
+    let uid = profileData.userData.uid;
+    let email = profileData.userData.email;
+    let tkn = profileData.userData.stsTokenManager.accessToken;
 
   // Sample data for the user profile
   let userProfile = {
@@ -40,6 +46,15 @@ const ProfilePage = () => {
     userProfile = null;
     profileData.logoutFunction();
   };
+
+  let url = constants.SERVER_BASEURL+"/users/"+email+"/dashboards"+"?uid="+uid+"&userToken="+tkn;
+  httpReq.sendHttpReq(
+    null,
+    url,
+    "GET",		
+    null,
+    setDashboards
+  );
 
 
   return (
@@ -63,12 +78,14 @@ const ProfilePage = () => {
         </Typography>
 
         <List>
-        {userProfile.dashboardItems.map((item, index) => (
+        {dashboards.map((item, index) => (
           <ListItem key={index} style={{display:'flex', justifyContent:'center', cursor: 'pointer' }}>    
             <Link >
                 {item.name}
             </Link>        
-            
+            <Link style={{margin:'0px 10px 0px 10px' }} color="secondary.dark">
+                    Delete
+            </Link>
           </ListItem>
         ))}
       </List>

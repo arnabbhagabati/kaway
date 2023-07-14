@@ -16,7 +16,7 @@ export default function App(props) {
 	const [selectedSecs, setSelectedSecs] = useState([]);
 	const [candleChart, setCandleChart] = useState(false);
 	const [apiCallData, setApiCallData] = useState(new Map());
-	const [profileData, setProfileData] = useState({loggedIn:false,userData:null});
+	const [profileData, setProfileData] = useState({loggedIn:false,userData:{}});
 
 	const firebaseConfig = {
 		apiKey: "AIzaSyC81NoOiG1Ad5gz7MINsfZGiAokIH5K-zk",

@@ -10,6 +10,7 @@ import { KawayContext } from '../../kawayContext';
 import SelectDur from '../select-duration/select-duration'
 import SelectGraphStyle from '../graph-style-toggle/graph-style-toggle'
 import Typography from '@mui/material/Typography';
+import SaveDashboard from '../save-dashboard/save-dashboard';
 
 
 function GetData(exchanges,sec_list,setSecs,setExSelectState){       
@@ -57,7 +58,7 @@ function GetData(exchanges,sec_list,setSecs,setExSelectState){
         }      
 
          //Todo : Fix this - we should wait for all http calls to complete (Promise.all?)
-         if(loadedCnt==2){
+         if(loadedCnt==5){
             setExSelectState("EX")
          }
 
@@ -84,6 +85,7 @@ export default function PageOptions() {
                 <SelectExchange tag={exSelectState} options={exchanges} placeHolder="Exchanges" sx={{ mr: 30 }}> </SelectExchange>     
                 <SelectSec tag="Stock" options={exchanges} placeHolder="Type To Search"> </SelectSec>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}></Typography>
+                <SaveDashboard></SaveDashboard>
                 <div style={{margin: '0 20px'}}><SelectGraphStyle className="select-graph-style"  ></SelectGraphStyle></div>
                 <SelectDur> </SelectDur>                
         </Toolbar >
