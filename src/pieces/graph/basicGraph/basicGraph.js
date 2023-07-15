@@ -8,6 +8,7 @@ import { KawayContext } from '../../../kawayContext';
 import { useContext } from 'react';
 import MultiBtn from '../../graph-dur-selector/multi-btn';
 import {addToMap, removeFromMap} from '../../../util';
+import Typography from '@mui/material/Typography';
 
 
 export const ChartComponent = props => {
@@ -90,15 +91,26 @@ export const ChartComponent = props => {
 					const startDate = new Date();
 					startDate.setDate(startDate.getDate() - tmpDuration);
 					
-					////console.log('setGraphData '+JSON.stringify(graphData));
+					////console.log('setGraphData '+JSON.stringify(graphData));		
+								
+					let graphSourceData= [];
+					if(tmpDuration<45){
+						graphSourceData	= props.gdata.fifMin;
+					}else{
+						graphSourceData = props.gdata.oneDay;
+						if(graphSourceData.length<5){
+							// Todo some symbols donot have hostorical data, but have recent 15 min data. Need to think how to appropriately handle them
+							//setGraphSelDuration(30);	
+						}
+					}
 	
-					props.gdata.forEach(element => {				
+					graphSourceData.forEach(element => {				
 						if(element != null && element.time != null && element.time.length>0){
 							let parts = element.time.split('-');		
 							let currDate = new Date(parts[0], parts[1] - 1, parts[2]); 
 							if(currDate>startDate){
 								const gPoint = {
-									"time" : element.time,
+									"time" : element.utcTimestamp,
 									"value" : element.close
 								}
 								graphData.push(gPoint);
@@ -111,7 +123,7 @@ export const ChartComponent = props => {
 				//console.log('setGraphData 4 is'+JSON.stringify(graphData));			
 				newSeries.setData(graphData);	
 				const now = Date.now();
-				let key = props.security.exchange+"_"+props.security.code+"_"+props.security.type;		
+				let key = props.security.exchange+"_"+props.security.id+"_"+props.security.type;		
 				if(!apiCallData.get(key) || (apiCallData.get(key) && (now - apiCallData.get(key).time)>3600000)){									
 					addToMap(key,{time: now, data:props.gdata},apiCallData, setApiCalldata);
 				}	
@@ -131,9 +143,10 @@ export const ChartComponent = props => {
 		<div>
 			<div class="graph-header">			
 				<div class="stock-id"> 
-					<p class="stock-id-text"> {props.security.displayId} </p>
+					<p class="stock-id-text"> {props.security.displayName} ({props.security.displayId}) </p>
 				</div>   
-				<MultiBtn class="range-select" graphDur={graphSelDuration} setGraphDur={setGraphSelDuration} setGraphSelFlag={setGraphSelFlag}/>	
+				<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}></Typography>
+				<MultiBtn  graphDur={graphSelDuration} setGraphDur={setGraphSelDuration} setGraphSelFlag={setGraphSelFlag}/>	
 			</div>		
 			<div id="chart-container"
 				ref={chartContainerRef}
@@ -152,14 +165,14 @@ export default function BasicGraph(props) {
 
 	let url = constants.SERVER_BASEURL+"/histData/"
 	if(props != null && typeof props != 'undefined' && props.security != null && typeof props.security !='undefined'){
-		url = url+props.security.exchange+"/"+props.security.code+"?type="+props.security.type;	
+		url = url+props.security.exchange+"/"+props.security.id+"?type="+props.security.type;	
 	}else{
 		console.log('bad data in basicGraph'+JSON.stringify(props));
 	}
-	console.log('basicGraph props 2 '+JSON.stringify(props));
+	//console.log('basicGraph props 2 '+JSON.stringify(props));
 	
 	let httpData = null;
-	let key = props.security.exchange+"_"+props.security.code+"_"+props.security.type;
+	let key = props.security.exchange+"_"+props.security.id+"_"+props.security.type;
 	let existingData = apiCallData.get(key);
 	const now = Date.now();
 	if(existingData !== null && typeof existingData != "undefined" && (now-existingData.time) > 3600000){

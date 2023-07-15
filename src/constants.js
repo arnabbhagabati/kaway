@@ -1,10 +1,23 @@
-//export const SERVER_BASEURL = "https://kaway-server-n3ahptldka-as.a.run.app";
-export const SERVER_BASEURL = "http://localhost:8080";
+export const SERVER_BASEURL = "https://kaway-server-n3ahptldka-as.a.run.app";
+//export const SERVER_BASEURL = "http://localhost:8080";
 export const EXCHANGES_LIST =[
     {
-        title : 'BSE'
+        title : 'BSE',
+        code : 'BSE'
     },{
-        title: 'NSE'
+        title: 'NSE',
+        code : 'NSE'
+    },{
+        title: 'NASDAQ',
+        code : 'NASDAQ'
+    },
+    {
+        title: 'NYSE',
+        code : 'NYSE'
+    },
+    {
+        title: 'LSE',
+        code : 'LSE'
     }
 ];
 
@@ -51,4 +64,7 @@ export const COLORS = {
     normal_blue : "#2962FF",
     green_blue :"#33cccc"
 }
+
+export const REQ_FAILED = "Request Failed";
+export const SUCCESS = "SUCCESS";
 

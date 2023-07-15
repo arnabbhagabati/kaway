@@ -40,7 +40,7 @@ export default function CheckboxesTags(boxProps) {
 
       for (var key in secs) {
           if (secs.hasOwnProperty(key)) {
-              console.log(key + " -> " + JSON.stringify(secs[key]));
+              //console.log(key + " -> " + JSON.stringify(secs[key]));
               if(exchngs.includes(key)){
                 for (var i = 0; i < secs[key].length; i++) {
                   allSecs.push(secs[key][i]);              
@@ -113,7 +113,7 @@ export default function CheckboxesTags(boxProps) {
               ); 
               
               let selectedSecsMap =  selectedSecs.reduce(function(map, obj) {
-                map[obj.code] = obj;
+                map[obj.id] = obj;
                 return map;
               }, {});
               
@@ -129,7 +129,7 @@ export default function CheckboxesTags(boxProps) {
                     if (secs.hasOwnProperty(key)) {                        
                         if(exchngs.includes(key)){
                           allSecMap = secs[key].reduce(function(map, obj) {
-                            map[obj.code] = obj;
+                            map[obj.id] = obj;
                             return map;
                           }, {});
                         }        
