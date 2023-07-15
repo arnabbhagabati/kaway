@@ -154,7 +154,7 @@ export default function Dashboard() {
           const token = credential.accessToken;
           // The signed-in user info.
           const user = result.user;
-          console.log(JSON.stringify(user));
+          //console.log(JSON.stringify(user));
           // IdP data available using getAdditionalUserInfo(result)
           // ...
           setProfileData({loggedIn:true,userData:user,logoutFunction:logoutFn,goToHm:goToHome});
@@ -186,7 +186,7 @@ export default function Dashboard() {
   }
 
   const goToHome = function(){
-    console.log('selected secs in db'+selectedSecs);
+    //console.log('selected secs in db'+selectedSecs);
     setViewProfile(false);
   }
 

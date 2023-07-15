@@ -48,7 +48,7 @@ const ProfilePage = () => {
     userProfile.name = null;
     userProfile = null;
     profileData.logoutFunction();
-    console.log('in profile handlelogout');
+    //console.log('in profile handlelogout');
   };
 
   let getDashboardsUrl = constants.SERVER_BASEURL+"/users/"+email+"/dashboards"+"?uid="+uid+"&userToken="+tkn;
@@ -128,20 +128,20 @@ const ProfilePage = () => {
         });
     });*/
 
-    console.log('profile loading dashboard '+JSON.stringify(dashboard));
-    console.log('profile loading exchangesObjs '+JSON.stringify(exchangesObjs));
-    console.log('profile loading selSecs '+JSON.stringify(selSecs));
+    //console.log('profile loading dashboard '+JSON.stringify(dashboard));
+    //console.log('profile loading exchangesObjs '+JSON.stringify(exchangesObjs));
+    //console.log('profile loading selSecs '+JSON.stringify(selSecs));
     setSelectedSecs(selSecs);    
-    console.log('profile loading selectedSecs '+JSON.stringify(selectedSecs));
-    console.log('profile loading selectedExs '+JSON.stringify(selectedExs));
+    //console.log('profile loading selectedSecs '+JSON.stringify(selectedSecs));
+    //console.log('profile loading selectedExs '+JSON.stringify(selectedExs));
     profileData.goToHm();
   }
 
   useEffect(() => {
     if(delRet){
-        console.log('profile delRet '+JSON.stringify(delRet));        
+        //console.log('profile delRet '+JSON.stringify(delRet));        
         if(delRet && delRet==constants.SUCCESS){
-          console.log('calling dashbrd list again');        
+          //console.log('calling dashbrd list again');        
           httpReq.sendHttpReq(
             null,
             getDashboardsUrl,

@@ -34,7 +34,7 @@ export default function CheckboxListSecondary() {
   },[selectedSecs]);
 
   const handleToggle = (value) => () => {
-    console.log('value in selected-list handleToggle'+JSON.stringify(value));   
+    //console.log('value in selected-list handleToggle'+JSON.stringify(value));   
 
          setSelectedSecs(current =>
             current.filter(sec => {            
@@ -42,7 +42,7 @@ export default function CheckboxListSecondary() {
             }),
          ); 
           
-    console.log('selectedSecs after delete in selected-list '+JSON.stringify(selectedSecs));
+    //console.log('selectedSecs after delete in selected-list '+JSON.stringify(selectedSecs));
     
   };
 

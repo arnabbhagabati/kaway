@@ -72,7 +72,7 @@ const SaveButton = () => {
       let url = constants.SERVER_BASEURL+"/users/"+email+"/dashboard"+"?uid="+uid+"&userToken="+tkn;
   
       setPData(null);
-      console.log('SaveButton '+url);
+      //console.log('SaveButton '+url);
       let httpData  = httpReq.sendHttpReq(
         null,
         url,
@@ -95,7 +95,7 @@ const SaveButton = () => {
 
   useEffect(() => {
     if(pData){
-        console.log('SaveButton pData '+JSON.stringify(pData));        
+        //console.log('SaveButton pData '+JSON.stringify(pData));        
         setMsgDialogText(pData);
         setOpenMsgDialog(true);
     }   

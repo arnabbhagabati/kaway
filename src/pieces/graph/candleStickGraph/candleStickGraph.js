@@ -87,8 +87,8 @@ export const ChartComponent = props => {
 					const startDate = new Date();
 					startDate.setDate(startDate.getDate() - tmpDuration);
 					
-					////console.log('setGraphData '+JSON.stringify(graphData));
-					console.log('basicGraph  tmpDuration '+tmpDuration);					
+					//console.log('setGraphData '+JSON.stringify(graphData));
+					//console.log('basicGraph  tmpDuration '+tmpDuration);					
 					let graphSourceData= [];
 					if(tmpDuration<45){
 						graphSourceData	= props.gdata.fifMin;
