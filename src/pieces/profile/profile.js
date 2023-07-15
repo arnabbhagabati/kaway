@@ -51,7 +51,7 @@ const ProfilePage = () => {
     //console.log('in profile handlelogout');
   };
 
-  let getDashboardsUrl = constants.SERVER_BASEURL+"/users/"+email+"/dashboards"+"?uid="+uid+"&userToken="+tkn;
+  let getDashboardsUrl = constants.SERVER_BASEURL+"/users/"+email+"/dashboards"+"?uid="+uid;
 
   useEffect(() => {
     httpReq.sendHttpReq(
@@ -59,19 +59,21 @@ const ProfilePage = () => {
       getDashboardsUrl,
       "GET",		
       null,
-      setDashboards
+      setDashboards,
+      tkn
     );
   },[]);
 
   const deleteDashBd = (dashBdName) => {
       //console.log(dashBdName);
-      let deleteDashboardsUrl = constants.SERVER_BASEURL+"/users/"+email+"/"+dashBdName+"?uid="+uid+"&userToken="+tkn;     
+      let deleteDashboardsUrl = constants.SERVER_BASEURL+"/users/"+email+"/"+dashBdName+"?uid="+uid;     
       httpReq.sendHttpReq(
         null,
         deleteDashboardsUrl,
         "DELETE",		
         null,
-        setDelRet
+        setDelRet,
+        tkn
       );     
   }
 
@@ -147,7 +149,8 @@ const ProfilePage = () => {
             getDashboardsUrl,
             "GET",		
             null,
-            setDashboards
+            setDashboards,
+            tkn
           );
         }
     }   
