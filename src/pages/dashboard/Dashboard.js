@@ -295,7 +295,7 @@ export default function Dashboard() {
               <SelectedSecList style={{ width:'10%'}}/>
             </div>
             <div className='disclaimer'> 
-                  Charts does not show real time information. Data intended for historical analysis only. For queries and feedback please drop an email to arnab.bhagabati1@gmail.com             
+                  Data intended for historical trend analysis only. For queries and feedback please drop an email to arnab.bhagabati1@gmail.com             
             </div>
           </div>
         }

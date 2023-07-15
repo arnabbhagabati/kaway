@@ -60,7 +60,7 @@ const SaveButton = () => {
   
   const HandleSave = () => {
 
-    var pattern =  /^[A-Za-z0-9]*$/;
+    var pattern =  /^[A-Za-z0-9_]*$/;
     if ( dashBoardName && dashBoardName.length > 2 && pattern.test(dashBoardName)) {
 
       let payld = {
@@ -84,7 +84,7 @@ const SaveButton = () => {
       setOpenSaveDialog(false);
      
     } else{
-      setMsgDialogText("Dashboard name can have only alphabets and nu,bers and needs to have at least 2 characters");
+      setMsgDialogText("Dashboard name can have only alphabets,numbers and underscores and needs to have at least 2 characters");
       setOpenMsgDialog(true);
       return false;
     }
