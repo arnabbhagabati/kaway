@@ -138,6 +138,9 @@ export default function Dashboard() {
   };
   const app = initializeApp(firebaseConfig);
   const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({
+    prompt: 'select_account'
+  });
   const auth = getAuth();
 
   const loginAction = function(){
