@@ -62,7 +62,7 @@ export default function CheckboxesTags(boxProps) {
 
   const filterOptions = createFilterOptions({
     matchFrom: 'any',
-    limit: 100,
+    limit: 200,
   });
 
   return (
@@ -95,7 +95,7 @@ export default function CheckboxesTags(boxProps) {
           {option.displayId}
         </li>
       )}
-      style={{ width: 250 }}
+      style={{ width: 300 }}
       renderInput={(params) => (
         <TextField {...params} label={boxProps.tag} placeholder={boxProps.placeHolder} />
       )}
