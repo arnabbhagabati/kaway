@@ -31,6 +31,8 @@ const ProfilePage = () => {
     const [selectedExs, setSelectedExs] = selEx; 
     const [allAvlblSecs, setAllAvlblSecs] = allAvlSec; 
 
+    const [dashBoardsAvl, setDashBoardsAvl] = useState(false);
+
     let uid = profileData.userData.uid;
     let email = profileData.userData.email;
     let tkn = profileData.userData.stsTokenManager.accessToken;
@@ -63,6 +65,14 @@ const ProfilePage = () => {
       tkn
     );
   },[]);
+
+  useEffect(() => {
+    if(dashboards.length>0){
+      setDashBoardsAvl(true);
+    }else{
+      setDashBoardsAvl(false);
+    }
+  },[dashboards]);
 
   const deleteDashBd = (dashBdName) => {
       //console.log(dashBdName);
@@ -177,6 +187,18 @@ const ProfilePage = () => {
             Saved Dashboards 
         </Typography>
 
+        {!dashBoardsAvl &&
+           <Typography
+           component="h3"
+           variant="h6"
+           color="primary.dark"
+           style={{ textAlign: 'center', margin:"100px 10px 20px 10px" }}>
+            Loading your dashboards...
+          </Typography>
+
+        }
+
+        {dashBoardsAvl &&
         <List>
         {dashboards.map((item, index) => (
           <ListItem key={index} style={{display:'flex', justifyContent:'center', cursor: 'pointer' }}>    
@@ -189,7 +211,7 @@ const ProfilePage = () => {
           </ListItem>
         ))}
       </List>
-    
+       }
     </div>
   );
 };

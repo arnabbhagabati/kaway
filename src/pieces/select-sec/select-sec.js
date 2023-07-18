@@ -140,7 +140,9 @@ export default function CheckboxesTags(boxProps) {
               sec.constituents.forEach(function(secId,index){                
                 if(!selectedSecsMap.hasOwnProperty(secId) || selectedSecsMap[secId] == null){
                   const thisSec = allSecMap[secId];
-                  setSelectedSecs(current => [...current, thisSec]);
+                  if(thisSec){
+                    setSelectedSecs(current => [...current, thisSec]);
+                  }
                 }
               });
 
