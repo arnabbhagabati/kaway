@@ -117,7 +117,7 @@ export default function CheckboxesTags(boxProps) {
                 return map;
               }, {});
               
-              let allSecMap = null;
+              let allSecMap = {};
 
               allAvlblSecs.forEach(  (secs,index) =>{   
 
@@ -128,10 +128,13 @@ export default function CheckboxesTags(boxProps) {
                 for (var key in secs) {
                     if (secs.hasOwnProperty(key)) {                        
                         if(exchngs.includes(key)){
-                          allSecMap = secs[key].reduce(function(map, obj) {
+                           let tmpAllSecMap = secs[key].reduce(function(map, obj) {
                             map[obj.id] = obj;
                             return map;
                           }, {});
+
+                          allSecMap = { ...allSecMap, ...tmpAllSecMap };
+                        
                         }        
                     }
                 }
