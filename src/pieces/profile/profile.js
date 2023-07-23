@@ -67,7 +67,7 @@ const ProfilePage = () => {
   },[]);
 
   useEffect(() => {
-    if(dashboards.length>0){
+    if(dashboards){
       setDashBoardsAvl(true);
     }else{
       setDashBoardsAvl(false);
