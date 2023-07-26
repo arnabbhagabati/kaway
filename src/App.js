@@ -3,7 +3,7 @@ import "./style.css";
 import DashBoard from "./pages/dashboard/Dashboard"
 import { KawayContext } from "./kawayContext";
 import { initializeApp } from 'firebase/app';
-
+import ReactGA from 'react-gtm-module';
 
 import React, { useEffect, useRef,useState } from 'react';
 
@@ -29,6 +29,18 @@ export default function App(props) {
 	  };
 
 	const app = initializeApp(firebaseConfig);
+
+	const gAdTagManagerArgs = {
+		gtmId: 'G-RF1SSSVF55', 
+	  };
+
+	ReactGA.initialize(gAdTagManagerArgs);  
+
+	const gAnalyticManagerArgs = {
+		gtmId: 'G-XH0MYEMXY3', 
+	  };
+
+	ReactGA.initialize(gAnalyticManagerArgs);    
 
 	return (
 		<div>
