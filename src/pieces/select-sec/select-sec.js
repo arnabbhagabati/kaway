@@ -129,7 +129,8 @@ export default function CheckboxesTags(boxProps) {
                     if (secs.hasOwnProperty(key)) {                        
                         if(exchngs.includes(key)){
                            let tmpAllSecMap = secs[key].reduce(function(map, obj) {
-                            map[obj.id] = obj;
+                            const secKey = sec.exchange+"_"+obj.id;
+                            map[secKey] = obj;
                             return map;
                           }, {});
 
@@ -140,9 +141,10 @@ export default function CheckboxesTags(boxProps) {
                 }
               });
 
-              sec.constituents.forEach(function(secId,index){                
-                if(!selectedSecsMap.hasOwnProperty(secId) || selectedSecsMap[secId] == null){
-                  const thisSec = allSecMap[secId];
+              sec.constituents.forEach(function(secId,index){  
+                const key = sec.exchange+"_"+secId;               
+                if(!selectedSecsMap.hasOwnProperty(key) || selectedSecsMap[key] == null){
+                  const thisSec = allSecMap[key];
                   if(thisSec){
                     setSelectedSecs(current => [...current, thisSec]);
                   }
