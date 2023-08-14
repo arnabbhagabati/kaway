@@ -129,7 +129,7 @@ export default function Dashboard() {
   const [profileImageLnk, setProfileImageLnk] = useState('');
   const firebaseConfig = {
     apiKey: "AIzaSyCWmHX5ohUlbtiAZncTTXxMCv18zUjtVrU",
-    authDomain: "kaway-395713.firebaseapp.com",
+    authDomain: "bullcharts.org",
     projectId: "kaway-395713",
     storageBucket: "kaway-395713.appspot.com",
     messagingSenderId: "72334033928",

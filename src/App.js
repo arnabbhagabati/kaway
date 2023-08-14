@@ -20,7 +20,7 @@ export default function App(props) {
 
 	const firebaseConfig = {
 		apiKey: "AIzaSyCWmHX5ohUlbtiAZncTTXxMCv18zUjtVrU",
-		authDomain: "kaway-395713.firebaseapp.com",
+		authDomain: "bullcharts.org",
 		projectId: "kaway-395713",
 		storageBucket: "kaway-395713.appspot.com",
 		messagingSenderId: "72334033928",
