@@ -129,7 +129,7 @@ export default function CheckboxesTags(boxProps) {
                     if (secs.hasOwnProperty(key)) {                        
                         if(exchngs.includes(key)){
                            let tmpAllSecMap = secs[key].reduce(function(map, obj) {
-                            const secKey = sec.exchange+"_"+obj.id;
+                            const secKey = obj.exchange+"_"+obj.id;
                             map[secKey] = obj;
                             return map;
                           }, {});
