@@ -298,7 +298,7 @@ export default function Dashboard() {
               <SelectedSecList style={{ width:'10%'}}/>
             </div>
             <div className='disclaimer'> 
-                  Data intended for historical trend analysis only. For queries,feedback or missing symbols please drop an email to admin@bullcharts.org             
+              © bullcharts.org.  Data intended for historical trend analysis only. For queries,feedback or missing symbols please drop an email to admin@bullcharts.org             
             </div>
           </div>
         }
