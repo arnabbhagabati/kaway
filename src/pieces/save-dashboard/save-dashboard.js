@@ -69,7 +69,7 @@ const SaveButton = () => {
         }
       // Logic to save data
       
-      let url = constants.SERVER_BASEURL+"/users/"+email+"/dashboard"+"?uid="+uid+"&userToken="+tkn;
+      let url = constants.SERVER_BASEURL+"/users/"+email+"/dashboard"+"?uid="+uid;
   
       setPData(null);
       //console.log('SaveButton '+url);
@@ -78,7 +78,8 @@ const SaveButton = () => {
         url,
         "POST",		
         payld,
-        setPData
+        setPData,
+        tkn
       );	
   
       setOpenSaveDialog(false);

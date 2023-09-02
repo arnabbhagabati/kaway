@@ -138,9 +138,9 @@ export const ChartComponent = props => {
 	return (
 		<div>
 			<div class="graph-header">			
-				<div class="stock-id"> 
-					<p class="stock-id-text"> {props.security.displayName} </p>
-				</div>   
+			<div class="stock-id"> 
+					<p class="stock-id-text"> {props.security.displayName} ({props.security.displayId}) </p>
+				</div>    
 				<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}></Typography>
 				<MultiBtn class="range-select" graphDur={graphSelDuration} setGraphDur={setGraphSelDuration} setGraphSelFlag={setGraphSelFlag}/>	
 			</div>		

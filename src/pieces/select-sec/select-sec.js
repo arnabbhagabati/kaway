@@ -62,7 +62,7 @@ export default function CheckboxesTags(boxProps) {
 
   const filterOptions = createFilterOptions({
     matchFrom: 'any',
-    limit: 100,
+    limit: 200,
   });
 
   return (
@@ -95,7 +95,7 @@ export default function CheckboxesTags(boxProps) {
           {option.displayId}
         </li>
       )}
-      style={{ width: 250 }}
+      style={{ width: 300 }}
       renderInput={(params) => (
         <TextField {...params} label={boxProps.tag} placeholder={boxProps.placeHolder} />
       )}
@@ -117,7 +117,7 @@ export default function CheckboxesTags(boxProps) {
                 return map;
               }, {});
               
-              let allSecMap = null;
+              let allSecMap = {};
 
               allAvlblSecs.forEach(  (secs,index) =>{   
 
@@ -128,19 +128,26 @@ export default function CheckboxesTags(boxProps) {
                 for (var key in secs) {
                     if (secs.hasOwnProperty(key)) {                        
                         if(exchngs.includes(key)){
-                          allSecMap = secs[key].reduce(function(map, obj) {
-                            map[obj.id] = obj;
+                           let tmpAllSecMap = secs[key].reduce(function(map, obj) {
+                            const secKey = obj.exchange+"_"+obj.id;
+                            map[secKey] = obj;
                             return map;
                           }, {});
+
+                          allSecMap = { ...allSecMap, ...tmpAllSecMap };
+                        
                         }        
                     }
                 }
               });
 
-              sec.constituents.forEach(function(secId,index){                
-                if(!selectedSecsMap.hasOwnProperty(secId) || selectedSecsMap[secId] == null){
-                  const thisSec = allSecMap[secId];
-                  setSelectedSecs(current => [...current, thisSec]);
+              sec.constituents.forEach(function(secId,index){  
+                const key = sec.exchange+"_"+secId;               
+                if(!selectedSecsMap.hasOwnProperty(key) || selectedSecsMap[key] == null){
+                  const thisSec = allSecMap[key];
+                  if(thisSec){
+                    setSelectedSecs(current => [...current, thisSec]);
+                  }
                 }
               });
 

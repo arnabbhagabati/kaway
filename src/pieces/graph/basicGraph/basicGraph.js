@@ -167,7 +167,7 @@ export default function BasicGraph(props) {
 	if(props != null && typeof props != 'undefined' && props.security != null && typeof props.security !='undefined'){
 		url = url+props.security.exchange+"/"+props.security.id+"?type="+props.security.type;	
 	}else{
-		console.log('bad data in basicGraph'+JSON.stringify(props));
+		console.log('bad data in basicGraph '+JSON.stringify(props));
 	}
 	//console.log('basicGraph props 2 '+JSON.stringify(props));
 	

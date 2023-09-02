@@ -2,7 +2,7 @@ import axios from "axios";
 import * as constants from '../constants';
 
 
-export const sendHttpReq = function (existingData,url, method, payload,setPData) {
+export const sendHttpReq = function (existingData,url, method, payload,setPData,usrTkn) {
 
         let data = null;
         let error = null;
@@ -26,7 +26,8 @@ export const sendHttpReq = function (existingData,url, method, payload,setPData)
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json' 
+                    'Content-Type': 'application/json' ,
+                    'User-Token':usrTkn
                   },
                 data: payload,               
                 method,

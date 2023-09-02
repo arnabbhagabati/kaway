@@ -1,4 +1,4 @@
-export const SERVER_BASEURL = "https://kaway-server-n3ahptldka-as.a.run.app";
+export const SERVER_BASEURL = "https://kaway-server-1-og2rb3iodq-as.a.run.app";
 //export const SERVER_BASEURL = "http://localhost:8080";
 export const EXCHANGES_LIST =[
     {

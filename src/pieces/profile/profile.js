@@ -31,6 +31,8 @@ const ProfilePage = () => {
     const [selectedExs, setSelectedExs] = selEx; 
     const [allAvlblSecs, setAllAvlblSecs] = allAvlSec; 
 
+    const [dashBoardsAvl, setDashBoardsAvl] = useState(false);
+
     let uid = profileData.userData.uid;
     let email = profileData.userData.email;
     let tkn = profileData.userData.stsTokenManager.accessToken;
@@ -51,7 +53,7 @@ const ProfilePage = () => {
     //console.log('in profile handlelogout');
   };
 
-  let getDashboardsUrl = constants.SERVER_BASEURL+"/users/"+email+"/dashboards"+"?uid="+uid+"&userToken="+tkn;
+  let getDashboardsUrl = constants.SERVER_BASEURL+"/users/"+email+"/dashboards"+"?uid="+uid;
 
   useEffect(() => {
     httpReq.sendHttpReq(
@@ -59,19 +61,29 @@ const ProfilePage = () => {
       getDashboardsUrl,
       "GET",		
       null,
-      setDashboards
+      setDashboards,
+      tkn
     );
   },[]);
 
+  useEffect(() => {
+    if(dashboards){
+      setDashBoardsAvl(true);
+    }else{
+      setDashBoardsAvl(false);
+    }
+  },[dashboards]);
+
   const deleteDashBd = (dashBdName) => {
       //console.log(dashBdName);
-      let deleteDashboardsUrl = constants.SERVER_BASEURL+"/users/"+email+"/"+dashBdName+"?uid="+uid+"&userToken="+tkn;     
+      let deleteDashboardsUrl = constants.SERVER_BASEURL+"/users/"+email+"/"+dashBdName+"?uid="+uid;     
       httpReq.sendHttpReq(
         null,
         deleteDashboardsUrl,
         "DELETE",		
         null,
-        setDelRet
+        setDelRet,
+        tkn
       );     
   }
 
@@ -147,7 +159,8 @@ const ProfilePage = () => {
             getDashboardsUrl,
             "GET",		
             null,
-            setDashboards
+            setDashboards,
+            tkn
           );
         }
     }   
@@ -174,6 +187,18 @@ const ProfilePage = () => {
             Saved Dashboards 
         </Typography>
 
+        {!dashBoardsAvl &&
+           <Typography
+           component="h3"
+           variant="h6"
+           color="primary.dark"
+           style={{ textAlign: 'center', margin:"100px 10px 20px 10px" }}>
+            Loading your dashboards...
+          </Typography>
+
+        }
+
+        {dashBoardsAvl &&
         <List>
         {dashboards.map((item, index) => (
           <ListItem key={index} style={{display:'flex', justifyContent:'center', cursor: 'pointer' }}>    
@@ -186,7 +211,7 @@ const ProfilePage = () => {
           </ListItem>
         ))}
       </List>
-    
+       }
     </div>
   );
 };

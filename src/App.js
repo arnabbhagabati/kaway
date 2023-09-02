@@ -3,7 +3,7 @@ import "./style.css";
 import DashBoard from "./pages/dashboard/Dashboard"
 import { KawayContext } from "./kawayContext";
 import { initializeApp } from 'firebase/app';
-
+import ReactGA from 'react-gtm-module';
 
 import React, { useEffect, useRef,useState } from 'react';
 
@@ -19,16 +19,28 @@ export default function App(props) {
 	const [profileData, setProfileData] = useState({loggedIn:false,userData:{}});
 
 	const firebaseConfig = {
-		apiKey: "AIzaSyC81NoOiG1Ad5gz7MINsfZGiAokIH5K-zk",
-		authDomain: "silly-tomato-386917.firebaseapp.com",
-		projectId: "silly-tomato-386917",
-		storageBucket: "silly-tomato-386917.appspot.com",
-		messagingSenderId: "961131906413",
-		appId: "1:961131906413:web:7f729975010c49bad90664",
-		measurementId: "G-XH0MYEMXY3"
+		apiKey: "AIzaSyCWmHX5ohUlbtiAZncTTXxMCv18zUjtVrU",
+		authDomain: "bullcharts.org",
+		projectId: "kaway-395713",
+		storageBucket: "kaway-395713.appspot.com",
+		messagingSenderId: "72334033928",
+		appId: "1:72334033928:web:0d4548d698d946ad643dbd",
+		measurementId: "G-FB3G9DS4EH"
 	  };
 
 	const app = initializeApp(firebaseConfig);
+
+	const gAdTagManagerArgs = {
+		gtmId: 'G-RF1SSSVF55', 
+	  };
+
+	ReactGA.initialize(gAdTagManagerArgs);  
+
+	const gAnalyticManagerArgs = {
+		gtmId: 'G-XH0MYEMXY3', 
+	  };
+
+	ReactGA.initialize(gAnalyticManagerArgs);    
 
 	return (
 		<div>

@@ -128,13 +128,13 @@ export default function Dashboard() {
 
   const [profileImageLnk, setProfileImageLnk] = useState('');
   const firebaseConfig = {
-    apiKey: "AIzaSyC81NoOiG1Ad5gz7MINsfZGiAokIH5K-zk",
-    authDomain: "silly-tomato-386917.firebaseapp.com",
-    projectId: "silly-tomato-386917",
-    storageBucket: "silly-tomato-386917.appspot.com",
-    messagingSenderId: "961131906413",
-    appId: "1:961131906413:web:7f729975010c49bad90664",
-    measurementId: "G-XH0MYEMXY3"
+    apiKey: "AIzaSyCWmHX5ohUlbtiAZncTTXxMCv18zUjtVrU",
+    authDomain: "bullcharts.org",
+    projectId: "kaway-395713",
+    storageBucket: "kaway-395713.appspot.com",
+    messagingSenderId: "72334033928",
+    appId: "1:72334033928:web:0d4548d698d946ad643dbd",
+    measurementId: "G-FB3G9DS4EH"
   };
   const app = initializeApp(firebaseConfig);
   const provider = new GoogleAuthProvider();
@@ -298,7 +298,7 @@ export default function Dashboard() {
               <SelectedSecList style={{ width:'10%'}}/>
             </div>
             <div className='disclaimer'> 
-                  Data intended for historical trend analysis only. For queries and feedback please drop an email to arnab.bhagabati1@gmail.com             
+              © bullcharts.org.  Data intended for historical trend analysis only. For queries,feedback or missing symbols please drop an email to admin@bullcharts.org             
             </div>
           </div>
         }
