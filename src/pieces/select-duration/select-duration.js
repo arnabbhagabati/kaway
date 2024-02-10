@@ -8,9 +8,7 @@ import Select from '@mui/material/Select';
 import { useContext } from 'react';
 import { KawayContext } from '../../kawayContext';
 
-export default function SeletDuration(props) {
-
-    
+export default function SeletDuration(props) {    
 
     const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext);
     const [ctxDur, setCtxDur] = duration;    

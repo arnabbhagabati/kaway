@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import SaveDashboard from '../save-dashboard/save-dashboard';
 
 
-function GetData(exchanges,sec_list,setSecs,setExSelectState){       
+function GetData(exchanges,setSecs,setExSelectState){       
     
     const secMap = [];
     let loadedCnt = 0;
@@ -58,7 +58,7 @@ function GetData(exchanges,sec_list,setSecs,setExSelectState){
         }      
 
          //Todo : Fix this - we should wait for all http calls to complete (Promise.all?)
-         if(loadedCnt==5){
+         if(loadedCnt==4){
             setExSelectState("EX")
          }
 
@@ -69,13 +69,16 @@ function GetData(exchanges,sec_list,setSecs,setExSelectState){
 
 export default function PageOptions() {   
     const exchanges = Constants.EXCHANGES_LIST;
-    const [sec_list,setSecs]=useState([]);
+    const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext);
+    //const [sec_list,setSecs]=useState([]);
+    const [allAvlblSecs, setAllAvlblSecs] = allAvlSec;    
     const [exSelectState, setExSelectState] = useState("Loading...");
 
-    GetData(exchanges,sec_list,setSecs,setExSelectState);
-    const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext);
-    const [allAvlblSecs, setAllAvlblSecs] = allAvlSec;    
-    setAllAvlblSecs(sec_list);   
+    GetData(exchanges,setAllAvlblSecs,setExSelectState);
+
+    
+   
+    //setAllAvlblSecs(sec_list);   
     //console.log('selectedExs in pageoptions'+JSON.stringify(selectedExs));
 
     //console.log('sec_list here is '+JSON.stringify(sec_list));     

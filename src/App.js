@@ -9,7 +9,7 @@ import React, { useEffect, useRef,useState } from 'react';
 
 export default function App(props) {	
 
-	const [duration, setDuration] = useState("");
+	const [duration, setDuration] = useState(365);
 	const [durChangedFlag, setDurChangedFlag] = useState(false);
 	const [allAvlblSecs, setAllAvlblSecs] = useState([]);
 	const [selectedEx, setSelectedEx] = useState([]);

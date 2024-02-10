@@ -1,5 +1,5 @@
-export const SERVER_BASEURL = "https://kaway-server-1-og2rb3iodq-as.a.run.app";
-//export const SERVER_BASEURL = "http://localhost:8080";
+//export const SERVER_BASEURL = "https://kaway-server-1-og2rb3iodq-as.a.run.app";
+export const SERVER_BASEURL = "http://localhost:8080";
 export const EXCHANGES_LIST =[
     {
         title : 'BSE',
@@ -15,10 +15,10 @@ export const EXCHANGES_LIST =[
         title: 'NYSE',
         code : 'NYSE'
     },
-    {
-        title: 'LSE',
-        code : 'LSE'
-    }
+    //{
+    //    title: 'LSE',
+    //    code : 'LSE'
+    //}
 ];
 
 export const STOCK_CODE_LIST = [
