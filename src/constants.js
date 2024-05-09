@@ -4,10 +4,12 @@ export const EXCHANGES_LIST =[
     {
         title : 'BSE',
         code : 'BSE'
-    },{
+    },
+    /*{
         title: 'NSE',
         code : 'NSE'
-    },{
+    },
+    {
         title: 'NASDAQ',
         code : 'NASDAQ'
     },
@@ -15,10 +17,10 @@ export const EXCHANGES_LIST =[
         title: 'NYSE',
         code : 'NYSE'
     },
-    //{
-    //    title: 'LSE',
-    //    code : 'LSE'
-    //}
+    {
+        title: 'LSE',
+        code : 'LSE'
+    }*/
 ];
 
 export const STOCK_CODE_LIST = [

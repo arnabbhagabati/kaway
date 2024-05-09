@@ -58,7 +58,7 @@ function GetData(exchanges,setSecs,setExSelectState){
         }      
 
          //Todo : Fix this - we should wait for all http calls to complete (Promise.all?)
-         if(loadedCnt==4){
+         if(loadedCnt==1){
             setExSelectState("EX")
          }
 
