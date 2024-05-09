@@ -147,7 +147,12 @@ export default function Dashboard() {
     if(profileData.loggedIn){
       setViewProfile(viewProfile ? false : true);
     }else{      
-      signInWithPopup(auth, provider)
+      const user ={uid:1,email:"arnabbhagabati"}
+      setProfileData({loggedIn:true,userData:user,logoutFunction:logoutFn,goToHm:goToHome});
+      /*
+        * COMMENTED OUT FOR LOCAL
+          
+        signInWithPopup(auth, provider)
         .then((result) => {
           // This gives you a Google Access Token. You can use it to access the Google API.
           const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -168,10 +173,14 @@ export default function Dashboard() {
           // The AuthCredential type that was used.
           const credential = GoogleAuthProvider.credentialFromError(error);
           // ...
-        });
+        });*/
     }
   }
   const logoutFn = function(){
+    
+    /*
+      * Commented out for local
+      *
     signOut(auth).then(() => {
       // Sign-out successful.
       console.log('logged out');
@@ -183,6 +192,8 @@ export default function Dashboard() {
       setProfileData({loggedIn:false,userData:{},logoutFunction:logoutFn,goToHm:goToHome});
       alert('We encountered some problem while logging out.Please try again');
     });
+
+    */
   }
 
   const goToHome = function(){

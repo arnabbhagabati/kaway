@@ -35,7 +35,7 @@ const ProfilePage = () => {
 
     let uid = profileData.userData.uid;
     let email = profileData.userData.email;
-    let tkn = profileData.userData.stsTokenManager.accessToken;
+    let tkn = "" //profileData.userData.stsTokenManager.accessToken;   // commented out for local
 
   // Sample data for the user profile
   let userProfile = {
