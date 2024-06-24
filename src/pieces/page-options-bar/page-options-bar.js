@@ -1,5 +1,6 @@
 import Toolbar from '@mui/material/Toolbar';
 import SelectExchange from '../select-exchange/select-exchange'
+import SelectFilter from '../select-filter/select-filter'
 import SelectSec from '../select-sec/select-sec'
 import React, { useState, useEffect} from 'react';
 import "./page-options-bar.css";
@@ -87,6 +88,7 @@ export default function PageOptions() {
         <Toolbar className="page-options-toolbar">            
                 <SelectExchange tag={exSelectState} options={exchanges} placeHolder="Exchanges" sx={{ mr: 30 }}> </SelectExchange>     
                 <SelectSec tag="Stock" options={exchanges} placeHolder="Type To Search"> </SelectSec>
+                <SelectFilter tag={exSelectState} options={exchanges} placeHolder="Filters" sx={{ mr: 30 }}> </SelectFilter>     
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}></Typography>
                 <SaveDashboard></SaveDashboard>
                 <div style={{margin: '0 20px'}}><SelectGraphStyle className="select-graph-style"  ></SelectGraphStyle></div>

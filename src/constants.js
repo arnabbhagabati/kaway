@@ -23,6 +23,18 @@ export const EXCHANGES_LIST =[
     }*/
 ];
 
+
+export const FILTER_OPTIONS =[
+    {
+        title : 'ALL',
+        code : 'ALL'
+    },
+    {
+        title: '6 Months Stable',
+        code : '6_MON_STBL'
+    }
+];
+
 export const STOCK_CODE_LIST = [
     {   
         exchange : "BSE",

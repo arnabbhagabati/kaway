@@ -18,6 +18,8 @@ export default function App(props) {
 	const [apiCallData, setApiCallData] = useState(new Map());
 	const [profileData, setProfileData] = useState({loggedIn:false,userData:{}});
 
+	const [selectedFilter, setSelectedFilter] = useState('ALL');
+
 	const firebaseConfig = {
 		apiKey: "AIzaSyCWmHX5ohUlbtiAZncTTXxMCv18zUjtVrU",
 		authDomain: "bullcharts.org",
@@ -52,7 +54,8 @@ export default function App(props) {
 											durChangedFlag:[durChangedFlag, setDurChangedFlag], 
 											candleChart:[candleChart, setCandleChart],
 											apiData : [apiCallData, setApiCallData],
-											usrProf : [profileData, setProfileData] }}>
+											usrProf : [profileData, setProfileData] ,
+											selectedFilter : [selectedFilter, setSelectedFilter] }}>
 				<DashBoard/>
 			</KawayContext.Provider>
 		</div>
