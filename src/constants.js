@@ -1,39 +1,6 @@
 //export const SERVER_BASEURL = "https://kaway-server-1-og2rb3iodq-as.a.run.app";
 export const SERVER_BASEURL = "http://localhost:8080";
-export const EXCHANGES_LIST =[
-    {
-        title : 'BSE',
-        code : 'BSE'
-    },
-    /*{
-        title: 'NSE',
-        code : 'NSE'
-    },
-    {
-        title: 'NASDAQ',
-        code : 'NASDAQ'
-    },
-    {
-        title: 'NYSE',
-        code : 'NYSE'
-    },
-    {
-        title: 'LSE',
-        code : 'LSE'
-    }*/
-];
-
-
-export const FILTER_OPTIONS =[
-    {
-        title : 'ALL',
-        code : 'ALL'
-    },
-    {
-        title: '6 Months Stable',
-        code : '6_MON_STBL'
-    }
-];
+export const EXCHANGES_LIST =['BSE'/*,'NSE','NASDAQ','NYSE','LSE'*/ ];    
 
 export const STOCK_CODE_LIST = [
     {   

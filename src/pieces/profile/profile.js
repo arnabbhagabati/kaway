@@ -17,7 +17,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { KawayContext } from '../../kawayContext';
 import { useContext, useState,useEffect } from 'react';
 import * as constants from '../../constants';
-import * as httpReq from "../httpReq";
+import * as httpReq from "../../http/httpReq";
 
 
 
@@ -96,7 +96,7 @@ const ProfilePage = () => {
             let key = sec.code+"_"+sec.id+"_"+sec.exchange;
             dasboardSecKeys.push(key);
             exchanges.forEach((inBltExch) => {
-                if(inBltExch.title === sec.exchange){
+                if(inBltExch === sec.exchange){
                   if(!exchangesObjs.includes(inBltExch)){
                     exchangesObjs.push(inBltExch);
                   }                  

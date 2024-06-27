@@ -11,7 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { KawayContext } from '../../kawayContext';
 import { useContext, useState,useEffect } from 'react';
 import * as constants from '../../constants';
-import * as httpReq from "../httpReq";
+import * as httpReq from "../../http/httpReq";
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
 import { getAuth } from "firebase/auth";
 

@@ -33,7 +33,7 @@ export default function SeletExchanges(boxProps) {
     <div>
     <Autocomplete
       multiple
-      id="select-sec"
+      id="select-ex"
       filterOptions={filterOptions}
       limitTags={1}
       disableCloseOnSelect
@@ -48,7 +48,7 @@ export default function SeletExchanges(boxProps) {
             />
        }
       }     
-      getOptionLabel={(option) => option.title}      
+      getOptionLabel={(option) => option}      
       renderOption={(props, option, { selected }) => (
         <li {...props}>
           <Checkbox
@@ -57,7 +57,7 @@ export default function SeletExchanges(boxProps) {
             style={{ marginRight: 8 }}
             checked={selected}
           />
-          {option.title}
+          {option}
         </li>
       )}
       style={{ width: 250 }}

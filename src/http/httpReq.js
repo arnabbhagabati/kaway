@@ -33,7 +33,7 @@ export const sendHttpReq = function (existingData,url, method, payload,setPData,
                 method,
                 url,
               });
-              //console.log('sendHttpReq data'+response.data);
+              //console.log('sendHttpReq data '+response.data);
               data = response.data;
               setPData(data);
             } catch (error) {
@@ -47,6 +47,5 @@ export const sendHttpReq = function (existingData,url, method, payload,setPData,
   
   
     //console.log('req data sent is '+data);
-    //setHttpOP({cancel:cancel,"data":data,"error":error,loaded:loaded});
     return {cancel:cancel,"data":data,"error":error,loaded:loaded};
 }
