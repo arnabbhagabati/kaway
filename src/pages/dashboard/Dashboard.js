@@ -197,7 +197,7 @@ export default function Dashboard() {
   }
 
   const goToHome = function(){
-    //console.log('selected secs in db'+selectedSecs);
+    console.log('selected secs in db'+selectedSecs);
     setViewProfile(false);
   }
 

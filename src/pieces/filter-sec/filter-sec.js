@@ -38,10 +38,9 @@ export default function FilterSecurity() {
   useEffect(() => {
     if(filteredSecs){
         console.log('filteredSecs is '+JSON.stringify(filteredSecs));    
-        if(filteredSecs){
+        if(filteredSecs && filteredSecs.length != 0){
           setSelectedSecs(filteredSecs);
-        }
-           
+        }           
     }   
   }, [filteredSecs]); 
 

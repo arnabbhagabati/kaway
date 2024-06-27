@@ -111,7 +111,7 @@ const ProfilePage = () => {
 
     allAvlblSecs.forEach(  (secs,index) =>{
       exchangesObjs.forEach((ex,index) => {        
-        exchngs.push(ex.title);
+        exchngs.push(ex);
       });
       for (var key in secs) {
           if (secs.hasOwnProperty(key)) {
@@ -144,7 +144,7 @@ const ProfilePage = () => {
     //console.log('profile loading exchangesObjs '+JSON.stringify(exchangesObjs));
     //console.log('profile loading selSecs '+JSON.stringify(selSecs));
     setSelectedSecs(selSecs);    
-    //console.log('profile loading selectedSecs '+JSON.stringify(selectedSecs));
+    console.log('profile loading selectedSecs '+JSON.stringify(selectedSecs));
     //console.log('profile loading selectedExs '+JSON.stringify(selectedExs));
     profileData.goToHm();
   }
