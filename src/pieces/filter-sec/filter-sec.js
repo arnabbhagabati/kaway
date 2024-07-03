@@ -20,7 +20,7 @@ export default function FilterSecurity() {
     console.log('handleChange ...');
     setSelectedFil(event.target.value);
     
-    let url = Constants.SERVER_BASEURL+"/filter?filterType="+selectedFil+"&volPercent=10";
+    let url = Constants.SERVER_BASEURL+"/filter?filterType="+event.target.value+"&volPercent=10";
     console.log('tmaking apiCall');
 
     let httpData  = httpReq.sendHttpReq(
@@ -56,8 +56,9 @@ export default function FilterSecurity() {
         style={{ width: 200 }}
     >
         <MenuItem value='ALL'>ALL</MenuItem>
-        <MenuItem value='STABLE_6_MON'>STABLE_6_MON_2</MenuItem>
-        <MenuItem value='STABLE_1_YR'>STABLE_1_YR</MenuItem>
+        <MenuItem value='STABLE_6_MON'>STABLE_6_MON</MenuItem>
+        <MenuItem value='UNDERVALUED'>UNDERVALUED</MenuItem>
+        <MenuItem value='BOTH'>BOTH</MenuItem>
     </Select>
     </div>
   );
