@@ -5,7 +5,7 @@ import { createChart, ColorType } from 'lightweight-charts';
 import React, { useEffect, useRef,useState,useMemo } from 'react';
 import { KawayContext } from '../../../kawayContext';
 import { useContext } from 'react';
-import MultiBtn from '../../graph-dur-selector/multi-btn';
+import MultiBtn from '../../graph-dur-selector/graph-dur-selector';
 import {addToMap, removeFromMap} from '../../../util';
 import Typography from '@mui/material/Typography';
 

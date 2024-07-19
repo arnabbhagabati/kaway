@@ -35,6 +35,7 @@ export default function SeletDuration(props) {
             <MenuItem value={7}>1 Week</MenuItem>
             <MenuItem value={14}>2 Weeks</MenuItem>
             <MenuItem value={30}>1 Month</MenuItem>
+            <MenuItem value={90}>3 Months</MenuItem>
             <MenuItem value={180}>6 Months</MenuItem>
             <MenuItem value={365}>1 year</MenuItem>
             <MenuItem value={1825}>5 Years</MenuItem>
