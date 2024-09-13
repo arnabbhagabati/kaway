@@ -20,7 +20,7 @@ export default function FilterSecurity() {
     console.log('handleChange ...');
     setSelectedFil(event.target.value);
     
-    let url = Constants.SERVER_BASEURL+"/filter?filterType="+event.target.value+"&volPercent=10";
+    let url = Constants.SERVER_BASEURL+"/filter?filterType="+event.target.value+"&volPercent=7";
     console.log('tmaking apiCall');
 
     let httpData  = httpReq.sendHttpReq(
