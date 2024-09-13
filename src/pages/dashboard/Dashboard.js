@@ -18,7 +18,7 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+
 
 import BasicGraph from "../../pieces/graph/basicGraph/basicGraph";
 import CandleStickGraph from "../../pieces/graph/candleStickGraph/candleStickGraph";
@@ -197,7 +197,7 @@ export default function Dashboard() {
   }
 
   const goToHome = function(){
-    //console.log('selected secs in db'+selectedSecs);
+    console.log('selected secs in db'+selectedSecs);
     setViewProfile(false);
   }
 

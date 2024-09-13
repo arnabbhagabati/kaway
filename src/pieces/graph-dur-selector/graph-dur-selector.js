@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import * as constants from '../../constants';
-import styles from './multi-btn.css'
+import styles from './graph-dur-selector.css'
 
 const Button = styled.button`
   /* Same as above */
@@ -20,7 +20,7 @@ const ButtonGroup = styled.div`
   display: flex;
   margin-right:80px;
 `;
-const types = ['1W', '2W', '1M' ,'6M','1Y','5Y','All'];
+const types = ['1W', '2W', '1M' , '3M','6M','1Y','5Y','All'];
 
 export default function ToggleGroup(props) {
   //console.log('props in mult is '+JSON.stringify(props));
@@ -38,6 +38,9 @@ export default function ToggleGroup(props) {
       case 30:
         setActive('1M');
         break;
+      case 90:
+        setActive('3M');
+        break;  
       case 180:
         setActive('6M');
         break;
@@ -66,6 +69,9 @@ export default function ToggleGroup(props) {
         break;
       case '1M':
         props.setGraphDur(30);
+        break;
+      case '3M':
+        props.setGraphDur(90);
         break;
       case '6M':
         props.setGraphDur(180);

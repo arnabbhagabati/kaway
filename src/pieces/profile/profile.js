@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { makeStyles } from '@material-ui/styles';
 
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
@@ -17,7 +16,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { KawayContext } from '../../kawayContext';
 import { useContext, useState,useEffect } from 'react';
 import * as constants from '../../constants';
-import * as httpReq from "../httpReq";
+import * as httpReq from "../../http/httpReq";
 
 
 
@@ -96,7 +95,7 @@ const ProfilePage = () => {
             let key = sec.code+"_"+sec.id+"_"+sec.exchange;
             dasboardSecKeys.push(key);
             exchanges.forEach((inBltExch) => {
-                if(inBltExch.title === sec.exchange){
+                if(inBltExch === sec.exchange){
                   if(!exchangesObjs.includes(inBltExch)){
                     exchangesObjs.push(inBltExch);
                   }                  
@@ -111,7 +110,7 @@ const ProfilePage = () => {
 
     allAvlblSecs.forEach(  (secs,index) =>{
       exchangesObjs.forEach((ex,index) => {        
-        exchngs.push(ex.title);
+        exchngs.push(ex);
       });
       for (var key in secs) {
           if (secs.hasOwnProperty(key)) {
@@ -144,7 +143,7 @@ const ProfilePage = () => {
     //console.log('profile loading exchangesObjs '+JSON.stringify(exchangesObjs));
     //console.log('profile loading selSecs '+JSON.stringify(selSecs));
     setSelectedSecs(selSecs);    
-    //console.log('profile loading selectedSecs '+JSON.stringify(selectedSecs));
+    console.log('profile loading selectedSecs '+JSON.stringify(selectedSecs));
     //console.log('profile loading selectedExs '+JSON.stringify(selectedExs));
     profileData.goToHm();
   }

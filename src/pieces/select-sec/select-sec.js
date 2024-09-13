@@ -19,23 +19,21 @@ export default function CheckboxesTags(boxProps) {
  
   const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext);
   const [allAvlblSecs, setAllAvlblSecs] = allAvlSec;    
-  //console.log('allSecs allAvlblSecs in multi dropdown'+JSON.stringify(allAvlblSecs));
   const [selectedSecs, setSelectedSecs] = selectedSec;  
   const [selectedExs, setSelectedExs] = selEx; 
   
   const [secOptions,setSecOptions] = useState([]);
   
-  let currCount = 0;
+
   const exchngs =[];
 
   useEffect(() => {
 
-    const allSecs = [];
-    let cnt = 0;
+    const allSecs = []; 
     allAvlblSecs.forEach(  (secs,index) =>{
 
       selectedExs.forEach((ex,index) => {
-        exchngs.push(ex.title);
+        exchngs.push(ex);
       });
 
       for (var key in secs) {
@@ -122,7 +120,7 @@ export default function CheckboxesTags(boxProps) {
               allAvlblSecs.forEach(  (secs,index) =>{   
 
                 selectedExs.forEach((ex,index) => {
-                  exchngs.push(ex.title);
+                  exchngs.push(ex);
                 });
                 
                 for (var key in secs) {

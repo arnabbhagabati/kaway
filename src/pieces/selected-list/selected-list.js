@@ -30,7 +30,7 @@ export default function CheckboxListSecondary() {
         selSecs.push(newSec);
     });
     setSecsList(selSecs);
-    //console.log('secsList in selected-list '+JSON.stringify(secsList));
+    console.log('secsList in selected-list '+JSON.stringify(secsList));
   },[selectedSecs]);
 
   const handleToggle = (value) => () => {

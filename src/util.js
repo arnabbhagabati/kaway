@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const addToMap = (key, value, mapData,setMapData,) => {
     const newMap = new Map(mapData);
     newMap.set(key, value);
@@ -10,3 +12,4 @@ export const addToMap = (key, value, mapData,setMapData,) => {
     newMap.delete(key);
     setMapData(newMap);
   };
+

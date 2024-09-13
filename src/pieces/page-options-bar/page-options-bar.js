@@ -1,5 +1,6 @@
 import Toolbar from '@mui/material/Toolbar';
 import SelectExchange from '../select-exchange/select-exchange'
+import FilterSecurity from '../filter-sec/filter-sec'
 import SelectSec from '../select-sec/select-sec'
 import React, { useState, useEffect} from 'react';
 import "./page-options-bar.css";
@@ -17,38 +18,19 @@ function GetData(exchanges,setSecs,setExSelectState){
     
     const secMap = [];
     let loadedCnt = 0;
-    //const exchanges= Constants.EXCHANGES_LIST;
-
+    
     exchanges.forEach(function (exchange,index){
-        let url = Constants.SERVER_BASEURL+"/secList/"+exchange.title;
+        let url = Constants.SERVER_BASEURL+"/secList/"+exchange;
 
         const httpData = UseHttpReq( null,url,"GET");
       
         if (httpData.loaded){
-             const secs = httpData.data;
-             const secCodeArr = [];  
-             //console.log('secs is '+JSON.stringify(secs));
-            
-            if(Array.isArray(secs) && secs.length>0){
-                secs.forEach(function(sec,index){                
-                    secCodeArr.push({ key : exchange.title+"_"+sec.code,
-                                     "code" : sec.code,
-                                     "id" :  sec.id ,
-                                     exchange : exchange.title,
-                                     type : sec.type,
-                                     constituents : sec.constituents,
-                                     displayName : sec.name,
-                                     displayId : exchange.code+" "+sec.displayName});     
-                                            
-                });
-            
+             const secs = httpData.data;          
                 secMap.push({
-                    [exchange.title] : secCodeArr
-                });
-            }
-             loadedCnt++;
+                    [exchange] : secs
+                });            
+            loadedCnt++;
         }
-
     });
 
     useEffect(() => {
@@ -61,7 +43,6 @@ function GetData(exchanges,setSecs,setExSelectState){
          if(loadedCnt==1){
             setExSelectState("EX")
          }
-
     }, [loadedCnt]); 
 
 }
@@ -69,24 +50,18 @@ function GetData(exchanges,setSecs,setExSelectState){
 
 export default function PageOptions() {   
     const exchanges = Constants.EXCHANGES_LIST;
-    const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart } = useContext(KawayContext);
+    const {duration, allAvlSec, selEx,selectedSec,durChangedFlag,candleChart,apiData,usrProf,selectedFilter} = useContext(KawayContext);
     //const [sec_list,setSecs]=useState([]);
     const [allAvlblSecs, setAllAvlblSecs] = allAvlSec;    
-    const [exSelectState, setExSelectState] = useState("Loading...");
+    const [exSelectState, setExSelectState] = useState("Loading...");    
 
     GetData(exchanges,setAllAvlblSecs,setExSelectState);
-
-    
-   
-    //setAllAvlblSecs(sec_list);   
-    //console.log('selectedExs in pageoptions'+JSON.stringify(selectedExs));
-
-    //console.log('sec_list here is '+JSON.stringify(sec_list));     
 
     return (
         <Toolbar className="page-options-toolbar">            
                 <SelectExchange tag={exSelectState} options={exchanges} placeHolder="Exchanges" sx={{ mr: 30 }}> </SelectExchange>     
                 <SelectSec tag="Stock" options={exchanges} placeHolder="Type To Search"> </SelectSec>
+                <FilterSecurity placeHolder="Filters" sx={{ mr: 30 }}> </FilterSecurity>     
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}></Typography>
                 <SaveDashboard></SaveDashboard>
                 <div style={{margin: '0 20px'}}><SelectGraphStyle className="select-graph-style"  ></SelectGraphStyle></div>

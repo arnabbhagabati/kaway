@@ -6,7 +6,7 @@ import { createChart, ColorType } from 'lightweight-charts';
 import React, { useEffect, useRef,useState,useMemo } from 'react';
 import { KawayContext } from '../../../kawayContext';
 import { useContext } from 'react';
-import MultiBtn from '../../graph-dur-selector/multi-btn';
+import MultiBtn from '../../graph-dur-selector/graph-dur-selector';
 import {addToMap, removeFromMap} from '../../../util';
 import Typography from '@mui/material/Typography';
 
@@ -143,7 +143,7 @@ export const ChartComponent = props => {
 		<div>
 			<div class="graph-header">			
 				<div class="stock-id"> 
-					<p class="stock-id-text"> {props.security.displayName} ({props.security.displayId}) </p>
+					<p class="stock-id-text"> {props.security.displayId} ({props.security.displayName}) </p>
 				</div>   
 				<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}></Typography>
 				<MultiBtn  graphDur={graphSelDuration} setGraphDur={setGraphSelDuration} setGraphSelFlag={setGraphSelFlag}/>	
