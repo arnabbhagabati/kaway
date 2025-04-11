@@ -1,83 +1,63 @@
 import "./style.css";
 
-import { priceData } from "./priceData";
-// import { areaData } from './areaData';
-import { volumeData } from "./volumeData";
+import DashBoard from "./pages/dashboard/Dashboard"
+import { KawayContext } from "./kawayContext";
+import { initializeApp } from 'firebase/app';
+import ReactGA from 'react-gtm-module';
 
-//import { createChart, CrosshairMode } from "lightweight-charts";
+import React, { useEffect, useRef,useState } from 'react';
 
-import { createChart, ColorType } from 'lightweight-charts';
-import React, { useEffect, useRef } from 'react';
+export default function App(props) {	
 
-export const ChartComponent = props => {
-	const {
-		data,
-		colors: {
-			backgroundColor = 'white',
-			lineColor = '#2962FF',
-			textColor = 'black',
-			areaTopColor = '#2962FF',
-			areaBottomColor = 'rgba(41, 98, 255, 0.28)',
-		} = {},
-	} = props;
+	const [duration, setDuration] = useState(365);
+	const [durChangedFlag, setDurChangedFlag] = useState(false);
+	const [allAvlblSecs, setAllAvlblSecs] = useState([]);
+	const [selectedEx, setSelectedEx] = useState([]);
+	const [selectedSecs, setSelectedSecs] = useState([]);
+	const [candleChart, setCandleChart] = useState(false);
+	const [apiCallData, setApiCallData] = useState(new Map());
+	const [profileData, setProfileData] = useState({loggedIn:false,userData:{}});
 
-	const chartContainerRef = useRef();
+	const [selectedFilter, setSelectedFilter] = useState('ALL');
 
-	useEffect(
-		() => {
-			const handleResize = () => {
-				chart.applyOptions({ width: chartContainerRef.current.clientWidth });
-			};
+	const firebaseConfig = {
+		apiKey: "AIzaSyCWmHX5ohUlbtiAZncTTXxMCv18zUjtVrU",
+		authDomain: "bullcharts.org",
+		projectId: "kaway-395713",
+		storageBucket: "kaway-395713.appspot.com",
+		messagingSenderId: "72334033928",
+		appId: "1:72334033928:web:0d4548d698d946ad643dbd",
+		measurementId: "G-FB3G9DS4EH"
+	  };
 
-			const chart = createChart(chartContainerRef.current, {
-				layout: {
-					background: { type: ColorType.Solid, color: backgroundColor },
-					textColor,
-				},
-				width: chartContainerRef.current.clientWidth,
-				height: 300,
-			});
-			chart.timeScale().fitContent();
+	const app = initializeApp(firebaseConfig);
 
-			const newSeries = chart.addLineSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });
-			newSeries.setData(data);
+	const gAdTagManagerArgs = {
+		gtmId: 'G-RF1SSSVF55', 
+	  };
 
-			window.addEventListener('resize', handleResize);
+	ReactGA.initialize(gAdTagManagerArgs);  
 
-			return () => {
-				window.removeEventListener('resize', handleResize);
+	const gAnalyticManagerArgs = {
+		gtmId: 'G-XH0MYEMXY3', 
+	  };
 
-				chart.remove();
-			};
-		},
-		[data, backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor]
-	);
+	ReactGA.initialize(gAnalyticManagerArgs);    
 
-	return (
-		<div
-			ref={chartContainerRef}
-		/>
-	);
-};
-
-const initialData = [
-	{ time: '2018-12-22', value: 32.51 },
-	{ time: '2018-12-23', value: 31.11 },
-	{ time: '2018-12-24', value: 27.02 },
-	{ time: '2018-12-25', value: 27.32 },
-	{ time: '2018-12-26', value: 25.17 },
-	{ time: '2018-12-27', value: 28.89 },
-	{ time: '2018-12-28', value: 25.46 },
-	{ time: '2018-12-29', value: 23.92 },
-	{ time: '2018-12-30', value: 22.68 },
-	{ time: '2018-12-31', value: 22.67 },
-];
-
-export default function App(props) {
 	return (
 		<div>
-			<p>Arnab</p>
-			<ChartComponent {...props} data={volumeData}></ChartComponent>
+			
+			<KawayContext.Provider value={{duration :[ duration, setDuration ],
+											allAvlSec :[ allAvlblSecs, setAllAvlblSecs ],
+											selEx :[ selectedEx, setSelectedEx ],
+											selectedSec :[ selectedSecs, setSelectedSecs ], 
+											durChangedFlag:[durChangedFlag, setDurChangedFlag], 
+											candleChart:[candleChart, setCandleChart],
+											apiData : [apiCallData, setApiCallData],
+											usrProf : [profileData, setProfileData] ,
+											selectedFilter : [selectedFilter, setSelectedFilter] }}>
+				<DashBoard/>
+			</KawayContext.Provider>
 		</div>
 		
 	);
