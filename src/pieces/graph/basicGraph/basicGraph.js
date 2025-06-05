@@ -32,21 +32,13 @@ export const ChartComponent = props => {
 	const [apiCallData, setApiCalldata] = apiData; 
 	const [graphSelDuration, setGraphSelDuration] = useState(-99); 
 
-	let [graphSelFlag,setGraphSelFlag] = useState(false); 
-
+	let [graphSelFlag,setGraphSelFlag] = useState(false); 		
 	
-
-	
-	//console.log('graphSelFlag 1 is'+graphSelFlag);
-	// To Do - change it to a integer variable
     const ref = useRef(true);	
 
 	useEffect(
-		() => {
-
-			
-			const firstRender = ref.current;
-			//console.log('basicGraph props is'+JSON.stringify(props));
+		() => {			
+			const firstRender = ref.current;			
 
 			const handleResize = () => {
 				chart.applyOptions({ width: chartContainerRef.current.clientWidth });
@@ -62,11 +54,7 @@ export const ChartComponent = props => {
 			});
 			chart.timeScale().fitContent();
 
-			const newSeries = chart.addLineSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });
-			//console.log('graphDuration in graph =='+graphDuration);
-			//console.log('graphSelDuration in graph =='+graphSelDuration);	
-			//console.log('ctxDuration in graph =='+ctxDuration);		
-			//console.log('firstRender in graph =='+firstRender);	
+			const newSeries = chart.addLineSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });		
 
 			if( firstRender){
 				ref.current = false;
@@ -79,7 +67,6 @@ export const ChartComponent = props => {
 				setGraphSelDuration(ctxDuration);				
 				setDurChgFlag(false);					
 			}
-
 
 			if(graphSelDuration){
 					
@@ -94,7 +81,7 @@ export const ChartComponent = props => {
 					////console.log('setGraphData '+JSON.stringify(graphData));		
 								
 					let graphSourceData= [];
-					if(tmpDuration<45){
+					if(tmpDuration<91){
 						graphSourceData	= props.gdata.fifMin;
 					}else{
 						graphSourceData = props.gdata.oneDay;
