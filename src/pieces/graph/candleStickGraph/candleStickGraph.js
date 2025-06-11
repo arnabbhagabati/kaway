@@ -90,7 +90,7 @@ export const ChartComponent = props => {
 					//console.log('setGraphData '+JSON.stringify(graphData));
 					//console.log('basicGraph  tmpDuration '+tmpDuration);					
 					let graphSourceData= [];
-					if(tmpDuration<45){
+					if(tmpDuration<91){
 						graphSourceData	= props.gdata.fifMin;
 					}else{
 						graphSourceData = props.gdata.oneDay;

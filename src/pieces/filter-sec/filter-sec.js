@@ -56,7 +56,7 @@ export default function FilterSecurity() {
         style={{ width: 200 }}
     >
         <MenuItem value='ALL'>ALL</MenuItem>
-        <MenuItem value='STABLE_6_MON'>STABLE_6_MON</MenuItem>
+        <MenuItem value='STABLE_9_MON'>STABLE_9_MON</MenuItem>
         <MenuItem value='UNDERVALUED'>UNDERVALUED</MenuItem>
         <MenuItem value='BOTH'>BOTH</MenuItem>
     </Select>
